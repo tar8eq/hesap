@@ -485,17 +485,31 @@
       color: var(--primary-light);
     }
 
-    .tx-ios .del {
-      background: none;
-      border: none;
-      color: rgba(255, 255, 255, 0.12);
-      font-size: 14px;
-      cursor: pointer;
-      padding: 4px;
-      transition: all 0.3s ease;
+    .tx-ios .actions-btn {
+      display: flex;
+      gap: 4px;
     }
 
-    .tx-ios .del:hover {
+    .tx-ios .actions-btn button {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 14px;
+      cursor: pointer;
+      padding: 4px 6px;
+      transition: all 0.3s ease;
+      border-radius: 6px;
+    }
+
+    .tx-ios .actions-btn button:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tx-ios .actions-btn .edit:hover {
+      color: var(--primary-light);
+    }
+
+    .tx-ios .actions-btn .del:hover {
       color: var(--danger);
     }
 
@@ -1008,17 +1022,20 @@
       { id: 'reports', label: 'التقارير', icon: '📊' },
     ];
 
-    const STORAGE_KEY = 'finance_ios_data_v4';
+    const STORAGE_KEY = 'finance_ios_data_v5';
 
     let state = { accounts: [], transactions: [] };
     let currentTab = 'home';
     let selectedAccountId = null;
-    let modals = { createAccount: false, addTransaction: false, transfer: false, settings: false };
+    let modals = { createAccount: false, addTransaction: false, transfer: false, settings: false, editTransaction: false,
+      editAccount: false };
     let txStep = 1;
     let txData = { type: 'deposit', accountId: '', currency: 'USD', reason: '', amount: 0, note: '', toAccountId: '',
       exchangeRate: 0 };
     let transferData = { fromAccountId: '', toAccountId: '', fromCurrency: 'USD', toCurrency: 'TRY', amount: 0,
-      exchangeRate: 0, convertedAmount: 0, showRate: false };
+      exchangeRate: 0, convertedAmount: 0 };
+    let editingTxId = null;
+    let editingAccountId = null;
 
     // ============================================================
     // ====== HELPERS ======
@@ -1031,6 +1048,8 @@
     function id() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 6); }
 
     function getAccount(id) { return state.accounts.find(a => a.id === id); }
+
+    function getTransaction(id) { return state.transactions.find(t => t.id === id); }
 
     function getTransactions(accountId) {
       return state.transactions.filter(t => t.accountId === accountId || t.toAccountId === accountId);
@@ -1120,10 +1139,28 @@
       renderAll();
     }
 
+    function updateAccount(id, data) {
+      const acc = getAccount(id);
+      if (!acc) return;
+      acc.name = data.name.trim() || acc.name;
+      if (data.currencies) {
+        Object.keys(data.currencies).forEach(c => {
+          acc.currencies[c] = data.currencies[c];
+        });
+      }
+      if (data.icon) acc.icon = data.icon;
+      if (data.color) acc.color = data.color;
+      saveData();
+      closeModal('editAccount');
+      showToast('✅ تم تحديث الحساب');
+      renderAll();
+    }
+
     function deleteAccount(id) {
-      if (!confirm('حذف الحساب؟')) return;
-      state.accounts = state.accounts.filter(a => a.id !== id);
+      if (!confirm('حذف الحساب؟ سيتم حذف جميع المعاملات المرتبطة به')) return;
+      // حذف المعاملات المرتبطة
       state.transactions = state.transactions.filter(t => t.accountId !== id && t.toAccountId !== id);
+      state.accounts = state.accounts.filter(a => a.id !== id);
       saveData();
       if (selectedAccountId === id) selectedAccountId = null;
       showToast('🗑️ تم حذف الحساب');
@@ -1131,7 +1168,7 @@
     }
 
     // ============================================================
-    // ====== TRANSACTION OPERATIONS ======
+    // ====== TRANSACTION OPERATIONS (مع التعديل والحذف) ======
     // ============================================================
 
     function addTransaction(data) {
@@ -1163,7 +1200,7 @@
           currencies: { ...a.currencies, [data.currency]: (a.currencies[data.currency] || 0) - data.amount }
         } : a);
       } else if (data.type === 'transfer' && data.toAccountId) {
-        if (data.exchangeRate && data.exchangeRate > 0) {
+        if (data.exchangeRate && data.exchangeRate > 0 && data.currency !== data.toCurrency) {
           const converted = data.amount * data.exchangeRate;
           tx.convertedAmount = converted;
           tx.targetCurrency = data.toCurrency || 'USD';
@@ -1201,8 +1238,148 @@
       renderAll();
     }
 
+    function updateTransaction(id, data) {
+      const oldTx = getTransaction(id);
+      if (!oldTx) return;
+
+      // استعادة الرصيد القديم
+      let accs = [...state.accounts];
+
+      // عكس العملية القديمة
+      if (oldTx.type === 'deposit') {
+        accs = accs.map(a => a.id === oldTx.accountId ? {
+          ...a,
+          currencies: { ...a.currencies, [oldTx.currency]: (a.currencies[oldTx.currency] || 0) - oldTx.amount }
+        } : a);
+      } else if (oldTx.type === 'withdraw') {
+        accs = accs.map(a => a.id === oldTx.accountId ? {
+          ...a,
+          currencies: { ...a.currencies, [oldTx.currency]: (a.currencies[oldTx.currency] || 0) + oldTx.amount }
+        } : a);
+      } else if (oldTx.type === 'transfer' && oldTx.toAccountId) {
+        if (oldTx.exchangeRate && oldTx.exchangeRate > 0 && oldTx.convertedAmount) {
+          accs = accs.map(a => {
+            if (a.id === oldTx.accountId) {
+              return { ...a, currencies: { ...a.currencies, [oldTx.currency]: (a.currencies[oldTx.currency] || 0) + oldTx
+                    .amount } };
+            }
+            if (a.id === oldTx.toAccountId) {
+              return { ...a, currencies: { ...a.currencies, [oldTx.targetCurrency || 'USD']: (a.currencies[oldTx
+                    .targetCurrency || 'USD'] || 0) - oldTx.convertedAmount } };
+            }
+            return a;
+          });
+        } else {
+          accs = accs.map(a => {
+            if (a.id === oldTx.accountId) {
+              return { ...a, currencies: { ...a.currencies, [oldTx.currency]: (a.currencies[oldTx.currency] || 0) + oldTx
+                    .amount } };
+            }
+            if (a.id === oldTx.toAccountId) {
+              return { ...a, currencies: { ...a.currencies, [oldTx.currency]: (a.currencies[oldTx.currency] || 0) - oldTx
+                    .amount } };
+            }
+            return a;
+          });
+        }
+      }
+
+      // تطبيق العملية الجديدة
+      const newTx = { ...oldTx, ...data };
+      if (newTx.type === 'deposit') {
+        accs = accs.map(a => a.id === newTx.accountId ? {
+          ...a,
+          currencies: { ...a.currencies, [newTx.currency]: (a.currencies[newTx.currency] || 0) + newTx.amount }
+        } : a);
+      } else if (newTx.type === 'withdraw') {
+        accs = accs.map(a => a.id === newTx.accountId ? {
+          ...a,
+          currencies: { ...a.currencies, [newTx.currency]: (a.currencies[newTx.currency] || 0) - newTx.amount }
+        } : a);
+      } else if (newTx.type === 'transfer' && newTx.toAccountId) {
+        if (newTx.exchangeRate && newTx.exchangeRate > 0 && newTx.currency !== newTx.toCurrency) {
+          const converted = newTx.amount * newTx.exchangeRate;
+          newTx.convertedAmount = converted;
+          newTx.targetCurrency = newTx.toCurrency || 'USD';
+          accs = accs.map(a => {
+            if (a.id === newTx.accountId) {
+              return { ...a, currencies: { ...a.currencies, [newTx.currency]: (a.currencies[newTx.currency] || 0) - newTx
+                    .amount } };
+            }
+            if (a.id === newTx.toAccountId) {
+              return { ...a, currencies: { ...a.currencies, [newTx.toCurrency]: (a.currencies[newTx.toCurrency] || 0) +
+                  converted } };
+            }
+            return a;
+          });
+        } else {
+          accs = accs.map(a => {
+            if (a.id === newTx.accountId) {
+              return { ...a, currencies: { ...a.currencies, [newTx.currency]: (a.currencies[newTx.currency] || 0) - newTx
+                    .amount } };
+            }
+            if (a.id === newTx.toAccountId) {
+              return { ...a, currencies: { ...a.currencies, [newTx.currency]: (a.currencies[newTx.currency] || 0) + newTx
+                    .amount } };
+            }
+            return a;
+          });
+        }
+      }
+
+      state.accounts = accs;
+      state.transactions = state.transactions.map(t => t.id === id ? newTx : t);
+      saveData();
+      closeModal('editTransaction');
+      showToast('✅ تم تعديل المعاملة');
+      renderAll();
+    }
+
     function deleteTransaction(id) {
-      if (!confirm('حذف المعاملة؟')) return;
+      if (!confirm('🗑️ هل أنت متأكد من حذف هذه المعاملة؟')) return;
+
+      const tx = getTransaction(id);
+      if (!tx) return;
+
+      // استعادة الرصيد
+      let accs = [...state.accounts];
+
+      if (tx.type === 'deposit') {
+        accs = accs.map(a => a.id === tx.accountId ? {
+          ...a,
+          currencies: { ...a.currencies, [tx.currency]: (a.currencies[tx.currency] || 0) - tx.amount }
+        } : a);
+      } else if (tx.type === 'withdraw') {
+        accs = accs.map(a => a.id === tx.accountId ? {
+          ...a,
+          currencies: { ...a.currencies, [tx.currency]: (a.currencies[tx.currency] || 0) + tx.amount }
+        } : a);
+      } else if (tx.type === 'transfer' && tx.toAccountId) {
+        if (tx.exchangeRate && tx.exchangeRate > 0 && tx.convertedAmount) {
+          accs = accs.map(a => {
+            if (a.id === tx.accountId) {
+              return { ...a, currencies: { ...a.currencies, [tx.currency]: (a.currencies[tx.currency] || 0) + tx.amount } };
+            }
+            if (a.id === tx.toAccountId) {
+              return { ...a, currencies: { ...a.currencies, [tx.targetCurrency || 'USD']: (a.currencies[tx
+                    .targetCurrency || 'USD'] || 0) - tx.convertedAmount } };
+            }
+            return a;
+          });
+        } else {
+          accs = accs.map(a => {
+            if (a.id === tx.accountId) {
+              return { ...a, currencies: { ...a.currencies, [tx.currency]: (a.currencies[tx.currency] || 0) + tx.amount } };
+            }
+            if (a.id === tx.toAccountId) {
+              return { ...a, currencies: { ...a.currencies, [tx.currency]: (a.currencies[tx.currency] || 0) - tx.amount } };
+            }
+            return a;
+          });
+        }
+      }
+
+      state.accounts = accs;
       state.transactions = state.transactions.filter(t => t.id !== id);
       saveData();
       showToast('🗑️ تم حذف المعاملة');
@@ -1406,7 +1583,7 @@
     }
 
     // ============================================================
-    // ====== ACCOUNT DETAIL ======
+    // ====== ACCOUNT DETAIL (مع إمكانية التعديل) ======
     // ============================================================
 
     function renderAccountDetail() {
@@ -1419,7 +1596,11 @@
 
       let html = `
         <div class="animate-fade-up">
-          <button class="btn-ios btn-ios-ghost btn-ios-small mb-3" onclick="selectedAccountId=null;renderAll()">← رجوع</button>
+          <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+            <button class="btn-ios btn-ios-ghost btn-ios-small" onclick="selectedAccountId=null;renderAll()">← رجوع</button>
+            <button class="btn-ios btn-ios-primary btn-ios-small" onclick="openEditAccount('${acc.id}')">✎ تعديل</button>
+            <button class="btn-ios btn-ios-danger btn-ios-small" onclick="deleteAccount('${acc.id}')">🗑 حذف</button>
+          </div>
 
           <div class="balance-ios" style="background:linear-gradient(135deg, ${color}18, rgba(255,255,255,0.02));border-color:${color}33;">
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
@@ -1435,7 +1616,6 @@
             <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
               <button class="btn-ios btn-ios-success btn-ios-small" onclick="openTxModal('deposit','${acc.id}')">+ إيداع</button>
               <button class="btn-ios btn-ios-danger btn-ios-small" onclick="openTxModal('withdraw','${acc.id}')">- سحب</button>
-              <button class="btn-ios btn-ios-ghost btn-ios-small" onclick="deleteAccount('${acc.id}')">🗑</button>
             </div>
           </div>
 
@@ -1494,7 +1674,7 @@
     }
 
     // ============================================================
-    // ====== TRANSACTION ITEM ======
+    // ====== TRANSACTION ITEM (مع أزرار التعديل والحذف) ======
     // ============================================================
 
     function renderTxItem(tx, index) {
@@ -1524,7 +1704,10 @@
             <div class="sub">${acc?.name || ''} ${toAcc ? `→ ${toAcc.name}` : ''} · ${formatDate(tx.date)}</div>
           </div>
           <div class="amount ${clsAmt}" style="font-size:13px;">${amountDisplay}</div>
-          <button class="del" onclick="deleteTransaction('${tx.id}')">✕</button>
+          <div class="actions-btn">
+            <button class="edit" onclick="openEditTransaction('${tx.id}')" title="تعديل">✎</button>
+            <button class="del" onclick="deleteTransaction('${tx.id}')" title="حذف">✕</button>
+          </div>
         </div>
       `;
     }
@@ -1615,9 +1798,11 @@
       if (modals.addTransaction) renderAddTransactionModal();
       if (modals.transfer) renderTransferModal();
       if (modals.settings) renderSettingsModal();
+      if (modals.editTransaction) renderEditTransactionModal();
+      if (modals.editAccount) renderEditAccountModal();
     }
 
-    // ----- CREATE ACCOUNT -----
+    // ----- CREATE ACCOUNT (مع إمكانية إضافة عملة بصفر) -----
     function renderCreateAccountModal() {
       const s = { currencies: [], icon: 0, color: 0, balances: {} };
       const overlay = document.createElement('div');
@@ -1630,7 +1815,7 @@
           </div>
           <div>
             <input class="input-ios" id="acc-name" placeholder="اسم الحساب" style="margin-bottom:12px;">
-            <div style="font-size:13px;color:rgba(255,255,255,0.3);margin-bottom:8px;">العملات</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.3);margin-bottom:8px;">العملات (يمكن إضافة عملة بصفر)</div>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px;">
               ${CURRENCIES.map(c => `
                 <button class="btn-ios btn-ios-ghost btn-ios-small" style="text-align:center;${s.currencies.includes(c.value) ? 'border-color:var(--primary);background:rgba(0,122,255,0.12);' : ''}" data-cur="${c.value}" onclick="toggleCurIOS(this,'${c.value}')">
@@ -1643,7 +1828,7 @@
                 const info = curInfo(c);
                 return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
                   <span style="font-size:16px;">${info?.flag}</span>
-                  <input class="input-ios" id="bal-${c}" placeholder="${info?.symbol}0.00" type="number" style="flex:1;padding:10px 14px;font-size:14px;">
+                  <input class="input-ios" id="bal-${c}" placeholder="${info?.symbol}0.00" type="number" style="flex:1;padding:10px 14px;font-size:14px;" value="0">
                 </div>`;
               }).join('')}
             </div>
@@ -1683,7 +1868,7 @@
           const info = curInfo(c);
           return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
             <span style="font-size:16px;">${info?.flag}</span>
-            <input class="input-ios" id="bal-${c}" placeholder="${info?.symbol}0.00" type="number" style="flex:1;padding:10px 14px;font-size:14px;">
+            <input class="input-ios" id="bal-${c}" placeholder="${info?.symbol}0.00" type="number" style="flex:1;padding:10px 14px;font-size:14px;" value="0">
           </div>`;
         }).join('');
       } else {
@@ -1908,7 +2093,7 @@
     };
 
     // ============================================================
-    // ====== TRANSFER MODAL (المعدل) ======
+    // ====== TRANSFER MODAL ======
     // ============================================================
 
     function renderTransferModal() {
@@ -1978,7 +2163,7 @@
 
       const currencies = Object.keys(acc.currencies || {}).filter(c => acc.currencies[c] > 0);
       if (currencies.length === 0) {
-        container.innerHTML = '<span style="font-size:12px;color:rgba(255,255,255,0.2);">لا توجد عملات في هذا الحساب</span>';
+        container.innerHTML = '<span style="font-size:12px;color:rgba(255,255,255,0.2);">لا توجد عملات</span>';
         return;
       }
 
@@ -2011,10 +2196,8 @@
       const to = $('#tf-to-ios')?.value;
       const details = $('#tf-details-ios');
 
-      // تحديث العملات
       if (from) {
         renderCurrencies(from, 'tf-from-currencies', transferData.fromCurrency);
-        // إذا لم تكن هناك عملة محددة، اختر الأولى
         const acc = getAccount(from);
         if (acc) {
           const keys = Object.keys(acc.currencies || {}).filter(c => acc.currencies[c] > 0);
@@ -2046,21 +2229,18 @@
         const amount = parseFloat($('#tf-amount-ios')?.value) || 0;
         const rate = parseFloat($('#tf-rate-ios')?.value) || 0;
 
-        // التحقق من العملات
         const fCur = transferData.fromCurrency || 'USD';
         const tCur = transferData.toCurrency || 'USD';
         const fInfo = curInfo(fCur);
         const tInfo = curInfo(tCur);
 
-        // إظهار أو إخفاء سعر الصرف
         const rateContainer = $('#tf-rate-container');
         const isSameCurrency = fCur === tCur;
 
         if (isSameCurrency) {
           rateContainer.style.display = 'none';
-          const converted = amount;
           $('#tf-from-amt-ios').textContent = `${fInfo?.symbol || ''}${formatNum(amount)}`;
-          $('#tf-to-amt-ios').textContent = `${tInfo?.symbol || ''}${formatNum(converted)}`;
+          $('#tf-to-amt-ios').textContent = `${tInfo?.symbol || ''}${formatNum(amount)}`;
           transferData.exchangeRate = 0;
           transferData.convertedAmount = amount;
         } else {
@@ -2097,7 +2277,6 @@
       const bal = fromAcc?.currencies?.[data.fromCurrency] || 0;
       if (data.amount > bal) { showToast(`⚠️ الرصيد غير كافٍ: ${formatNum(bal)}`); return; }
 
-      // إذا كانت العملات مختلفة ولا يوجد سعر صرف
       if (data.fromCurrency !== data.toCurrency && (!data.exchangeRate || data.exchangeRate <= 0)) {
         showToast('❌ أدخل سعر تحويل صحيح');
         return;
@@ -2119,6 +2298,237 @@
       transferData = { fromAccountId: '', toAccountId: '', fromCurrency: 'USD', toCurrency: 'TRY', amount: 0,
         exchangeRate: 0, convertedAmount: 0 };
       renderAll();
+    };
+
+    // ============================================================
+    // ====== EDIT TRANSACTION MODAL ======
+    // ============================================================
+
+    function openEditTransaction(id) {
+      editingTxId = id;
+      const tx = getTransaction(id);
+      if (!tx) return;
+      // ملء البيانات
+      txData = {
+        type: tx.type,
+        accountId: tx.accountId,
+        currency: tx.currency,
+        reason: tx.reason,
+        amount: tx.amount,
+        note: tx.note || '',
+        toAccountId: tx.toAccountId || '',
+        exchangeRate: tx.exchangeRate || 0,
+        toCurrency: tx.targetCurrency || 'USD',
+      };
+      openModal('editTransaction');
+    }
+
+    function renderEditTransactionModal() {
+      const tx = getTransaction(editingTxId);
+      if (!tx) { closeModal('editTransaction'); return; }
+
+      const data = txData;
+      const overlay = document.createElement('div');
+      overlay.className = 'modal-ios';
+      overlay.innerHTML = `
+        <div class="sheet" onclick="event.stopPropagation()">
+          <div class="head">
+            <h2>✎ تعديل المعاملة</h2>
+            <button class="close" onclick="closeModal('editTransaction')">✕</button>
+          </div>
+          <div style="space-y:16px;">
+            <div>
+              <label style="font-size:12px;color:rgba(255,255,255,0.3);">النوع</label>
+              <select class="select-ios" id="edit-tx-type" style="margin-top:4px;">
+                <option value="deposit" ${data.type === 'deposit' ? 'selected' : ''}>📥 إيداع</option>
+                <option value="withdraw" ${data.type === 'withdraw' ? 'selected' : ''}>📤 سحب</option>
+                <option value="transfer" ${data.type === 'transfer' ? 'selected' : ''}>🔄 تحويل</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:12px;color:rgba(255,255,255,0.3);">الحساب</label>
+              <select class="select-ios" id="edit-tx-account" style="margin-top:4px;">
+                ${state.accounts.map(a => `<option value="${a.id}" ${data.accountId === a.id ? 'selected' : ''}>${a.name}</option>`).join('')}
+              </select>
+            </div>
+            <div>
+              <label style="font-size:12px;color:rgba(255,255,255,0.3);">العملة</label>
+              <select class="select-ios" id="edit-tx-currency" style="margin-top:4px;">
+                ${CURRENCIES.map(c => `<option value="${c.value}" ${data.currency === c.value ? 'selected' : ''}>${c.flag} ${c.symbol}</option>`).join('')}
+              </select>
+            </div>
+            <div>
+              <label style="font-size:12px;color:rgba(255,255,255,0.3);">السبب</label>
+              <select class="select-ios" id="edit-tx-reason" style="margin-top:4px;">
+                ${REASONS.map(r => `<option value="${r.value}" ${data.reason === r.value ? 'selected' : ''}>${r.icon} ${r.label}</option>`).join('')}
+              </select>
+            </div>
+            <div>
+              <label style="font-size:12px;color:rgba(255,255,255,0.3);">المبلغ</label>
+              <input class="input-ios" id="edit-tx-amount" type="number" value="${data.amount}" style="margin-top:4px;">
+            </div>
+            <div>
+              <label style="font-size:12px;color:rgba(255,255,255,0.3);">ملاحظة</label>
+              <input class="input-ios" id="edit-tx-note" value="${data.note || ''}" style="margin-top:4px;" placeholder="اختياري">
+            </div>
+            ${data.type === 'transfer' ? `
+              <div>
+                <label style="font-size:12px;color:rgba(255,255,255,0.3);">إلى حساب</label>
+                <select class="select-ios" id="edit-tx-to" style="margin-top:4px;">
+                  <option value="">اختر حساب</option>
+                  ${state.accounts.filter(a => a.id !== data.accountId).map(a => `<option value="${a.id}" ${data.toAccountId === a.id ? 'selected' : ''}>${a.name}</option>`).join('')}
+                </select>
+              </div>
+              <div id="edit-tx-rate-container" style="${data.currency !== data.toCurrency && data.toAccountId ? 'display:block;' : 'display:none;'}">
+                <label style="font-size:12px;color:rgba(255,255,255,0.3);">سعر التحويل</label>
+                <input class="input-ios" id="edit-tx-rate" type="number" value="${data.exchangeRate || ''}" style="margin-top:4px;" placeholder="32.50">
+              </div>
+            ` : ''}
+            <button class="btn-ios btn-ios-success w-full" onclick="submitEditTransaction()" style="margin-top:8px;">💾 حفظ التعديل</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+    }
+
+    window.submitEditTransaction = function() {
+      const type = $('#edit-tx-type')?.value;
+      const accountId = $('#edit-tx-account')?.value;
+      const currency = $('#edit-tx-currency')?.value;
+      const reason = $('#edit-tx-reason')?.value;
+      const amount = parseFloat($('#edit-tx-amount')?.value);
+      const note = $('#edit-tx-note')?.value || '';
+      const toAccountId = $('#edit-tx-to')?.value || null;
+      const rate = parseFloat($('#edit-tx-rate')?.value) || 0;
+
+      if (!accountId) { showToast('❌ اختر الحساب'); return; }
+      if (!amount || amount <= 0) { showToast('❌ أدخل مبلغ صحيح'); return; }
+
+      const data = { type, accountId, currency, reason, amount, note, toAccountId, exchangeRate: rate };
+      if (type === 'transfer') {
+        const toAcc = getAccount(toAccountId);
+        if (toAcc) {
+          const keys = Object.keys(toAcc.currencies || {});
+          data.toCurrency = keys.length > 0 ? keys[0] : 'USD';
+        }
+      }
+
+      updateTransaction(editingTxId, data);
+    };
+
+    // ============================================================
+    // ====== EDIT ACCOUNT MODAL ======
+    // ============================================================
+
+    function openEditAccount(id) {
+      editingAccountId = id;
+      openModal('editAccount');
+    }
+
+    function renderEditAccountModal() {
+      const acc = getAccount(editingAccountId);
+      if (!acc) { closeModal('editAccount'); return; }
+
+      const overlay = document.createElement('div');
+      overlay.className = 'modal-ios';
+      overlay.innerHTML = `
+        <div class="sheet" onclick="event.stopPropagation()">
+          <div class="head">
+            <h2>✎ تعديل الحساب</h2>
+            <button class="close" onclick="closeModal('editAccount')">✕</button>
+          </div>
+          <div style="space-y:16px;">
+            <div>
+              <label style="font-size:12px;color:rgba(255,255,255,0.3);">اسم الحساب</label>
+              <input class="input-ios" id="edit-acc-name" value="${acc.name}" style="margin-top:4px;">
+            </div>
+            <div>
+              <label style="font-size:12px;color:rgba(255,255,255,0.3);">الأيقونة</label>
+              <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:6px;">
+                ${ACCOUNT_ICONS.map((ic, i) => `
+                  <button class="btn-ios btn-ios-ghost btn-ios-small" style="font-size:18px;padding:8px;${acc.icon === ic ? 'border-color:var(--primary);background:rgba(0,122,255,0.12);' : ''}" data-icon="${i}" onclick="selectEditIcon(this,${i})">${ic}</button>
+                `).join('')}
+              </div>
+            </div>
+            <div>
+              <label style="font-size:12px;color:rgba(255,255,255,0.3);">اللون</label>
+              <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;">
+                ${ACCOUNT_COLORS.map((col, i) => `
+                  <button style="width:28px;height:28px;border-radius:50%;border:2px solid ${acc.color === col ? '#fff' : 'transparent'};background:${col};cursor:pointer;" onclick="selectEditColor(this,${i})" data-color="${i}"></button>
+                `).join('')}
+              </div>
+            </div>
+            <div>
+              <label style="font-size:12px;color:rgba(255,255,255,0.3);">تعديل الأرصدة</label>
+              ${CURRENCIES.filter(c => acc.currencies?.[c.value] !== undefined).map(c => `
+                <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+                  <span style="font-size:16px;">${c.flag}</span>
+                  <input class="input-ios" id="edit-bal-${c.value}" type="number" value="${acc.currencies[c.value] || 0}" style="flex:1;padding:10px 14px;font-size:14px;">
+                </div>
+              `).join('')}
+              ${CURRENCIES.filter(c => acc.currencies?.[c.value] === undefined).map(c => `
+                <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+                  <span style="font-size:16px;">${c.flag}</span>
+                  <span style="font-size:13px;color:rgba(255,255,255,0.2);">غير مضاف</span>
+                  <button class="btn-ios btn-ios-ghost btn-ios-small" onclick="addCurrencyToAccount('${editingAccountId}','${c.value}')" style="padding:4px 12px;font-size:12px;">+ إضافة</button>
+                </div>
+              `).join('')}
+            </div>
+            <button class="btn-ios btn-ios-success w-full" onclick="submitEditAccount()" style="margin-top:8px;">💾 حفظ التعديلات</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+
+      window._editIcon = acc.icon;
+      window._editColor = acc.color;
+    }
+
+    window.selectEditIcon = function(el, i) {
+      window._editIcon = ACCOUNT_ICONS[i];
+      $$('[data-icon]').forEach(b => {
+        const v = parseInt(b.dataset.icon);
+        b.style.borderColor = v === i ? 'var(--primary)' : 'rgba(255,255,255,0.06)';
+        b.style.background = v === i ? 'rgba(0,122,255,0.12)' : 'rgba(255,255,255,0.04)';
+      });
+    };
+
+    window.selectEditColor = function(el, i) {
+      window._editColor = ACCOUNT_COLORS[i];
+      $$('[data-color]').forEach((b, idx) => {
+        b.style.borderColor = idx === i ? '#fff' : 'transparent';
+      });
+    };
+
+    window.addCurrencyToAccount = function(accountId, currency) {
+      const acc = getAccount(accountId);
+      if (!acc) return;
+      acc.currencies[currency] = 0;
+      saveData();
+      closeModal('editAccount');
+      setTimeout(() => openEditAccount(accountId), 100);
+      showToast(`✅ تم إضافة ${curInfo(currency)?.label || currency}`);
+    };
+
+    window.submitEditAccount = function() {
+      const acc = getAccount(editingAccountId);
+      if (!acc) return;
+
+      const name = $('#edit-acc-name')?.value.trim() || acc.name;
+      const icon = window._editIcon || acc.icon;
+      const color = window._editColor || acc.color;
+
+      const currencies = {};
+      CURRENCIES.forEach(c => {
+        const inp = $(`#edit-bal-${c.value}`);
+        if (inp) {
+          currencies[c.value] = parseFloat(inp.value) || 0;
+        } else if (acc.currencies?.[c.value] !== undefined) {
+          currencies[c.value] = acc.currencies[c.value];
+        }
+      });
+
+      updateAccount(editingAccountId, { name, currencies, icon, color });
     };
 
     // ============================================================
@@ -2174,9 +2584,9 @@
     loadData();
     renderAll();
 
-    console.log('💰 تطبيق حساباتي - النسخة الكلاسيكية المطورة');
+    console.log('💰 تطبيق حساباتي - النسخة المتكاملة');
     console.log(`📊 ${state.accounts.length} حسابات، ${state.transactions.length} معاملات`);
-    console.log('📌 الأسباب المتاحة:', REASONS.map(r => r.label).join(', '));
+    console.log('📌 الميزات: إنشاء حساب مع عملات بصفر، تعديل المعاملات، حذف المعاملات مع استعادة الرصيد');
 
     updateFabs();
   </script>
