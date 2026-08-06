@@ -69,15 +69,6 @@
       box-shadow: var(--shadow);
     }
 
-    .glass-strong {
-      background: rgba(20, 20, 40, 0.75);
-      backdrop-filter: blur(40px);
-      -webkit-backdrop-filter: blur(40px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-    }
-
     /* ====== SCROLLBAR ====== */
     ::-webkit-scrollbar {
       width: 3px;
@@ -248,15 +239,6 @@
       }
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
     @keyframes slideUp {
       from {
         opacity: 0;
@@ -268,22 +250,8 @@
       }
     }
 
-    @keyframes pulseGlow {
-      0%,
-      100% {
-        opacity: 0.3;
-      }
-      50% {
-        opacity: 0.6;
-      }
-    }
-
     .animate-fade-up {
       animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-
-    .animate-fade {
-      animation: fadeIn 0.3s ease forwards;
     }
 
     .animate-slide-up {
@@ -632,12 +600,19 @@
       color: rgba(255, 255, 255, 0.6);
     }
 
-    /* ====== FAB BUTTON (زر + الثابت) ====== */
-    .fab-main {
+    /* ====== FAB BUTTONS (الثابتة في كل الشاشات) ====== */
+    .fab-container {
       position: fixed;
       bottom: 100px;
       right: 20px;
       z-index: 45;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .fab-main {
       width: 60px;
       height: 60px;
       border-radius: 50%;
@@ -663,10 +638,6 @@
     }
 
     .fab-transfer {
-      position: fixed;
-      bottom: 172px;
-      right: 20px;
-      z-index: 44;
       width: 50px;
       height: 50px;
       border-radius: 50%;
@@ -856,15 +827,11 @@
         width: 52px;
         height: 52px;
         font-size: 26px;
-        bottom: 90px;
-        right: 14px;
       }
       .fab-transfer {
         width: 44px;
         height: 44px;
         font-size: 18px;
-        bottom: 154px;
-        right: 14px;
       }
     }
 
@@ -998,9 +965,11 @@
     <div class="app-container" id="app-container"></div>
   </div>
 
-  <!-- ====== FAB BUTTONS (ثابتة في كل الشاشات) ====== -->
-  <button class="fab-main" id="fabMain" onclick="openModal('addTransaction')" title="إضافة معاملة">+</button>
-  <button class="fab-transfer" id="fabTransfer" onclick="openModal('transfer')" title="تحويل بين الحسابات" style="display:none;">⇄</button>
+  <!-- ====== FAB BUTTONS (الثابتة في كل الشاشات) ====== -->
+  <div class="fab-container" id="fabContainer">
+    <button class="fab-transfer" id="fabTransfer" onclick="openModal('transfer')" title="تحويل بين الحسابات" style="display:none;">⇄</button>
+    <button class="fab-main" id="fabMain" onclick="openModal('addTransaction')" title="إضافة معاملة">+</button>
+  </div>
 
   <!-- ====== BOTTOM NAV ====== -->
   <nav class="nav-ios" id="bottom-nav"></nav>
@@ -1016,7 +985,6 @@
       { value: 'EUR', label: 'يورو', symbol: '€', flag: '🇪🇺' },
     ];
 
-    // أسباب محدثة
     const REASONS = [
       { value: 'rent', label: 'إيجار', icon: '🏠' },
       { value: 'internet', label: 'إنترنت', icon: '🌐' },
@@ -1037,7 +1005,7 @@
       { id: 'reports', label: 'التقارير', icon: '📊' },
     ];
 
-    const STORAGE_KEY = 'finance_ios_data_v2';
+    const STORAGE_KEY = 'finance_ios_data_v3';
 
     let state = { accounts: [], transactions: [] };
     let currentTab = 'home';
@@ -1145,7 +1113,7 @@
       state.accounts.push(acc);
       saveData();
       closeModal('createAccount');
-      showToast('تم إنشاء الحساب بنجاح');
+      showToast('✅ تم إنشاء الحساب بنجاح');
       renderAll();
     }
 
@@ -1155,7 +1123,7 @@
       state.transactions = state.transactions.filter(t => t.accountId !== id && t.toAccountId !== id);
       saveData();
       if (selectedAccountId === id) selectedAccountId = null;
-      showToast('تم حذف الحساب');
+      showToast('🗑️ تم حذف الحساب');
       renderAll();
     }
 
@@ -1176,6 +1144,7 @@
         toAccountId: data.toAccountId || null,
         exchangeRate: data.exchangeRate || null,
         convertedAmount: null,
+        targetCurrency: null,
       };
 
       let accs = [...state.accounts];
@@ -1192,13 +1161,11 @@
         } : a);
       } else if (data.type === 'transfer' && data.toAccountId && data.exchangeRate) {
         const converted = data.amount * data.exchangeRate;
-        // تحديد العملة المستهدفة
         let targetCur = 'USD';
         const toAcc = getAccount(data.toAccountId);
         if (toAcc) {
           const avail = Object.keys(toAcc.currencies || {});
           if (avail.length > 0) {
-            // اختر أول عملة متاحة في الحساب المستهدف
             targetCur = avail[0];
           }
         }
@@ -1227,7 +1194,7 @@
       if (!confirm('حذف المعاملة؟')) return;
       state.transactions = state.transactions.filter(t => t.id !== id);
       saveData();
-      showToast('تم حذف المعاملة');
+      showToast('🗑️ تم حذف المعاملة');
       renderAll();
     }
 
@@ -1246,7 +1213,7 @@
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      showToast('تم تصدير البيانات');
+      showToast('📤 تم تصدير البيانات');
     }
 
     function importData(file) {
@@ -1259,11 +1226,11 @@
             state.transactions = d.transactions;
             saveData();
             renderAll();
-            showToast(`تم استيراد ${d.accounts.length} حسابات`);
+            showToast(`✅ تم استيراد ${d.accounts.length} حسابات`);
           } else {
-            showToast('ملف غير صالح');
+            showToast('❌ ملف غير صالح');
           }
-        } catch (err) { showToast('خطأ في الاستيراد'); }
+        } catch (err) { showToast('❌ خطأ في الاستيراد'); }
       };
       reader.readAsText(file);
     }
@@ -1652,7 +1619,7 @@
       overlay.innerHTML = `
         <div class="sheet" onclick="event.stopPropagation()">
           <div class="head">
-            <h2>حساب جديد</h2>
+            <h2>✨ حساب جديد</h2>
             <button class="close" onclick="closeModal('createAccount')">✕</button>
           </div>
           <div>
@@ -1739,8 +1706,8 @@
     window.submitCreateIOS = function() {
       const s = window._createIOS;
       const name = $('#acc-name').value.trim();
-      if (!name) { showToast('أدخل اسم الحساب'); return; }
-      if (s.currencies.length === 0) { showToast('اختر عملة'); return; }
+      if (!name) { showToast('❌ أدخل اسم الحساب'); return; }
+      if (s.currencies.length === 0) { showToast('❌ اختر عملة'); return; }
       const currencies = {};
       s.currencies.forEach(c => {
         const inp = $(`#bal-${c}`);
@@ -1749,7 +1716,7 @@
       addAccount({ name, currencies, icon: ACCOUNT_ICONS[s.icon], color: ACCOUNT_COLORS[s.color] });
     };
 
-    // ----- ADD TRANSACTION (ترتيب جديد: الحساب ← العملة ← السبب ← المبلغ) -----
+    // ----- ADD TRANSACTION (ترتيب جديد: النوع ← الحساب ← العملة ← السبب ← المبلغ) -----
     function openTxModal(type, accountId) {
       txStep = 1;
       txData = { type: type || 'deposit', accountId: accountId || '', currency: 'USD', reason: '', amount: 0, note: '',
@@ -1763,7 +1730,7 @@
       overlay.innerHTML = `
         <div class="sheet" onclick="event.stopPropagation()">
           <div class="head">
-            <h2>معاملة جديدة</h2>
+            <h2>📝 معاملة جديدة</h2>
             <button class="close" onclick="closeModal('addTransaction')">✕</button>
           </div>
           <div id="tx-content-ios">${renderTxStepIOS()}</div>
@@ -1870,7 +1837,7 @@
               <label style="font-size:12px;color:rgba(255,255,255,0.3);">ملاحظة</label>
               <input class="input-ios" id="tx-note-ios" placeholder="اختياري" style="padding:12px 16px;">
             </div>
-            <button class="btn-ios btn-ios-success w-full" onclick="submitTxIOS()">تأكيد</button>
+            <button class="btn-ios btn-ios-success w-full" onclick="submitTxIOS()">✅ تأكيد</button>
           `;
           break;
       }
@@ -1880,8 +1847,8 @@
       if (current < 5 && current > 0) {
         html += `
           <div style="display:flex;gap:8px;margin-top:14px;">
-            ${current > 1 ? `<button class="btn-ios btn-ios-ghost btn-ios-small" style="flex:1;" onclick="txStep--;renderTxContentIOS()">رجوع</button>` : ''}
-            <button class="btn-ios btn-ios-primary btn-ios-small" style="flex:1;" onclick="txStep++;renderTxContentIOS()">التالي</button>
+            ${current > 1 ? `<button class="btn-ios btn-ios-ghost btn-ios-small" style="flex:1;" onclick="txStep--;renderTxContentIOS()">← رجوع</button>` : ''}
+            <button class="btn-ios btn-ios-primary btn-ios-small" style="flex:1;" onclick="txStep++;renderTxContentIOS()">التالي →</button>
           </div>
         `;
       }
@@ -1931,15 +1898,15 @@
     window.submitTxIOS = function() {
       const data = txData;
       const amount = parseFloat($('#tx-amount-ios')?.value);
-      if (!data.accountId) { showToast('اختر الحساب'); return; }
-      if (!data.reason && data.type !== 'transfer') { showToast('اختر السبب'); return; }
-      if (!amount || amount <= 0) { showToast('أدخل مبلغ صحيح'); return; }
+      if (!data.accountId) { showToast('❌ اختر الحساب'); return; }
+      if (!data.reason && data.type !== 'transfer') { showToast('❌ اختر السبب'); return; }
+      if (!amount || amount <= 0) { showToast('❌ أدخل مبلغ صحيح'); return; }
 
       if (data.type === 'transfer') {
         const toAcc = $('#tx-to-ios')?.value;
         const rate = parseFloat($('#tx-rate-ios')?.value);
-        if (!toAcc) { showToast('اختر الحساب المستهدف'); return; }
-        if (!rate || rate <= 0) { showToast('أدخل سعر تحويل صحيح'); return; }
+        if (!toAcc) { showToast('❌ اختر الحساب المستهدف'); return; }
+        if (!rate || rate <= 0) { showToast('❌ أدخل سعر تحويل صحيح'); return; }
         data.toAccountId = toAcc;
         data.exchangeRate = rate;
       }
@@ -1950,11 +1917,11 @@
       const acc = getAccount(data.accountId);
       if (data.type === 'withdraw') {
         const bal = acc?.currencies?.[data.currency] || 0;
-        if (amount > bal) { showToast(`الرصيد غير كافٍ: ${formatNum(bal)}`); return; }
+        if (amount > bal) { showToast(`⚠️ الرصيد غير كافٍ: ${formatNum(bal)}`); return; }
       }
       if (data.type === 'transfer') {
         const bal = acc?.currencies?.[data.currency] || 0;
-        if (amount > bal) { showToast(`الرصيد غير كافٍ: ${formatNum(bal)}`); return; }
+        if (amount > bal) { showToast(`⚠️ الرصيد غير كافٍ: ${formatNum(bal)}`); return; }
       }
 
       addTransaction(data);
@@ -1972,7 +1939,7 @@
       overlay.innerHTML = `
         <div class="sheet" onclick="event.stopPropagation()">
           <div class="head">
-            <h2>🔄 تحويل</h2>
+            <h2>🔄 تحويل بين الحسابات</h2>
             <button class="close" onclick="closeModal('transfer')">✕</button>
           </div>
           <div>
@@ -2014,7 +1981,7 @@
                   ${transferData.fromCurrency} → ${transferData.toCurrency}
                 </div>
               </div>
-              <button class="btn-ios btn-ios-success w-full" style="margin-top:10px;" onclick="submitTransferIOS()">تأكيد التحويل</button>
+              <button class="btn-ios btn-ios-success w-full" style="margin-top:10px;" onclick="submitTransferIOS()">✅ تأكيد التحويل</button>
             </div>
           </div>
         </div>
@@ -2034,7 +2001,6 @@
         const rate = parseFloat($('#tf-rate-ios')?.value) || 0;
         const converted = amount * rate;
 
-        // تحديد العملات
         const fKeys = Object.keys(fromAcc?.currencies || {});
         const tKeys = Object.keys(toAcc?.currencies || {});
         const fCur = fKeys.length > 0 ? fKeys[0] : 'USD';
@@ -2053,7 +2019,6 @@
         transferData.exchangeRate = rate;
         transferData.convertedAmount = converted;
 
-        // تحديث سعر الصرف المعروض
         const rateLabel = document.querySelector('#tf-rate-ios + div');
         if (rateLabel) {
           rateLabel.textContent = `1 ${fCur} = ${rate} ${tCur}`;
@@ -2065,14 +2030,14 @@
 
     window.submitTransferIOS = function() {
       const data = transferData;
-      if (!data.fromAccountId || !data.toAccountId) { showToast('اختر الحسابات'); return; }
-      if (data.fromAccountId === data.toAccountId) { showToast('لا يمكن التحويل لنفس الحساب'); return; }
-      if (!data.amount || data.amount <= 0) { showToast('أدخل مبلغ'); return; }
-      if (!data.exchangeRate || data.exchangeRate <= 0) { showToast('أدخل سعر تحويل'); return; }
+      if (!data.fromAccountId || !data.toAccountId) { showToast('❌ اختر الحسابات'); return; }
+      if (data.fromAccountId === data.toAccountId) { showToast('❌ لا يمكن التحويل لنفس الحساب'); return; }
+      if (!data.amount || data.amount <= 0) { showToast('❌ أدخل مبلغ'); return; }
+      if (!data.exchangeRate || data.exchangeRate <= 0) { showToast('❌ أدخل سعر تحويل'); return; }
 
       const fromAcc = getAccount(data.fromAccountId);
       const bal = fromAcc?.currencies?.[data.fromCurrency] || 0;
-      if (data.amount > bal) { showToast(`الرصيد غير كافٍ: ${formatNum(bal)}`); return; }
+      if (data.amount > bal) { showToast(`⚠️ الرصيد غير كافٍ: ${formatNum(bal)}`); return; }
 
       addTransaction({
         type: 'transfer',
@@ -2144,6 +2109,9 @@
     console.log('💰 تطبيق حساباتي - النسخة الكلاسيكية المطورة');
     console.log(`📊 ${state.accounts.length} حسابات، ${state.transactions.length} معاملات`);
     console.log('📌 الأسباب المتاحة:', REASONS.map(r => r.label).join(', '));
+
+    // إظهار الأزرار بعد تحميل البيانات
+    updateFabs();
   </script>
 
 </body>
