@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#0f172a" />
+  <meta name="theme-color" content="#f0f2f8" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>حساباتي - إدارة مالية احترافية</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,68 +15,92 @@
     }
 
     :root {
-      --primary: #007AFF;
-      --primary-dark: #0055CC;
-      --primary-light: #409CFF;
-      --secondary: #5856D6;
-      --success: #34C759;
-      --danger: #FF3B30;
-      --warning: #FF9500;
-      --gray: #8E8E93;
-      --gray-light: #C7C7CC;
-      --glass-bg: rgba(255, 255, 255, 0.08);
-      --glass-border: rgba(255, 255, 255, 0.12);
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      --primary: #5B4FCF;
+      --primary-light: #8B7FE8;
+      --primary-dark: #3F35A8;
+      --secondary: #4ECDC4;
+      --success: #2ECC71;
+      --danger: #FF6B6B;
+      --warning: #F9CA24;
+      --gray: #95A5A6;
+      --bg-main: #f0f2f8;
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --text-dark: #2C3E50;
+      --text-light: #7F8C8D;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.3);
     }
 
     body {
       font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0a0a1a;
-      color: #ffffff;
+      background: var(--bg-main);
+      color: var(--text-dark);
       min-height: 100vh;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       padding-bottom: 100px;
+      position: relative;
     }
 
+    /* خلفية متحركة ناعمة */
     .bg-ios {
       position: fixed;
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      background: radial-gradient(ellipse at 20% 50%, rgba(0, 122, 255, 0.08) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 50%, rgba(88, 86, 214, 0.06) 0%, transparent 60%),
-        radial-gradient(ellipse at 50% 100%, rgba(52, 199, 89, 0.04) 0%, transparent 50%);
+      background: radial-gradient(ellipse at 20% 30%, rgba(91, 79, 207, 0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(78, 205, 196, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 100%, rgba(249, 202, 36, 0.03) 0%, transparent 40%);
+      overflow: hidden;
     }
 
     .bg-ios::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
-      opacity: 0.3;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+
+    .stars {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(91, 79, 207, 0.15);
+      border-radius: 50%;
+      animation: twinkle 4s infinite alternate ease-in-out;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0.2; transform: scale(0.8); }
+      100% { opacity: 0.8; transform: scale(1.3); }
     }
 
     .glass {
-      background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
       box-shadow: var(--shadow);
     }
 
     ::-webkit-scrollbar {
-      width: 3px;
+      width: 4px;
     }
     ::-webkit-scrollbar-track {
       background: transparent;
     }
     ::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(91, 79, 207, 0.15);
       border-radius: 10px;
     }
 
+    /* أزرار محسّنة بألوان فاتحة */
     .btn-ios {
       display: inline-flex;
       align-items: center;
@@ -84,123 +108,108 @@
       gap: 8px;
       padding: 14px 24px;
       border: none;
-      border-radius: 14px;
+      border-radius: 16px;
       font-family: 'Cairo', sans-serif;
       font-weight: 600;
       font-size: 16px;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
     }
-
     .btn-ios:active {
       transform: scale(0.96);
     }
-
     .btn-ios-primary {
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
       color: white;
-      box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+      box-shadow: 0 4px 20px rgba(91, 79, 207, 0.25);
     }
-
     .btn-ios-primary:hover {
-      background: var(--primary-dark);
-      box-shadow: 0 6px 24px rgba(0, 122, 255, 0.4);
-      transform: translateY(-1px);
+      box-shadow: 0 6px 30px rgba(91, 79, 207, 0.35);
+      transform: translateY(-2px);
     }
-
     .btn-ios-success {
-      background: var(--success);
+      background: linear-gradient(135deg, var(--success), #27AE60);
       color: white;
-      box-shadow: 0 4px 16px rgba(52, 199, 89, 0.3);
+      box-shadow: 0 4px 20px rgba(46, 204, 113, 0.25);
     }
-
     .btn-ios-success:hover {
-      background: #2DB84E;
-      box-shadow: 0 6px 24px rgba(52, 199, 89, 0.4);
-      transform: translateY(-1px);
+      box-shadow: 0 6px 30px rgba(46, 204, 113, 0.35);
+      transform: translateY(-2px);
     }
-
     .btn-ios-danger {
-      background: var(--danger);
+      background: linear-gradient(135deg, var(--danger), #E74C3C);
       color: white;
-      box-shadow: 0 4px 16px rgba(255, 59, 48, 0.3);
+      box-shadow: 0 4px 20px rgba(255, 107, 107, 0.2);
     }
-
     .btn-ios-danger:hover {
-      background: #E0352B;
-      box-shadow: 0 6px 24px rgba(255, 59, 48, 0.4);
-      transform: translateY(-1px);
+      box-shadow: 0 6px 30px rgba(255, 107, 107, 0.3);
+      transform: translateY(-2px);
     }
-
     .btn-ios-ghost {
-      background: rgba(255, 255, 255, 0.06);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(91, 79, 207, 0.06);
+      color: var(--text-dark);
+      border: 1px solid rgba(91, 79, 207, 0.1);
     }
-
     .btn-ios-ghost:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(91, 79, 207, 0.1);
+      transform: translateY(-2px);
     }
-
     .btn-ios-small {
       padding: 8px 16px;
       font-size: 13px;
-      border-radius: 10px;
+      border-radius: 12px;
     }
-
     .btn-ios-icon {
       width: 44px;
       height: 44px;
       padding: 0;
-      border-radius: 12px;
+      border-radius: 14px;
       border: none;
-      background: rgba(255, 255, 255, 0.05);
-      color: rgba(255, 255, 255, 0.6);
+      background: rgba(91, 79, 207, 0.06);
+      color: var(--text-light);
       font-size: 18px;
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-
     .btn-ios-icon:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
+      background: rgba(91, 79, 207, 0.12);
+      color: var(--primary);
+      transform: rotate(8deg);
     }
 
     .input-ios {
       width: 100%;
       padding: 14px 18px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 14px;
-      color: white;
+      background: rgba(91, 79, 207, 0.04);
+      border: 1px solid rgba(91, 79, 207, 0.08);
+      border-radius: 16px;
+      color: var(--text-dark);
       font-family: 'Cairo', sans-serif;
       font-size: 16px;
       transition: all 0.3s ease;
       outline: none;
     }
-
     .input-ios:focus {
       border-color: var(--primary);
-      background: rgba(255, 255, 255, 0.06);
-      box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+      background: rgba(91, 79, 207, 0.06);
+      box-shadow: 0 0 0 4px rgba(91, 79, 207, 0.08);
     }
-
     .input-ios::placeholder {
-      color: rgba(255, 255, 255, 0.25);
+      color: rgba(44, 62, 80, 0.25);
     }
 
     .select-ios {
       width: 100%;
       padding: 14px 18px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 14px;
-      color: white;
+      background: rgba(91, 79, 207, 0.04);
+      border: 1px solid rgba(91, 79, 207, 0.08);
+      border-radius: 16px;
+      color: var(--text-dark);
       font-family: 'Cairo', sans-serif;
       font-size: 16px;
       transition: all 0.3s ease;
@@ -208,16 +217,14 @@
       appearance: none;
       cursor: pointer;
     }
-
     .select-ios:focus {
       border-color: var(--primary);
-      background: rgba(255, 255, 255, 0.06);
-      box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+      background: rgba(91, 79, 207, 0.06);
+      box-shadow: 0 0 0 4px rgba(91, 79, 207, 0.08);
     }
-
     .select-ios option {
-      background: #1a1a2e;
-      color: #fff;
+      background: #fff;
+      color: var(--text-dark);
     }
 
     .app-container {
@@ -235,83 +242,82 @@
       justify-content: space-between;
       padding: 16px 20px;
       margin-bottom: 20px;
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.5);
       backdrop-filter: blur(30px);
       -webkit-backdrop-filter: blur(30px);
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      animation: float 6s ease-in-out infinite;
     }
-
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
     .header-ios .title {
       font-size: 20px;
       font-weight: 700;
-      color: #fff;
-      letter-spacing: -0.3px;
+      color: var(--text-dark);
     }
-
     .header-ios .title .accent {
       color: var(--primary);
     }
 
-    .header-ios .actions {
-      display: flex;
-      gap: 6px;
-    }
-
+    /* بطاقة الرصيد - تصميم فاتح */
     .balance-ios {
       padding: 24px 24px 20px;
       margin-bottom: 20px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(0, 122, 255, 0.12), rgba(88, 86, 214, 0.08));
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(91, 79, 207, 0.06), rgba(78, 205, 196, 0.04));
+      border: 1px solid rgba(91, 79, 207, 0.06);
       position: relative;
       overflow: hidden;
+      transition: all 0.5s ease;
     }
-
     .balance-ios::before {
       content: '';
       position: absolute;
-      top: -50%;
-      right: -30%;
-      width: 80%;
-      height: 80%;
-      background: radial-gradient(circle, rgba(0, 122, 255, 0.06), transparent 70%);
+      top: -60%;
+      right: -40%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(91, 79, 207, 0.06), transparent 70%);
       pointer-events: none;
+      animation: orb 12s infinite alternate ease-in-out;
     }
-
+    @keyframes orb {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(20px, 20px) scale(1.2); }
+    }
     .balance-ios .label {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.4);
+      font-size: 12px;
+      color: var(--text-light);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
       font-weight: 500;
     }
-
     .balance-ios .amount {
-      font-size: 34px;
-      font-weight: 700;
-      color: #fff;
-      margin: 4px 0 12px;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin: 2px 0 12px;
       letter-spacing: -0.5px;
     }
-
     .balance-ios .currencies {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
-
     .balance-ios .currencies .chip {
       padding: 4px 14px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 30px;
       font-size: 13px;
-      color: rgba(255, 255, 255, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-light);
+      border: 1px solid rgba(91, 79, 207, 0.04);
+      transition: all 0.3s ease;
     }
-
     .balance-ios .currencies .chip strong {
-      color: #fff;
+      color: var(--text-dark);
       font-weight: 600;
     }
 
@@ -321,315 +327,262 @@
       gap: 10px;
       margin-bottom: 20px;
     }
-
     .stat-ios {
       padding: 14px 10px;
       text-align: center;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 18px;
+      border: 1px solid rgba(91, 79, 207, 0.04);
       transition: all 0.3s ease;
     }
-
     .stat-ios:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.6);
+      transform: translateY(-2px);
     }
-
     .stat-ios .value {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 700;
-      color: #fff;
+      color: var(--text-dark);
     }
-
     .stat-ios .label {
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.3);
+      font-size: 10px;
+      color: var(--text-light);
       margin-top: 2px;
       text-transform: uppercase;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.5px;
     }
 
+    /* بطاقات الحسابات */
     .account-ios {
       padding: 16px 18px;
       margin-bottom: 10px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(91, 79, 207, 0.04);
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
     }
-
     .account-ios:hover {
-      background: rgba(255, 255, 255, 0.05);
-      transform: translateX(-4px);
-      border-color: rgba(0, 122, 255, 0.15);
+      background: rgba(255, 255, 255, 0.7);
+      transform: translateX(-6px) scale(1.01);
+      border-color: rgba(91, 79, 207, 0.1);
     }
-
     .account-ios .row {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-
     .account-ios .name {
       font-size: 16px;
       font-weight: 600;
-      color: #fff;
+      color: var(--text-dark);
     }
-
     .account-ios .badge {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 18px;
       flex-shrink: 0;
     }
-
     .account-ios .balances {
       display: flex;
       gap: 10px;
       margin-top: 6px;
       flex-wrap: wrap;
     }
-
     .account-ios .balances .b {
       font-size: 13px;
-      color: rgba(255, 255, 255, 0.4);
+      color: var(--text-light);
     }
-
     .account-ios .balances .b strong {
-      color: #fff;
+      color: var(--text-dark);
       font-weight: 600;
     }
-
+    .account-ios .balances .b.negative strong {
+      color: var(--danger);
+    }
     .account-ios .line {
       position: absolute;
-      left: 0;
+      right: 0;
       top: 0;
       bottom: 0;
-      width: 3px;
-      border-radius: 0 4px 4px 0;
+      width: 4px;
+      border-radius: 0 6px 6px 0;
     }
 
+    /* المعاملات */
     .tx-ios {
       display: flex;
       align-items: center;
       gap: 14px;
       padding: 12px 16px;
       margin-bottom: 8px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(91, 79, 207, 0.04);
       transition: all 0.3s ease;
+      position: relative;
     }
-
     .tx-ios:hover {
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.5);
+      transform: translateX(-4px);
     }
-
     .tx-ios .icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 18px;
       flex-shrink: 0;
     }
-
-    .tx-ios .icon.deposit {
-      background: rgba(52, 199, 89, 0.12);
-    }
-    .tx-ios .icon.withdraw {
-      background: rgba(255, 59, 48, 0.12);
-    }
-    .tx-ios .icon.transfer {
-      background: rgba(0, 122, 255, 0.12);
-    }
-
-    .tx-ios .info {
-      flex: 1;
-      min-width: 0;
-    }
-
+    .tx-ios .icon.deposit { background: rgba(46, 204, 113, 0.12); }
+    .tx-ios .icon.withdraw { background: rgba(255, 107, 107, 0.12); }
+    .tx-ios .icon.transfer { background: rgba(91, 79, 207, 0.12); }
+    .tx-ios .info { flex: 1; min-width: 0; }
     .tx-ios .info .title {
       font-size: 14px;
       font-weight: 600;
-      color: #fff;
+      color: var(--text-dark);
     }
-
     .tx-ios .info .sub {
       font-size: 12px;
-      color: rgba(255, 255, 255, 0.3);
-      margin-top: 1px;
+      color: var(--text-light);
+      margin-top: 2px;
     }
-
     .tx-ios .amount {
       font-weight: 700;
-      font-size: 15px;
+      font-size: 14px;
     }
-
-    .tx-ios .amount.pos {
-      color: var(--success);
-    }
-    .tx-ios .amount.neg {
-      color: var(--danger);
-    }
-    .tx-ios .amount.neu {
-      color: var(--primary-light);
-    }
-
+    .tx-ios .amount.pos { color: var(--success); }
+    .tx-ios .amount.neg { color: var(--danger); }
+    .tx-ios .amount.neu { color: var(--primary); }
     .tx-ios .actions-btn {
       display: flex;
       gap: 4px;
     }
-
     .tx-ios .actions-btn button {
       background: none;
       border: none;
-      color: rgba(255, 255, 255, 0.2);
+      color: var(--text-light);
       font-size: 14px;
       cursor: pointer;
       padding: 4px 6px;
       transition: all 0.3s ease;
-      border-radius: 6px;
+      border-radius: 8px;
     }
-
     .tx-ios .actions-btn button:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(91, 79, 207, 0.06);
     }
+    .tx-ios .actions-btn .edit:hover { color: var(--primary); }
+    .tx-ios .actions-btn .del:hover { color: var(--danger); }
 
-    .tx-ios .actions-btn .edit:hover {
-      color: var(--primary-light);
-    }
-
-    .tx-ios .actions-btn .del:hover {
-      color: var(--danger);
-    }
-
+    /* التنقل السفلي */
     .nav-ios {
       position: fixed;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 50;
-      padding: 6px 6px;
+      padding: 6px;
       display: flex;
       gap: 2px;
-      background: rgba(20, 20, 40, 0.85);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(40px);
       -webkit-backdrop-filter: blur(40px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 28px;
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 30px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
       max-width: 360px;
       width: calc(100% - 32px);
     }
-
     .nav-ios .item {
       flex: 1;
       padding: 10px 0;
       border: none;
       background: transparent;
-      color: rgba(255, 255, 255, 0.3);
+      color: var(--text-light);
       font-family: 'Cairo', sans-serif;
       font-size: 11px;
       font-weight: 500;
       cursor: pointer;
-      border-radius: 22px;
+      border-radius: 24px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1px;
-      letter-spacing: 0.3px;
+      gap: 2px;
     }
-
     .nav-ios .item .ico {
       font-size: 20px;
       transition: all 0.3s ease;
     }
-
     .nav-ios .item.active {
-      color: #fff;
-      background: rgba(0, 122, 255, 0.2);
+      color: var(--primary);
+      background: rgba(91, 79, 207, 0.08);
     }
+    .nav-ios .item.active .ico { transform: scale(1.1); }
+    .nav-ios .item:hover:not(.active) { color: var(--primary); }
 
-    .nav-ios .item.active .ico {
-      transform: scale(1.05);
-    }
-
-    .nav-ios .item:hover:not(.active) {
-      color: rgba(255, 255, 255, 0.6);
-    }
-
+    /* الأزرار العائمة */
     .fab-container {
       position: fixed;
       bottom: 100px;
-      right: 20px;
+      left: 20px;
       z-index: 45;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      align-items: flex-end;
+      align-items: flex-start;
     }
-
     .fab-main {
       width: 60px;
       height: 60px;
       border-radius: 50%;
       border: none;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
       color: white;
       font-size: 32px;
       cursor: pointer;
-      box-shadow: 0 6px 30px rgba(0, 122, 255, 0.45);
+      box-shadow: 0 6px 30px rgba(91, 79, 207, 0.3);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       align-items: center;
       justify-content: center;
     }
-
     .fab-main:hover {
-      transform: scale(1.06);
-      box-shadow: 0 8px 40px rgba(0, 122, 255, 0.55);
+      transform: scale(1.08) rotate(8deg);
+      box-shadow: 0 8px 40px rgba(91, 79, 207, 0.4);
     }
-
-    .fab-main:active {
-      transform: scale(0.92);
-    }
-
+    .fab-main:active { transform: scale(0.92); }
     .fab-transfer {
       width: 50px;
       height: 50px;
       border-radius: 50%;
       border: none;
-      background: linear-gradient(135deg, var(--success), #059669);
+      background: linear-gradient(135deg, var(--success), #27AE60);
       color: white;
       font-size: 22px;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(52, 199, 89, 0.4);
+      box-shadow: 0 4px 20px rgba(46, 204, 113, 0.25);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       align-items: center;
       justify-content: center;
     }
-
     .fab-transfer:hover {
-      transform: scale(1.06);
-      box-shadow: 0 6px 28px rgba(52, 199, 89, 0.5);
+      transform: scale(1.08);
+      box-shadow: 0 6px 30px rgba(46, 204, 113, 0.35);
     }
+    .fab-transfer:active { transform: scale(0.92); }
 
-    .fab-transfer:active {
-      transform: scale(0.92);
-    }
-
+    /* المودالات */
     .modal-ios {
       position: fixed;
       inset: 0;
@@ -638,45 +591,45 @@
       align-items: flex-end;
       justify-content: center;
       padding: 16px;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
-
     .modal-ios .sheet {
       width: 100%;
       max-width: 440px;
       max-height: 88vh;
       overflow-y: auto;
       padding: 24px 20px 20px;
-      border-radius: 28px 28px 20px 20px;
-      background: rgba(20, 20, 40, 0.92);
+      border-radius: 30px 30px 20px 20px;
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(40px);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.08);
       animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
-
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
     .modal-ios .sheet .head {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 20px;
     }
-
     .modal-ios .sheet .head h2 {
       font-size: 20px;
       font-weight: 700;
-      color: #fff;
+      color: var(--text-dark);
     }
-
     .modal-ios .sheet .head .close {
       width: 36px;
       height: 36px;
       border-radius: 50%;
       border: none;
-      background: rgba(255, 255, 255, 0.04);
-      color: rgba(255, 255, 255, 0.4);
+      background: rgba(91, 79, 207, 0.06);
+      color: var(--text-light);
       font-size: 16px;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -684,10 +637,9 @@
       align-items: center;
       justify-content: center;
     }
-
     .modal-ios .sheet .head .close:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
+      background: rgba(91, 79, 207, 0.12);
+      color: var(--text-dark);
     }
 
     .step-ios {
@@ -695,31 +647,25 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
-
     .step-ios .dot {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(91, 79, 207, 0.1);
       transition: all 0.4s ease;
     }
-
     .step-ios .dot.active {
       background: var(--primary);
-      width: 24px;
-      border-radius: 3px;
+      width: 28px;
+      border-radius: 4px;
     }
-
-    .step-ios .dot.done {
-      background: var(--success);
-    }
-
+    .step-ios .dot.done { background: var(--success); }
     .step-ios .label {
       text-align: center;
       font-size: 13px;
-      color: rgba(255, 255, 255, 0.3);
+      color: var(--text-light);
       margin-bottom: 14px;
     }
 
@@ -727,22 +673,19 @@
       text-align: center;
       padding: 40px 20px;
     }
-
     .empty-ios .icon {
-      font-size: 48px;
+      font-size: 52px;
       margin-bottom: 12px;
       display: block;
-      opacity: 0.4;
+      opacity: 0.5;
     }
-
     .empty-ios h3 {
       font-size: 17px;
-      color: #fff;
+      color: var(--text-dark);
       font-weight: 600;
     }
-
     .empty-ios p {
-      color: rgba(255, 255, 255, 0.3);
+      color: var(--text-light);
       font-size: 14px;
       margin-top: 4px;
     }
@@ -754,78 +697,20 @@
       transform: translateX(-50%);
       z-index: 200;
       padding: 14px 28px;
-      border-radius: 14px;
-      background: rgba(52, 199, 89, 0.92);
+      border-radius: 16px;
+      background: rgba(46, 204, 113, 0.95);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: 0 8px 32px rgba(52, 199, 89, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(46, 204, 113, 0.15);
       font-family: 'Cairo', sans-serif;
       font-weight: 600;
       color: #fff;
       font-size: 15px;
       animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
-
     @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(16px) scale(0.98);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .animate-fade-up {
-      animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-
-    .animate-slide-up {
-      animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-
-    @media (min-width: 640px) {
-      .modal-ios {
-        align-items: center;
-      }
-      .modal-ios .sheet {
-        border-radius: 28px;
-      }
-    }
-
-    @media (max-width: 400px) {
-      .stats-ios {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 6px;
-      }
-      .stat-ios .value {
-        font-size: 16px;
-      }
-      .balance-ios .amount {
-        font-size: 26px;
-      }
-      .fab-main {
-        width: 52px;
-        height: 52px;
-        font-size: 26px;
-      }
-      .fab-transfer {
-        width: 44px;
-        height: 44px;
-        font-size: 18px;
-      }
+      from { opacity: 0; transform: translateY(16px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .currency-selector {
@@ -834,151 +719,70 @@
       flex-wrap: wrap;
       margin-top: 6px;
     }
-
     .currency-selector .curr-btn {
       padding: 6px 14px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.03);
-      color: rgba(255, 255, 255, 0.6);
+      border-radius: 12px;
+      border: 1px solid rgba(91, 79, 207, 0.06);
+      background: rgba(91, 79, 207, 0.02);
+      color: var(--text-light);
       font-family: 'Cairo', sans-serif;
       font-size: 13px;
       cursor: pointer;
       transition: all 0.3s ease;
     }
-
     .currency-selector .curr-btn:hover {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(91, 79, 207, 0.06);
     }
-
     .currency-selector .curr-btn.active {
       border-color: var(--primary);
-      background: rgba(0, 122, 255, 0.12);
-      color: #fff;
+      background: rgba(91, 79, 207, 0.08);
+      color: var(--primary);
     }
 
-    .flex {
-      display: flex;
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .gap-2 { gap: 8px; }
+    .gap-3 { gap: 12px; }
+    .gap-4 { gap: 16px; }
+    .w-full { width: 100%; }
+    .text-center { text-align: center; }
+    .mt-2 { margin-top: 8px; }
+    .mt-3 { margin-top: 12px; }
+    .mt-4 { margin-top: 16px; }
+    .mb-2 { margin-bottom: 8px; }
+    .mb-3 { margin-bottom: 12px; }
+    .mb-4 { margin-bottom: 16px; }
+    .mb-6 { margin-bottom: 24px; }
+    .grid-cols-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .grid-cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .hidden { display: none; }
+    .relative { position: relative; }
+    .p-2 { padding: 8px; }
+    .p-3 { padding: 12px; }
+    .p-4 { padding: 16px; }
+    .rounded-xl { border-radius: 14px; }
+    .bg-glass { background: rgba(255, 255, 255, 0.3); }
+
+    @media (min-width: 640px) {
+      .modal-ios { align-items: center; }
+      .modal-ios .sheet { border-radius: 32px; }
     }
-    .flex-col {
-      flex-direction: column;
-    }
-    .items-center {
-      align-items: center;
-    }
-    .justify-between {
-      justify-content: space-between;
-    }
-    .justify-center {
-      justify-content: center;
-    }
-    .gap-2 {
-      gap: 8px;
-    }
-    .gap-3 {
-      gap: 12px;
-    }
-    .gap-4 {
-      gap: 16px;
-    }
-    .flex-1 {
-      flex: 1;
-    }
-    .w-full {
-      width: 100%;
-    }
-    .text-center {
-      text-align: center;
-    }
-    .text-white {
-      color: #fff;
-    }
-    .text-sm {
-      font-size: 13px;
-    }
-    .text-xs {
-      font-size: 11px;
-    }
-    .mt-2 {
-      margin-top: 8px;
-    }
-    .mt-3 {
-      margin-top: 12px;
-    }
-    .mt-4 {
-      margin-top: 16px;
-    }
-    .mb-2 {
-      margin-bottom: 8px;
-    }
-    .mb-3 {
-      margin-bottom: 12px;
-    }
-    .mb-4 {
-      margin-bottom: 16px;
-    }
-    .mb-6 {
-      margin-bottom: 24px;
-    }
-    .grid {
-      display: grid;
-    }
-    .grid-cols-2 {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .grid-cols-3 {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .grid-cols-4 {
-      grid-template-columns: repeat(4, 1fr);
-    }
-    .hidden {
-      display: none;
-    }
-    .relative {
-      position: relative;
-    }
-    .overflow-hidden {
-      overflow: hidden;
-    }
-    .p-2 {
-      padding: 8px;
-    }
-    .p-3 {
-      padding: 12px;
-    }
-    .p-4 {
-      padding: 16px;
-    }
-    .px-4 {
-      padding-left: 16px;
-      padding-right: 16px;
-    }
-    .py-2 {
-      padding-top: 8px;
-      padding-bottom: 8px;
-    }
-    .py-3 {
-      padding-top: 12px;
-      padding-bottom: 12px;
-    }
-    .rounded-xl {
-      border-radius: 14px;
-    }
-    .rounded-2xl {
-      border-radius: 18px;
-    }
-    .border {
-      border: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .bg-glass {
-      background: rgba(255, 255, 255, 0.03);
+    @media (max-width: 400px) {
+      .stats-ios { gap: 6px; }
+      .stat-ios .value { font-size: 17px; }
+      .balance-ios .amount { font-size: 28px; }
+      .fab-main { width: 52px; height: 52px; font-size: 26px; }
+      .fab-transfer { width: 44px; height: 44px; font-size: 18px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-ios"></div>
+  <div class="bg-ios">
+    <div class="stars" id="stars"></div>
+  </div>
 
   <div id="app">
     <div class="app-container" id="app-container"></div>
@@ -1013,7 +817,7 @@
       { value: 'other', label: 'أخرى', icon: '📌' },
     ];
 
-    const ACCOUNT_COLORS = ['#007AFF', '#34C759', '#FF9500', '#FF3B30', '#5856D6', '#FF2D55'];
+    const ACCOUNT_COLORS = ['#5B4FCF', '#2ECC71', '#F9CA24', '#FF6B6B', '#4ECDC4', '#FF9FF3'];
     const ACCOUNT_ICONS = ['👛', '🐷', '🏢', '🏛️', '🪙', '💵'];
 
     const TABS = [
@@ -1022,7 +826,7 @@
       { id: 'reports', label: 'التقارير', icon: '📊' },
     ];
 
-    const STORAGE_KEY = 'finance_ios_data_v5';
+    const STORAGE_KEY = 'finance_ios_data_v7';
 
     let state = { accounts: [], transactions: [] };
     let currentTab = 'home';
@@ -1042,15 +846,11 @@
     // ============================================================
 
     function $(s, c = document) { return c.querySelector(s); }
-
     function $$(s, c = document) { return [...c.querySelectorAll(s)]; }
-
     function id() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 6); }
 
     function getAccount(id) { return state.accounts.find(a => a.id === id); }
-
     function getTransaction(id) { return state.transactions.find(t => t.id === id); }
-
     function getTransactions(accountId) {
       return state.transactions.filter(t => t.accountId === accountId || t.toAccountId === accountId);
     }
@@ -1058,19 +858,18 @@
     function getTotalBalance() {
       const t = { USD: 0, TRY: 0, EUR: 0 };
       state.accounts.forEach(a => {
-        Object.entries(a.currencies || {}).forEach(([c, v]) => { if (t[c] !== undefined) t[c] += v; });
+        Object.entries(a.currencies || {}).forEach(([c, v]) => {
+          if (t[c] !== undefined && v > 0) t[c] += v; // نضيف فقط الموجب
+        });
       });
       return t;
     }
 
     function formatNum(n) { return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
-
     function formatDate(d) {
       return new Date(d).toLocaleDateString('ar-SA', { year: 'numeric', month: 'short', day: 'numeric' });
     }
-
     function curInfo(c) { return CURRENCIES.find(x => x.value === c); }
-
     function reasonInfo(r) { return REASONS.find(x => x.value === r); }
 
     function saveData() {
@@ -1112,7 +911,6 @@
       document.body.style.overflow = 'hidden';
       renderAll();
     }
-
     function closeModal(id) {
       modals[id] = false;
       document.body.style.overflow = '';
@@ -1157,8 +955,7 @@
     }
 
     function deleteAccount(id) {
-      if (!confirm('حذف الحساب؟ سيتم حذف جميع المعاملات المرتبطة به')) return;
-      // حذف المعاملات المرتبطة
+      if (!confirm('🗑️ حذف الحساب؟ سيتم حذف جميع المعاملات المرتبطة به')) return;
       state.transactions = state.transactions.filter(t => t.accountId !== id && t.toAccountId !== id);
       state.accounts = state.accounts.filter(a => a.id !== id);
       saveData();
@@ -1168,7 +965,7 @@
     }
 
     // ============================================================
-    // ====== TRANSACTION OPERATIONS (مع التعديل والحذف) ======
+    // ====== TRANSACTION OPERATIONS ======
     // ============================================================
 
     function addTransaction(data) {
@@ -1216,7 +1013,6 @@
             return a;
           });
         } else {
-          // نفس العملة
           accs = accs.map(a => {
             if (a.id === data.accountId) {
               return { ...a, currencies: { ...a.currencies, [data.currency]: (a.currencies[data.currency] || 0) - data
@@ -1242,7 +1038,6 @@
       const oldTx = getTransaction(id);
       if (!oldTx) return;
 
-      // استعادة الرصيد القديم
       let accs = [...state.accounts];
 
       // عكس العملية القديمة
@@ -1337,11 +1132,9 @@
 
     function deleteTransaction(id) {
       if (!confirm('🗑️ هل أنت متأكد من حذف هذه المعاملة؟')) return;
-
       const tx = getTransaction(id);
       if (!tx) return;
 
-      // استعادة الرصيد
       let accs = [...state.accounts];
 
       if (tx.type === 'deposit') {
@@ -1447,6 +1240,26 @@
     }
 
     // ============================================================
+    // ====== STARS BACKGROUND ======
+    // ============================================================
+
+    function createStars() {
+      const container = document.getElementById('stars');
+      if (!container) return;
+      for (let i = 0; i < 50; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.width = (Math.random() * 3 + 1) + 'px';
+        star.style.height = star.style.width;
+        star.style.animationDelay = (Math.random() * 5) + 's';
+        star.style.animationDuration = (3 + Math.random() * 4) + 's';
+        container.appendChild(star);
+      }
+    }
+
+    // ============================================================
     // ====== RENDER ======
     // ============================================================
 
@@ -1514,13 +1327,13 @@
 
       html += `
         <div class="balance-ios animate-fade-up">
-          <div class="label">الرصيد الإجمالي</div>
+          <div class="label">الرصيد الإجمالي (الموجب فقط)</div>
           <div class="amount">${hasBal ? '' : '0.00'}</div>
           <div class="currencies">
             ${CURRENCIES.filter(c => totals[c.value] > 0).map(c => `
               <span class="chip">${c.flag} <strong>${c.symbol}${formatNum(totals[c.value])}</strong></span>
             `).join('')}
-            ${!hasBal ? '<span class="chip" style="color:rgba(255,255,255,0.2);">لا توجد أرصدة</span>' : ''}
+            ${!hasBal ? '<span class="chip" style="color:var(--text-light);">لا توجد أرصدة موجبة</span>' : ''}
           </div>
         </div>
       `;
@@ -1544,13 +1357,13 @@
 
       html += `
         <button class="btn-ios btn-ios-primary w-full mb-4" onclick="openModal('createAccount')">
-          <span style="font-size:18px;">+</span> حساب جديد
+          <span style="font-size:20px;">+</span> حساب جديد
         </button>
       `;
 
       if (state.accounts.length === 0) {
         html += `
-          <div class="empty-ios glass" style="border-radius:20px;padding:40px 20px;">
+          <div class="empty-ios glass" style="border-radius:22px;padding:40px 20px;">
             <span class="icon">👛</span>
             <h3>لا توجد حسابات</h3>
             <p>أضف حسابك الأول</p>
@@ -1568,11 +1381,12 @@
                 <div class="badge" style="background:${color}22;">${icon}</div>
               </div>
               <div class="balances">
-                ${Object.entries(acc.currencies || {}).filter(([,v]) => v > 0).map(([c, v]) => {
+                ${Object.entries(acc.currencies || {}).filter(([,v]) => v !== 0).map(([c, v]) => {
                   const info = curInfo(c);
-                  return `<span class="b">${info?.flag || ''} <strong>${info?.symbol || ''}${formatNum(v)}</strong></span>`;
+                  const isNegative = v < 0;
+                  return `<span class="b ${isNegative ? 'negative' : ''}">${info?.flag || ''} <strong>${info?.symbol || ''}${formatNum(v)}</strong></span>`;
                 }).join('')}
-                ${Object.values(acc.currencies || {}).every(v => v === 0) ? '<span class="b" style="color:rgba(255,255,255,0.2);">لا توجد أرصدة</span>' : ''}
+                ${Object.values(acc.currencies || {}).every(v => v === 0) ? '<span class="b" style="color:var(--text-light);">لا توجد أرصدة</span>' : ''}
               </div>
             </div>
           `;
@@ -1583,7 +1397,7 @@
     }
 
     // ============================================================
-    // ====== ACCOUNT DETAIL (مع إمكانية التعديل) ======
+    // ====== ACCOUNT DETAIL ======
     // ============================================================
 
     function renderAccountDetail() {
@@ -1591,7 +1405,7 @@
       if (!acc) { selectedAccountId = null; return ''; }
 
       const icon = acc.icon || '👛';
-      const color = acc.color || '#007AFF';
+      const color = acc.color || '#5B4FCF';
       const txs = getTransactions(acc.id);
 
       let html = `
@@ -1602,16 +1416,18 @@
             <button class="btn-ios btn-ios-danger btn-ios-small" onclick="deleteAccount('${acc.id}')">🗑 حذف</button>
           </div>
 
-          <div class="balance-ios" style="background:linear-gradient(135deg, ${color}18, rgba(255,255,255,0.02));border-color:${color}33;">
+          <div class="balance-ios" style="background:linear-gradient(145deg, ${color}08, rgba(255,255,255,0.3));border-color:${color}22;">
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
-              <span style="font-size:28px;">${icon}</span>
-              <span style="font-size:20px;font-weight:700;">${acc.name}</span>
+              <span style="font-size:32px;">${icon}</span>
+              <span style="font-size:20px;font-weight:700;color:var(--text-dark);">${acc.name}</span>
             </div>
             <div class="currencies">
-              ${CURRENCIES.filter(c => (acc.currencies?.[c.value] || 0) > 0).map(c => `
-                <span class="chip">${c.flag} <strong>${c.symbol}${formatNum(acc.currencies?.[c.value] || 0)}</strong></span>
-              `).join('')}
-              ${Object.values(acc.currencies || {}).every(v => v === 0) ? '<span style="color:rgba(255,255,255,0.2);font-size:13px;">لا توجد أرصدة</span>' : ''}
+              ${CURRENCIES.filter(c => (acc.currencies?.[c.value] || 0) !== 0).map(c => {
+                const v = acc.currencies?.[c.value] || 0;
+                const isNegative = v < 0;
+                return `<span class="chip" style="${isNegative ? 'border-color:var(--danger);background:rgba(255,107,107,0.05);' : ''}">${c.flag} <strong style="${isNegative ? 'color:var(--danger);' : ''}">${c.symbol}${formatNum(v)}</strong></span>`;
+              }).join('')}
+              ${Object.values(acc.currencies || {}).every(v => v === 0) ? '<span style="color:var(--text-light);font-size:13px;">لا توجد أرصدة</span>' : ''}
             </div>
             <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
               <button class="btn-ios btn-ios-success btn-ios-small" onclick="openTxModal('deposit','${acc.id}')">+ إيداع</button>
@@ -1620,14 +1436,14 @@
           </div>
 
           <div style="display:flex;justify-content:space-between;align-items:center;margin:12px 0 10px;">
-            <span style="font-weight:600;color:#fff;font-size:15px;">المعاملات</span>
-            <span style="font-size:12px;color:rgba(255,255,255,0.25);">${txs.length}</span>
+            <span style="font-weight:600;color:var(--text-dark);font-size:15px;">المعاملات</span>
+            <span style="font-size:12px;color:var(--text-light);">${txs.length}</span>
           </div>
       `;
 
       if (txs.length === 0) {
         html += `
-          <div class="empty-ios glass" style="border-radius:16px;padding:30px 20px;">
+          <div class="empty-ios glass" style="border-radius:18px;padding:30px 20px;">
             <span class="icon" style="font-size:32px;">📭</span>
             <h3 style="font-size:15px;">لا توجد معاملات</h3>
           </div>
@@ -1651,14 +1467,14 @@
 
       let html = `
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-          <span style="font-size:20px;font-weight:700;color:#fff;">المعاملات</span>
-          <span style="font-size:13px;color:rgba(255,255,255,0.25);">${txs.length}</span>
+          <span style="font-size:20px;font-weight:700;color:var(--text-dark);">المعاملات</span>
+          <span style="font-size:13px;color:var(--text-light);">${txs.length}</span>
         </div>
       `;
 
       if (txs.length === 0) {
         html += `
-          <div class="empty-ios glass" style="border-radius:20px;padding:40px 20px;">
+          <div class="empty-ios glass" style="border-radius:22px;padding:40px 20px;">
             <span class="icon">📭</span>
             <h3>لا توجد معاملات</h3>
             <p>أضف معاملة جديدة</p>
@@ -1674,7 +1490,7 @@
     }
 
     // ============================================================
-    // ====== TRANSACTION ITEM (مع أزرار التعديل والحذف) ======
+    // ====== TRANSACTION ITEM ======
     // ============================================================
 
     function renderTxItem(tx, index) {
@@ -1731,19 +1547,19 @@
 
       let html = `
         <div style="margin-bottom:16px;">
-          <span style="font-size:20px;font-weight:700;color:#fff;">التقارير</span>
+          <span style="font-size:20px;font-weight:700;color:var(--text-dark);">التقارير</span>
         </div>
 
         <div class="stats-ios">
-          <div class="stat-ios" style="border-color:rgba(52,199,89,0.1);">
+          <div class="stat-ios" style="border-color:rgba(46,204,113,0.1);">
             <div class="value" style="color:var(--success);">${formatNum(income)}</div>
             <div class="label">إيداعات</div>
           </div>
-          <div class="stat-ios" style="border-color:rgba(255,59,48,0.1);">
+          <div class="stat-ios" style="border-color:rgba(255,107,107,0.1);">
             <div class="value" style="color:var(--danger);">${formatNum(expense)}</div>
             <div class="label">سحوبات</div>
           </div>
-          <div class="stat-ios" style="border-color:${net >= 0 ? 'rgba(52,199,89,0.1)' : 'rgba(255,59,48,0.1)'};">
+          <div class="stat-ios" style="border-color:${net >= 0 ? 'rgba(46,204,113,0.1)' : 'rgba(255,107,107,0.1)'};">
             <div class="value" style="color:${net >= 0 ? 'var(--success)' : 'var(--danger)'};">${formatNum(net)}</div>
             <div class="label">صافي</div>
           </div>
@@ -1752,18 +1568,18 @@
 
       if (sorted.length > 0) {
         html += `
-          <div class="glass" style="padding:18px 20px;border-radius:18px;margin-bottom:16px;">
-            <div style="font-weight:600;color:#fff;font-size:15px;margin-bottom:12px;">التوزيع حسب السبب</div>
+          <div class="glass" style="padding:18px 20px;border-radius:20px;margin-bottom:16px;">
+            <div style="font-weight:600;color:var(--text-dark);font-size:15px;margin-bottom:12px;">التوزيع حسب السبب</div>
             ${sorted.map(([r, amt]) => {
               const info = reasonInfo(r);
               const pct = (amt / maxAmt) * 100;
               return `
                 <div style="margin-bottom:10px;">
-                  <div style="display:flex;justify-content:space-between;font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:3px;">
+                  <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-light);margin-bottom:3px;">
                     <span>${info?.icon || ''} ${info?.label || r}</span>
-                    <span style="color:#fff;">${formatNum(amt)}</span>
+                    <span style="color:var(--text-dark);">${formatNum(amt)}</span>
                   </div>
-                  <div style="height:4px;border-radius:10px;background:rgba(255,255,255,0.04);overflow:hidden;">
+                  <div style="height:4px;border-radius:10px;background:rgba(91,79,207,0.06);overflow:hidden;">
                     <div style="height:100%;border-radius:10px;background:linear-gradient(90deg,var(--primary),var(--secondary));width:${Math.min(pct, 100)}%;"></div>
                   </div>
                 </div>
@@ -1773,7 +1589,7 @@
         `;
       } else {
         html += `
-          <div class="empty-ios glass" style="border-radius:18px;padding:30px 20px;">
+          <div class="empty-ios glass" style="border-radius:20px;padding:30px 20px;">
             <span class="icon" style="font-size:32px;">📊</span>
             <h3 style="font-size:15px;">لا توجد بيانات</h3>
             <p style="font-size:13px;">أضف معاملات لعرض التقارير</p>
@@ -1802,7 +1618,7 @@
       if (modals.editAccount) renderEditAccountModal();
     }
 
-    // ----- CREATE ACCOUNT (مع إمكانية إضافة عملة بصفر) -----
+    // ----- CREATE ACCOUNT -----
     function renderCreateAccountModal() {
       const s = { currencies: [], icon: 0, color: 0, balances: {} };
       const overlay = document.createElement('div');
@@ -1815,10 +1631,10 @@
           </div>
           <div>
             <input class="input-ios" id="acc-name" placeholder="اسم الحساب" style="margin-bottom:12px;">
-            <div style="font-size:13px;color:rgba(255,255,255,0.3);margin-bottom:8px;">العملات (يمكن إضافة عملة بصفر)</div>
+            <div style="font-size:13px;color:var(--text-light);margin-bottom:8px;">العملات (يمكن إضافة عملة بصفر)</div>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px;">
               ${CURRENCIES.map(c => `
-                <button class="btn-ios btn-ios-ghost btn-ios-small" style="text-align:center;${s.currencies.includes(c.value) ? 'border-color:var(--primary);background:rgba(0,122,255,0.12);' : ''}" data-cur="${c.value}" onclick="toggleCurIOS(this,'${c.value}')">
+                <button class="btn-ios btn-ios-ghost btn-ios-small" style="text-align:center;${s.currencies.includes(c.value) ? 'border-color:var(--primary);background:rgba(91,79,207,0.08);' : ''}" data-cur="${c.value}" onclick="toggleCurIOS(this,'${c.value}')">
                   ${c.flag}<br><span style="font-size:10px;">${c.symbol}</span>
                 </button>
               `).join('')}
@@ -1834,12 +1650,12 @@
             </div>
             <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:12px;">
               ${ACCOUNT_ICONS.map((ic, i) => `
-                <button class="btn-ios btn-ios-ghost btn-ios-small" style="font-size:18px;padding:8px;${s.icon === i ? 'border-color:var(--primary);background:rgba(0,122,255,0.12);' : ''}" data-icon="${i}" onclick="selectIconIOS(this,${i})">${ic}</button>
+                <button class="btn-ios btn-ios-ghost btn-ios-small" style="font-size:18px;padding:8px;${s.icon === i ? 'border-color:var(--primary);background:rgba(91,79,207,0.08);' : ''}" data-icon="${i}" onclick="selectIconIOS(this,${i})">${ic}</button>
               `).join('')}
             </div>
             <div style="display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap;">
               ${ACCOUNT_COLORS.map((col, i) => `
-                <button style="width:28px;height:28px;border-radius:50%;border:2px solid ${s.color === i ? '#fff' : 'transparent'};background:${col};cursor:pointer;" onclick="selectColorIOS(${i})" data-color="${i}"></button>
+                <button style="width:30px;height:30px;border-radius:50%;border:2px solid ${s.color === i ? 'var(--primary)' : 'transparent'};background:${col};cursor:pointer;transition:all 0.3s;" onclick="selectColorIOS(${i})" data-color="${i}"></button>
               `).join('')}
             </div>
             <button class="btn-ios btn-ios-primary w-full" onclick="submitCreateIOS()">إنشاء</button>
@@ -1858,8 +1674,8 @@
       else s.currencies.push(cur);
       $$('[data-cur]').forEach(b => {
         const v = b.dataset.cur;
-        b.style.borderColor = s.currencies.includes(v) ? 'var(--primary)' : 'rgba(255,255,255,0.06)';
-        b.style.background = s.currencies.includes(v) ? 'rgba(0,122,255,0.12)' : 'rgba(255,255,255,0.04)';
+        b.style.borderColor = s.currencies.includes(v) ? 'var(--primary)' : 'rgba(91,79,207,0.06)';
+        b.style.background = s.currencies.includes(v) ? 'rgba(91,79,207,0.08)' : 'rgba(255,255,255,0.3)';
       });
       const cont = $('#acc-balances-ios');
       if (s.currencies.length > 0) {
@@ -1881,8 +1697,8 @@
       s.icon = i;
       $$('[data-icon]').forEach(b => {
         const v = parseInt(b.dataset.icon);
-        b.style.borderColor = v === i ? 'var(--primary)' : 'rgba(255,255,255,0.06)';
-        b.style.background = v === i ? 'rgba(0,122,255,0.12)' : 'rgba(255,255,255,0.04)';
+        b.style.borderColor = v === i ? 'var(--primary)' : 'rgba(91,79,207,0.06)';
+        b.style.background = v === i ? 'rgba(91,79,207,0.08)' : 'rgba(255,255,255,0.3)';
       });
     };
 
@@ -1890,7 +1706,7 @@
       const s = window._createIOS;
       s.color = i;
       $$('[data-color]').forEach((b, idx) => {
-        b.style.borderColor = idx === i ? '#fff' : 'transparent';
+        b.style.borderColor = idx === i ? 'var(--primary)' : 'transparent';
       });
     };
 
@@ -1947,16 +1763,16 @@
         case 1:
           html += `
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
-              <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:14px;text-align:center;${data.type === 'deposit' ? 'border-color:var(--success);background:rgba(52,199,89,0.1);' : ''}" onclick="setTxTypeIOS('deposit')">
-                <div style="font-size:24px;">📥</div>
+              <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:14px;text-align:center;${data.type === 'deposit' ? 'border-color:var(--success);background:rgba(46,204,113,0.08);' : ''}" onclick="setTxTypeIOS('deposit')">
+                <div style="font-size:28px;">📥</div>
                 <div style="font-weight:600;font-size:13px;">إيداع</div>
               </button>
-              <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:14px;text-align:center;${data.type === 'withdraw' ? 'border-color:var(--danger);background:rgba(255,59,48,0.1);' : ''}" onclick="setTxTypeIOS('withdraw')">
-                <div style="font-size:24px;">📤</div>
+              <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:14px;text-align:center;${data.type === 'withdraw' ? 'border-color:var(--danger);background:rgba(255,107,107,0.08);' : ''}" onclick="setTxTypeIOS('withdraw')">
+                <div style="font-size:28px;">📤</div>
                 <div style="font-weight:600;font-size:13px;">سحب</div>
               </button>
-              <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:14px;text-align:center;${data.type === 'transfer' ? 'border-color:var(--primary);background:rgba(0,122,255,0.1);' : ''}" onclick="setTxTypeIOS('transfer')">
-                <div style="font-size:24px;">🔄</div>
+              <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:14px;text-align:center;${data.type === 'transfer' ? 'border-color:var(--primary);background:rgba(91,79,207,0.08);' : ''}" onclick="setTxTypeIOS('transfer')">
+                <div style="font-size:28px;">🔄</div>
                 <div style="font-weight:600;font-size:13px;">تحويل</div>
               </button>
             </div>
@@ -1966,10 +1782,10 @@
           html += `
             <div style="max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;">
               ${state.accounts.map(a => `
-                <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:12px 16px;text-align:right;${data.accountId === a.id ? 'border-color:var(--primary);background:rgba(0,122,255,0.08);' : ''}" onclick="setTxAccountIOS('${a.id}')">
-                  <div style="font-weight:600;font-size:14px;">${a.name}</div>
-                  <div style="font-size:11px;color:rgba(255,255,255,0.3);">
-                    ${Object.entries(a.currencies || {}).filter(([,v]) => v > 0).map(([c, v]) => `${curInfo(c)?.flag || ''} ${formatNum(v)}`).join(' · ') || 'لا توجد أرصدة'}
+                <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:12px 16px;text-align:right;${data.accountId === a.id ? 'border-color:var(--primary);background:rgba(91,79,207,0.06);' : ''}" onclick="setTxAccountIOS('${a.id}')">
+                  <div style="font-weight:600;font-size:14px;color:var(--text-dark);">${a.name}</div>
+                  <div style="font-size:11px;color:var(--text-light);">
+                    ${Object.entries(a.currencies || {}).filter(([,v]) => v !== 0).map(([c, v]) => `${curInfo(c)?.flag || ''} ${formatNum(v)}`).join(' · ') || 'لا توجد أرصدة'}
                   </div>
                 </button>
               `).join('')}
@@ -1982,13 +1798,13 @@
           html += `
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
               ${CURRENCIES.filter(c => avail.includes(c.value)).map(c => `
-                <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:12px;text-align:center;${data.currency === c.value ? 'border-color:var(--primary);background:rgba(0,122,255,0.08);' : ''}" onclick="setTxCurrencyIOS('${c.value}')">
-                  <div style="font-size:24px;">${c.flag}</div>
-                  <div style="font-size:13px;font-weight:600;">${c.symbol}</div>
-                  <div style="font-size:10px;color:rgba(255,255,255,0.2);">${formatNum(acc?.currencies?.[c.value] || 0)}</div>
+                <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:12px;text-align:center;${data.currency === c.value ? 'border-color:var(--primary);background:rgba(91,79,207,0.06);' : ''}" onclick="setTxCurrencyIOS('${c.value}')">
+                  <div style="font-size:28px;">${c.flag}</div>
+                  <div style="font-size:13px;font-weight:600;color:var(--text-dark);">${c.symbol}</div>
+                  <div style="font-size:10px;color:var(--text-light);">${formatNum(acc?.currencies?.[c.value] || 0)}</div>
                 </button>
               `).join('')}
-              ${avail.length === 0 ? '<div style="grid-column:span 3;text-align:center;color:rgba(255,255,255,0.2);padding:16px;font-size:13px;">لا توجد عملات</div>' : ''}
+              ${avail.length === 0 ? '<div style="grid-column:span 3;text-align:center;color:var(--text-light);padding:16px;font-size:13px;">لا توجد عملات</div>' : ''}
             </div>
           `;
           break;
@@ -1996,9 +1812,9 @@
           html += `
             <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;">
               ${REASONS.map(r => `
-                <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:10px;text-align:center;${data.reason === r.value ? 'border-color:var(--primary);background:rgba(0,122,255,0.08);' : ''}" onclick="setTxReasonIOS('${r.value}')">
-                  <div style="font-size:20px;">${r.icon}</div>
-                  <div style="font-size:12px;font-weight:500;">${r.label}</div>
+                <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:10px;text-align:center;${data.reason === r.value ? 'border-color:var(--primary);background:rgba(91,79,207,0.06);' : ''}" onclick="setTxReasonIOS('${r.value}')">
+                  <div style="font-size:24px;">${r.icon}</div>
+                  <div style="font-size:12px;font-weight:500;color:var(--text-dark);">${r.label}</div>
                 </button>
               `).join('')}
             </div>
@@ -2008,11 +1824,11 @@
           const info = curInfo(data.currency);
           html += `
             <div style="margin-bottom:10px;">
-              <label style="font-size:12px;color:rgba(255,255,255,0.3);">المبلغ (${info?.symbol || ''})</label>
+              <label style="font-size:12px;color:var(--text-light);">المبلغ (${info?.symbol || ''})</label>
               <input class="input-ios" id="tx-amount-ios" type="number" placeholder="0.00" style="font-size:18px;padding:12px 16px;">
             </div>
             <div style="margin-bottom:14px;">
-              <label style="font-size:12px;color:rgba(255,255,255,0.3);">ملاحظة</label>
+              <label style="font-size:12px;color:var(--text-light);">ملاحظة</label>
               <input class="input-ios" id="tx-note-ios" placeholder="اختياري" style="padding:12px 16px;">
             </div>
             <button class="btn-ios btn-ios-success w-full" onclick="submitTxIOS()">✅ تأكيد</button>
@@ -2073,16 +1889,10 @@
       const amount = parseFloat($('#tx-amount-ios')?.value);
       if (!data.accountId) { showToast('❌ اختر الحساب'); return; }
       if (!data.reason && data.type !== 'transfer') { showToast('❌ اختر السبب'); return; }
-      if (!amount || amount <= 0) { showToast('❌ أدخل مبلغ صحيح'); return; }
+      if (!amount || amount === 0) { showToast('❌ أدخل مبلغ صحيح (لا يمكن أن يكون صفر)'); return; }
 
       data.note = $('#tx-note-ios')?.value || '';
       data.amount = amount;
-
-      const acc = getAccount(data.accountId);
-      if (data.type === 'withdraw' || data.type === 'transfer') {
-        const bal = acc?.currencies?.[data.currency] || 0;
-        if (amount > bal) { showToast(`⚠️ الرصيد غير كافٍ: ${formatNum(bal)}`); return; }
-      }
 
       addTransaction(data);
       closeModal('addTransaction');
@@ -2107,16 +1917,16 @@
           </div>
           <div>
             <div style="margin-bottom:10px;">
-              <label style="font-size:12px;color:rgba(255,255,255,0.3);">من حساب</label>
+              <label style="font-size:12px;color:var(--text-light);">من حساب</label>
               <select class="select-ios" id="tf-from-ios" style="padding:12px 16px;margin-top:2px;" onchange="updateTransferIOS()">
                 <option value="">اختر حساب</option>
                 ${state.accounts.map(a => `<option value="${a.id}">${a.name}</option>`).join('')}
               </select>
               <div id="tf-from-currencies" style="margin-top:6px;"></div>
             </div>
-            <div style="text-align:center;font-size:20px;color:rgba(255,255,255,0.1);margin:2px 0;">⬇</div>
+            <div style="text-align:center;font-size:20px;color:var(--text-light);margin:2px 0;">⬇</div>
             <div style="margin-bottom:12px;">
-              <label style="font-size:12px;color:rgba(255,255,255,0.3);">إلى حساب</label>
+              <label style="font-size:12px;color:var(--text-light);">إلى حساب</label>
               <select class="select-ios" id="tf-to-ios" style="padding:12px 16px;margin-top:2px;" onchange="updateTransferIOS()">
                 <option value="">اختر حساب</option>
                 ${state.accounts.map(a => `<option value="${a.id}">${a.name}</option>`).join('')}
@@ -2126,20 +1936,20 @@
             <div id="tf-details-ios" style="display:none;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
                 <div>
-                  <label style="font-size:12px;color:rgba(255,255,255,0.3);">المبلغ</label>
+                  <label style="font-size:12px;color:var(--text-light);">المبلغ</label>
                   <input class="input-ios" id="tf-amount-ios" type="number" placeholder="0.00" style="padding:12px 16px;" oninput="updateTransferIOS()">
                 </div>
                 <div id="tf-rate-container" style="display:none;">
-                  <label style="font-size:12px;color:rgba(255,255,255,0.3);">سعر التحويل</label>
+                  <label style="font-size:12px;color:var(--text-light);">سعر التحويل</label>
                   <input class="input-ios" id="tf-rate-ios" type="number" placeholder="32.50" style="padding:12px 16px;" oninput="updateTransferIOS()">
-                  <div id="tf-rate-label" style="font-size:10px;color:rgba(255,255,255,0.2);margin-top:2px;"></div>
+                  <div id="tf-rate-label" style="font-size:10px;color:var(--text-light);margin-top:2px;"></div>
                 </div>
               </div>
-              <div id="tf-preview-ios" style="padding:14px;border-radius:14px;background:rgba(52,199,89,0.06);border:1px solid rgba(52,199,89,0.08);margin-top:10px;text-align:center;">
-                <span style="font-size:12px;color:rgba(255,255,255,0.3);">معاينة التحويل</span>
+              <div id="tf-preview-ios" style="padding:14px;border-radius:18px;background:rgba(46,204,113,0.04);border:1px solid rgba(46,204,113,0.06);margin-top:10px;text-align:center;">
+                <span style="font-size:12px;color:var(--text-light);">معاينة التحويل</span>
                 <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-top:4px;flex-wrap:wrap;">
-                  <span id="tf-from-amt-ios" style="font-weight:700;color:#fff;">0.00</span>
-                  <span style="font-size:16px;color:rgba(255,255,255,0.1);">→</span>
+                  <span id="tf-from-amt-ios" style="font-weight:700;color:var(--text-dark);">0.00</span>
+                  <span style="font-size:16px;color:var(--text-light);">→</span>
                   <span id="tf-to-amt-ios" style="font-weight:700;color:var(--success);">0.00</span>
                 </div>
               </div>
@@ -2161,9 +1971,9 @@
       const acc = getAccount(accountId);
       if (!acc) { container.innerHTML = ''; return; }
 
-      const currencies = Object.keys(acc.currencies || {}).filter(c => acc.currencies[c] > 0);
+      const currencies = Object.keys(acc.currencies || {}).filter(c => acc.currencies[c] !== 0);
       if (currencies.length === 0) {
-        container.innerHTML = '<span style="font-size:12px;color:rgba(255,255,255,0.2);">لا توجد عملات</span>';
+        container.innerHTML = '<span style="font-size:12px;color:var(--text-light);">لا توجد عملات</span>';
         return;
       }
 
@@ -2174,7 +1984,7 @@
         html += `
           <button class="curr-btn ${isActive ? 'active' : ''}" onclick="selectTransferCurrency('${containerId}', '${c}')">
             ${info?.flag || ''} ${info?.symbol || c}
-            <span style="font-size:10px;color:rgba(255,255,255,0.3);">${formatNum(acc.currencies[c])}</span>
+            <span style="font-size:10px;color:var(--text-light);">${formatNum(acc.currencies[c])}</span>
           </button>
         `;
       });
@@ -2200,7 +2010,7 @@
         renderCurrencies(from, 'tf-from-currencies', transferData.fromCurrency);
         const acc = getAccount(from);
         if (acc) {
-          const keys = Object.keys(acc.currencies || {}).filter(c => acc.currencies[c] > 0);
+          const keys = Object.keys(acc.currencies || {}).filter(c => acc.currencies[c] !== 0);
           if (keys.length > 0 && !transferData.fromCurrency) {
             transferData.fromCurrency = keys[0];
           }
@@ -2213,7 +2023,7 @@
         renderCurrencies(to, 'tf-to-currencies', transferData.toCurrency);
         const acc = getAccount(to);
         if (acc) {
-          const keys = Object.keys(acc.currencies || {}).filter(c => acc.currencies[c] > 0);
+          const keys = Object.keys(acc.currencies || {}).filter(c => acc.currencies[c] !== 0);
           if (keys.length > 0 && !transferData.toCurrency) {
             transferData.toCurrency = keys[0];
           }
@@ -2271,11 +2081,14 @@
       const data = transferData;
       if (!data.fromAccountId || !data.toAccountId) { showToast('❌ اختر الحسابات'); return; }
       if (data.fromAccountId === data.toAccountId) { showToast('❌ لا يمكن التحويل لنفس الحساب'); return; }
-      if (!data.amount || data.amount <= 0) { showToast('❌ أدخل مبلغ'); return; }
+      if (!data.amount || data.amount === 0) { showToast('❌ أدخل مبلغ صحيح'); return; }
 
       const fromAcc = getAccount(data.fromAccountId);
       const bal = fromAcc?.currencies?.[data.fromCurrency] || 0;
-      if (data.amount > bal) { showToast(`⚠️ الرصيد غير كافٍ: ${formatNum(bal)}`); return; }
+
+      if (data.amount > bal) {
+        showToast(`⚠️ رصيدك: ${formatNum(bal)}، سيصبح سالباً`);
+      }
 
       if (data.fromCurrency !== data.toCurrency && (!data.exchangeRate || data.exchangeRate <= 0)) {
         showToast('❌ أدخل سعر تحويل صحيح');
@@ -2308,7 +2121,6 @@
       editingTxId = id;
       const tx = getTransaction(id);
       if (!tx) return;
-      // ملء البيانات
       txData = {
         type: tx.type,
         accountId: tx.accountId,
@@ -2336,9 +2148,9 @@
             <h2>✎ تعديل المعاملة</h2>
             <button class="close" onclick="closeModal('editTransaction')">✕</button>
           </div>
-          <div style="space-y:16px;">
+          <div style="display:flex;flex-direction:column;gap:12px;">
             <div>
-              <label style="font-size:12px;color:rgba(255,255,255,0.3);">النوع</label>
+              <label style="font-size:12px;color:var(--text-light);">النوع</label>
               <select class="select-ios" id="edit-tx-type" style="margin-top:4px;">
                 <option value="deposit" ${data.type === 'deposit' ? 'selected' : ''}>📥 إيداع</option>
                 <option value="withdraw" ${data.type === 'withdraw' ? 'selected' : ''}>📤 سحب</option>
@@ -2346,41 +2158,41 @@
               </select>
             </div>
             <div>
-              <label style="font-size:12px;color:rgba(255,255,255,0.3);">الحساب</label>
+              <label style="font-size:12px;color:var(--text-light);">الحساب</label>
               <select class="select-ios" id="edit-tx-account" style="margin-top:4px;">
                 ${state.accounts.map(a => `<option value="${a.id}" ${data.accountId === a.id ? 'selected' : ''}>${a.name}</option>`).join('')}
               </select>
             </div>
             <div>
-              <label style="font-size:12px;color:rgba(255,255,255,0.3);">العملة</label>
+              <label style="font-size:12px;color:var(--text-light);">العملة</label>
               <select class="select-ios" id="edit-tx-currency" style="margin-top:4px;">
                 ${CURRENCIES.map(c => `<option value="${c.value}" ${data.currency === c.value ? 'selected' : ''}>${c.flag} ${c.symbol}</option>`).join('')}
               </select>
             </div>
             <div>
-              <label style="font-size:12px;color:rgba(255,255,255,0.3);">السبب</label>
+              <label style="font-size:12px;color:var(--text-light);">السبب</label>
               <select class="select-ios" id="edit-tx-reason" style="margin-top:4px;">
                 ${REASONS.map(r => `<option value="${r.value}" ${data.reason === r.value ? 'selected' : ''}>${r.icon} ${r.label}</option>`).join('')}
               </select>
             </div>
             <div>
-              <label style="font-size:12px;color:rgba(255,255,255,0.3);">المبلغ</label>
+              <label style="font-size:12px;color:var(--text-light);">المبلغ</label>
               <input class="input-ios" id="edit-tx-amount" type="number" value="${data.amount}" style="margin-top:4px;">
             </div>
             <div>
-              <label style="font-size:12px;color:rgba(255,255,255,0.3);">ملاحظة</label>
+              <label style="font-size:12px;color:var(--text-light);">ملاحظة</label>
               <input class="input-ios" id="edit-tx-note" value="${data.note || ''}" style="margin-top:4px;" placeholder="اختياري">
             </div>
             ${data.type === 'transfer' ? `
               <div>
-                <label style="font-size:12px;color:rgba(255,255,255,0.3);">إلى حساب</label>
+                <label style="font-size:12px;color:var(--text-light);">إلى حساب</label>
                 <select class="select-ios" id="edit-tx-to" style="margin-top:4px;">
                   <option value="">اختر حساب</option>
                   ${state.accounts.filter(a => a.id !== data.accountId).map(a => `<option value="${a.id}" ${data.toAccountId === a.id ? 'selected' : ''}>${a.name}</option>`).join('')}
                 </select>
               </div>
               <div id="edit-tx-rate-container" style="${data.currency !== data.toCurrency && data.toAccountId ? 'display:block;' : 'display:none;'}">
-                <label style="font-size:12px;color:rgba(255,255,255,0.3);">سعر التحويل</label>
+                <label style="font-size:12px;color:var(--text-light);">سعر التحويل</label>
                 <input class="input-ios" id="edit-tx-rate" type="number" value="${data.exchangeRate || ''}" style="margin-top:4px;" placeholder="32.50">
               </div>
             ` : ''}
@@ -2402,7 +2214,7 @@
       const rate = parseFloat($('#edit-tx-rate')?.value) || 0;
 
       if (!accountId) { showToast('❌ اختر الحساب'); return; }
-      if (!amount || amount <= 0) { showToast('❌ أدخل مبلغ صحيح'); return; }
+      if (!amount || amount === 0) { showToast('❌ أدخل مبلغ صحيح'); return; }
 
       const data = { type, accountId, currency, reason, amount, note, toAccountId, exchangeRate: rate };
       if (type === 'transfer') {
@@ -2437,29 +2249,29 @@
             <h2>✎ تعديل الحساب</h2>
             <button class="close" onclick="closeModal('editAccount')">✕</button>
           </div>
-          <div style="space-y:16px;">
+          <div style="display:flex;flex-direction:column;gap:12px;">
             <div>
-              <label style="font-size:12px;color:rgba(255,255,255,0.3);">اسم الحساب</label>
+              <label style="font-size:12px;color:var(--text-light);">اسم الحساب</label>
               <input class="input-ios" id="edit-acc-name" value="${acc.name}" style="margin-top:4px;">
             </div>
             <div>
-              <label style="font-size:12px;color:rgba(255,255,255,0.3);">الأيقونة</label>
+              <label style="font-size:12px;color:var(--text-light);">الأيقونة</label>
               <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:6px;">
                 ${ACCOUNT_ICONS.map((ic, i) => `
-                  <button class="btn-ios btn-ios-ghost btn-ios-small" style="font-size:18px;padding:8px;${acc.icon === ic ? 'border-color:var(--primary);background:rgba(0,122,255,0.12);' : ''}" data-icon="${i}" onclick="selectEditIcon(this,${i})">${ic}</button>
+                  <button class="btn-ios btn-ios-ghost btn-ios-small" style="font-size:18px;padding:8px;${acc.icon === ic ? 'border-color:var(--primary);background:rgba(91,79,207,0.08);' : ''}" data-icon="${i}" onclick="selectEditIcon(this,${i})">${ic}</button>
                 `).join('')}
               </div>
             </div>
             <div>
-              <label style="font-size:12px;color:rgba(255,255,255,0.3);">اللون</label>
+              <label style="font-size:12px;color:var(--text-light);">اللون</label>
               <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;">
                 ${ACCOUNT_COLORS.map((col, i) => `
-                  <button style="width:28px;height:28px;border-radius:50%;border:2px solid ${acc.color === col ? '#fff' : 'transparent'};background:${col};cursor:pointer;" onclick="selectEditColor(this,${i})" data-color="${i}"></button>
+                  <button style="width:30px;height:30px;border-radius:50%;border:2px solid ${acc.color === col ? 'var(--primary)' : 'transparent'};background:${col};cursor:pointer;transition:all 0.3s;" onclick="selectEditColor(this,${i})" data-color="${i}"></button>
                 `).join('')}
               </div>
             </div>
             <div>
-              <label style="font-size:12px;color:rgba(255,255,255,0.3);">تعديل الأرصدة</label>
+              <label style="font-size:12px;color:var(--text-light);">تعديل الأرصدة</label>
               ${CURRENCIES.filter(c => acc.currencies?.[c.value] !== undefined).map(c => `
                 <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
                   <span style="font-size:16px;">${c.flag}</span>
@@ -2469,7 +2281,7 @@
               ${CURRENCIES.filter(c => acc.currencies?.[c.value] === undefined).map(c => `
                 <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
                   <span style="font-size:16px;">${c.flag}</span>
-                  <span style="font-size:13px;color:rgba(255,255,255,0.2);">غير مضاف</span>
+                  <span style="font-size:13px;color:var(--text-light);">غير مضاف</span>
                   <button class="btn-ios btn-ios-ghost btn-ios-small" onclick="addCurrencyToAccount('${editingAccountId}','${c.value}')" style="padding:4px 12px;font-size:12px;">+ إضافة</button>
                 </div>
               `).join('')}
@@ -2488,15 +2300,15 @@
       window._editIcon = ACCOUNT_ICONS[i];
       $$('[data-icon]').forEach(b => {
         const v = parseInt(b.dataset.icon);
-        b.style.borderColor = v === i ? 'var(--primary)' : 'rgba(255,255,255,0.06)';
-        b.style.background = v === i ? 'rgba(0,122,255,0.12)' : 'rgba(255,255,255,0.04)';
+        b.style.borderColor = v === i ? 'var(--primary)' : 'rgba(91,79,207,0.06)';
+        b.style.background = v === i ? 'rgba(91,79,207,0.08)' : 'rgba(255,255,255,0.3)';
       });
     };
 
     window.selectEditColor = function(el, i) {
       window._editColor = ACCOUNT_COLORS[i];
       $$('[data-color]').forEach((b, idx) => {
-        b.style.borderColor = idx === i ? '#fff' : 'transparent';
+        b.style.borderColor = idx === i ? 'var(--primary)' : 'transparent';
       });
     };
 
@@ -2546,14 +2358,14 @@
           </div>
           <div style="display:flex;flex-direction:column;gap:8px;">
             <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:14px 16px;display:flex;align-items:center;gap:12px;text-align:right;width:100%;" onclick="closeModal('settings');exportData();">
-              <span style="font-size:20px;">📤</span>
-              <div><div style="font-weight:600;font-size:14px;">تصدير البيانات</div><div style="font-size:11px;color:rgba(255,255,255,0.2);">نسخة احتياطية</div></div>
+              <span style="font-size:22px;">📤</span>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text-dark);">تصدير البيانات</div><div style="font-size:11px;color:var(--text-light);">نسخة احتياطية</div></div>
             </button>
             <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:14px 16px;display:flex;align-items:center;gap:12px;text-align:right;width:100%;" onclick="closeModal('settings');triggerImport();">
-              <span style="font-size:20px;">📥</span>
-              <div><div style="font-weight:600;font-size:14px;">استيراد البيانات</div><div style="font-size:11px;color:rgba(255,255,255,0.2);">استعادة</div></div>
+              <span style="font-size:22px;">📥</span>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text-dark);">استيراد البيانات</div><div style="font-size:11px;color:var(--text-light);">استعادة</div></div>
             </button>
-            <div style="padding:12px;border-radius:14px;background:rgba(255,255,255,0.02);text-align:center;font-size:12px;color:rgba(255,255,255,0.15);">
+            <div style="padding:12px;border-radius:16px;background:rgba(91,79,207,0.03);text-align:center;font-size:12px;color:var(--text-light);">
               ${state.accounts.length} حسابات · ${state.transactions.length} معاملات
             </div>
           </div>
@@ -2582,11 +2394,12 @@
     // ============================================================
 
     loadData();
+    createStars();
     renderAll();
 
-    console.log('💰 تطبيق حساباتي - النسخة المتكاملة');
+    console.log('💰 تطبيق حساباتي - النسخة المحسنة');
     console.log(`📊 ${state.accounts.length} حسابات، ${state.transactions.length} معاملات`);
-    console.log('📌 الميزات: إنشاء حساب مع عملات بصفر، تعديل المعاملات، حذف المعاملات مع استعادة الرصيد');
+    console.log('✨ الميزات: عرض الأرصدة السالبة مع تمييزها، الإجمالي يحسب الموجب فقط، ألوان فاتحة ونظيفة');
 
     updateFabs();
   </script>
