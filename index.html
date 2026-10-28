@@ -3,587 +3,640 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#f0f2f8" />
+  <meta name="theme-color" content="#0f172a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <title>حساباتي - إدارة مالية احترافية</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>TAREK - إدارة مالية احترافية</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
     :root {
-      --primary: #5B4FCF;
-      --primary-light: #8B7FE8;
-      --primary-dark: #3F35A8;
-      --secondary: #4ECDC4;
-      --success: #2ECC71;
-      --danger: #FF6B6B;
-      --warning: #F9CA24;
-      --gray: #95A5A6;
-      --bg-main: #f0f2f8;
-      --card-bg: rgba(255, 255, 255, 0.75);
-      --text-dark: #2C3E50;
-      --text-light: #7F8C8D;
-      --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-      --glass-border: rgba(255, 255, 255, 0.3);
+      --brand: #6366f1;
+      --brand-2: #8b5cf6;
+      --brand-3: #a855f7;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --ink: #0f172a;
+      --ink-2: #1e293b;
+      --muted: #64748b;
+      --line: rgba(15, 23, 42, 0.06);
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
+      --radius: 18px;
+      --radius-lg: 24px;
     }
 
     body {
-      font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg-main);
-      color: var(--text-dark);
+      font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
       min-height: 100vh;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
-      padding-bottom: 100px;
-      position: relative;
+      padding-bottom: 110px;
+      line-height: 1.5;
     }
 
-    /* خلفية متحركة ناعمة */
-    .bg-ios {
+    /* خلفية مزخرفة */
+    .bg-layer {
       position: fixed;
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      background: radial-gradient(ellipse at 20% 30%, rgba(91, 79, 207, 0.06) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 70%, rgba(78, 205, 196, 0.05) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 100%, rgba(249, 202, 36, 0.03) 0%, transparent 40%);
       overflow: hidden;
     }
-
-    .bg-ios::before {
+    .bg-layer::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-      opacity: 0.5;
-    }
-
-    .stars {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-    .star {
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      background: rgba(91, 79, 207, 0.15);
+      top: -20%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.15), transparent 70%);
       border-radius: 50%;
-      animation: twinkle 4s infinite alternate ease-in-out;
+      filter: blur(40px);
     }
-    @keyframes twinkle {
-      0% { opacity: 0.2; transform: scale(0.8); }
-      100% { opacity: 0.8; transform: scale(1.3); }
-    }
-
-    .glass {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
+    .bg-layer::after {
+      content: '';
+      position: absolute;
+      bottom: -10%;
+      left: -10%;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.12), transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
     }
 
-    ::-webkit-scrollbar {
-      width: 4px;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(91, 79, 207, 0.15);
-      border-radius: 10px;
-    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.2); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.4); }
 
-    /* أزرار محسّنة بألوان فاتحة */
-    .btn-ios {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 14px 24px;
-      border: none;
-      border-radius: 16px;
-      font-family: 'Cairo', sans-serif;
-      font-weight: 600;
-      font-size: 16px;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-ios:active {
-      transform: scale(0.96);
-    }
-    .btn-ios-primary {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      color: white;
-      box-shadow: 0 4px 20px rgba(91, 79, 207, 0.25);
-    }
-    .btn-ios-primary:hover {
-      box-shadow: 0 6px 30px rgba(91, 79, 207, 0.35);
-      transform: translateY(-2px);
-    }
-    .btn-ios-success {
-      background: linear-gradient(135deg, var(--success), #27AE60);
-      color: white;
-      box-shadow: 0 4px 20px rgba(46, 204, 113, 0.25);
-    }
-    .btn-ios-success:hover {
-      box-shadow: 0 6px 30px rgba(46, 204, 113, 0.35);
-      transform: translateY(-2px);
-    }
-    .btn-ios-danger {
-      background: linear-gradient(135deg, var(--danger), #E74C3C);
-      color: white;
-      box-shadow: 0 4px 20px rgba(255, 107, 107, 0.2);
-    }
-    .btn-ios-danger:hover {
-      box-shadow: 0 6px 30px rgba(255, 107, 107, 0.3);
-      transform: translateY(-2px);
-    }
-    .btn-ios-ghost {
-      background: rgba(91, 79, 207, 0.06);
-      color: var(--text-dark);
-      border: 1px solid rgba(91, 79, 207, 0.1);
-    }
-    .btn-ios-ghost:hover {
-      background: rgba(91, 79, 207, 0.1);
-      transform: translateY(-2px);
-    }
-    .btn-ios-small {
-      padding: 8px 16px;
-      font-size: 13px;
-      border-radius: 12px;
-    }
-    .btn-ios-icon {
-      width: 44px;
-      height: 44px;
-      padding: 0;
-      border-radius: 14px;
-      border: none;
-      background: rgba(91, 79, 207, 0.06);
-      color: var(--text-light);
-      font-size: 18px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .btn-ios-icon:hover {
-      background: rgba(91, 79, 207, 0.12);
-      color: var(--primary);
-      transform: rotate(8deg);
-    }
-
-    .input-ios {
-      width: 100%;
-      padding: 14px 18px;
-      background: rgba(91, 79, 207, 0.04);
-      border: 1px solid rgba(91, 79, 207, 0.08);
-      border-radius: 16px;
-      color: var(--text-dark);
-      font-family: 'Cairo', sans-serif;
-      font-size: 16px;
-      transition: all 0.3s ease;
-      outline: none;
-    }
-    .input-ios:focus {
-      border-color: var(--primary);
-      background: rgba(91, 79, 207, 0.06);
-      box-shadow: 0 0 0 4px rgba(91, 79, 207, 0.08);
-    }
-    .input-ios::placeholder {
-      color: rgba(44, 62, 80, 0.25);
-    }
-
-    .select-ios {
-      width: 100%;
-      padding: 14px 18px;
-      background: rgba(91, 79, 207, 0.04);
-      border: 1px solid rgba(91, 79, 207, 0.08);
-      border-radius: 16px;
-      color: var(--text-dark);
-      font-family: 'Cairo', sans-serif;
-      font-size: 16px;
-      transition: all 0.3s ease;
-      outline: none;
-      appearance: none;
-      cursor: pointer;
-    }
-    .select-ios:focus {
-      border-color: var(--primary);
-      background: rgba(91, 79, 207, 0.06);
-      box-shadow: 0 0 0 4px rgba(91, 79, 207, 0.08);
-    }
-    .select-ios option {
-      background: #fff;
-      color: var(--text-dark);
-    }
-
-    .app-container {
+    /* الحاويات */
+    .app {
       position: relative;
       z-index: 1;
       max-width: 480px;
       margin: 0 auto;
-      padding: 20px 16px 30px;
+      padding: 16px 16px 30px;
       min-height: 100vh;
     }
 
-    .header-ios {
+    /* الترويسة */
+    .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 20px;
-      margin-bottom: 20px;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      animation: float 6s ease-in-out infinite;
+      padding: 10px 4px 20px;
+      gap: 12px;
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .header-ios .title {
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-3) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 900;
       font-size: 20px;
-      font-weight: 700;
-      color: var(--text-dark);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+      letter-spacing: -1px;
     }
-    .header-ios .title .accent {
-      color: var(--primary);
+    .brand-name {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--ink) 0%, var(--brand) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-
-    /* بطاقة الرصيد - تصميم فاتح */
-    .balance-ios {
-      padding: 24px 24px 20px;
-      margin-bottom: 20px;
-      border-radius: 24px;
-      background: linear-gradient(145deg, rgba(91, 79, 207, 0.06), rgba(78, 205, 196, 0.04));
-      border: 1px solid rgba(91, 79, 207, 0.06);
-      position: relative;
-      overflow: hidden;
-      transition: all 0.5s ease;
-    }
-    .balance-ios::before {
-      content: '';
-      position: absolute;
-      top: -60%;
-      right: -40%;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle, rgba(91, 79, 207, 0.06), transparent 70%);
-      pointer-events: none;
-      animation: orb 12s infinite alternate ease-in-out;
-    }
-    @keyframes orb {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(20px, 20px) scale(1.2); }
-    }
-    .balance-ios .label {
-      font-size: 12px;
-      color: var(--text-light);
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    .brand-sub {
+      font-size: 11px;
+      color: var(--muted);
       font-weight: 500;
     }
-    .balance-ios .amount {
-      font-size: 36px;
-      font-weight: 800;
-      color: var(--text-dark);
-      margin: 2px 0 12px;
-      letter-spacing: -0.5px;
-    }
-    .balance-ios .currencies {
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--muted);
+      font-size: 18px;
+      cursor: pointer;
       display: flex;
-      gap: 10px;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-sm);
+    }
+    .icon-btn:hover {
+      color: var(--brand);
+      border-color: rgba(99, 102, 241, 0.2);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+    .icon-btn:active { transform: scale(0.94); }
+
+    /* بطاقة الرصيد الكبيرة */
+    .hero {
+      background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 50%, #6d28d9 100%);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      color: #fff;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 40px -12px rgba(76, 29, 149, 0.4);
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 60%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40%;
+      left: -10%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.4), transparent 60%);
+      border-radius: 50%;
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-label {
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.75;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hero-label::before {
+      content: '●';
+      color: var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .hero-amounts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 20px;
+      margin-top: 14px;
+    }
+    .hero-amt {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .hero-amt .cur {
+      font-size: 11px;
+      opacity: 0.65;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .hero-amt .val {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      font-variant-numeric: tabular-nums;
+    }
+    .hero-amt .val.neg { color: #fca5a5; }
+    .hero-chips {
+      display: flex;
+      gap: 6px;
+      margin-top: 16px;
       flex-wrap: wrap;
     }
-    .balance-ios .currencies .chip {
-      padding: 4px 14px;
-      background: rgba(255, 255, 255, 0.5);
-      border-radius: 30px;
-      font-size: 13px;
-      color: var(--text-light);
-      border: 1px solid rgba(91, 79, 207, 0.04);
-      transition: all 0.3s ease;
-    }
-    .balance-ios .currencies .chip strong {
-      color: var(--text-dark);
+    .hero-chip {
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      font-size: 11px;
       font-weight: 600;
+      backdrop-filter: blur(8px);
     }
 
-    .stats-ios {
+    /* الإحصائيات */
+    .stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
       margin-bottom: 20px;
     }
-    .stat-ios {
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
       padding: 14px 10px;
       text-align: center;
-      background: rgba(255, 255, 255, 0.4);
-      border-radius: 18px;
-      border: 1px solid rgba(91, 79, 207, 0.04);
-      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
     }
-    .stat-ios:hover {
-      background: rgba(255, 255, 255, 0.6);
+    .stat:hover {
       transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
-    .stat-ios .value {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text-dark);
+    .stat .num {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.5px;
     }
-    .stat-ios .label {
-      font-size: 10px;
-      color: var(--text-light);
+    .stat .lbl {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 600;
       margin-top: 2px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
+    .stat.income .num { color: var(--success); }
+    .stat.expense .num { color: var(--danger); }
+    .stat.net .num { color: var(--brand); }
 
-    /* بطاقات الحسابات */
-    .account-ios {
-      padding: 16px 18px;
-      margin-bottom: 10px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.4);
-      border: 1px solid rgba(91, 79, 207, 0.04);
-      cursor: pointer;
-      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-    }
-    .account-ios:hover {
-      background: rgba(255, 255, 255, 0.7);
-      transform: translateX(-6px) scale(1.01);
-      border-color: rgba(91, 79, 207, 0.1);
-    }
-    .account-ios .row {
+    /* عناوين الأقسام */
+    .section-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin: 20px 4px 12px;
     }
-    .account-ios .name {
+    .section-title {
       font-size: 16px;
-      font-weight: 600;
-      color: var(--text-dark);
-    }
-    .account-ios .badge {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
+      font-weight: 700;
+      color: var(--ink);
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
+      gap: 8px;
     }
-    .account-ios .balances {
-      display: flex;
-      gap: 10px;
-      margin-top: 6px;
-      flex-wrap: wrap;
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 18px;
+      border-radius: 4px;
+      background: linear-gradient(180deg, var(--brand), var(--brand-3));
     }
-    .account-ios .balances .b {
-      font-size: 13px;
-      color: var(--text-light);
-    }
-    .account-ios .balances .b strong {
-      color: var(--text-dark);
+    .section-count {
+      font-size: 12px;
+      color: var(--muted);
       font-weight: 600;
+      background: var(--card);
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
     }
-    .account-ios .balances .b.negative strong {
-      color: var(--danger);
+
+    /* الأزرار */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 14px;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
     }
-    .account-ios .line {
+    .btn:active { transform: scale(0.96); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 8px 22px rgba(99, 102, 241, 0.4);
+      transform: translateY(-1px);
+    }
+    .btn-success {
+      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+    }
+    .btn-success:hover {
+      box-shadow: 0 8px 22px rgba(16, 185, 129, 0.4);
+      transform: translateY(-1px);
+    }
+    .btn-danger {
+      background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
+    }
+    .btn-danger:hover {
+      box-shadow: 0 8px 22px rgba(239, 68, 68, 0.4);
+      transform: translateY(-1px);
+    }
+    .btn-ghost {
+      background: var(--card);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-ghost:hover {
+      border-color: rgba(99, 102, 241, 0.3);
+      color: var(--brand);
+      transform: translateY(-1px);
+    }
+    .btn-block { width: 100%; }
+    .btn-sm { padding: 8px 14px; font-size: 13px; border-radius: 12px; }
+    .btn-lg { padding: 16px 24px; font-size: 15px; border-radius: 16px; }
+
+    /* حقول الإدخال */
+    .field { margin-bottom: 14px; }
+    .field-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .input {
+      width: 100%;
+      padding: 13px 16px;
+      background: var(--bg);
+      border: 1.5px solid transparent;
+      border-radius: 14px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 15px;
+      color: var(--ink);
+      transition: all 0.2s ease;
+      outline: none;
+      font-weight: 500;
+    }
+    .input:focus {
+      border-color: var(--brand);
+      background: var(--card);
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    }
+    .input::placeholder { color: #cbd5e1; font-weight: 400; }
+    select.input {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: left 16px center;
+      padding-left: 40px;
+      cursor: pointer;
+    }
+
+    /* بطاقات الحسابات */
+    .account-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 16px 16px 20px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .account-card::before {
+      content: '';
       position: absolute;
       right: 0;
       top: 0;
       bottom: 0;
       width: 4px;
-      border-radius: 0 6px 6px 0;
+      background: var(--brand);
     }
-
-    /* المعاملات */
-    .tx-ios {
+    .account-card:hover {
+      transform: translateX(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(99, 102, 241, 0.15);
+    }
+    .account-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 12px 16px;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .account-info { flex: 1; min-width: 0; }
+    .account-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .account-bals {
+      display: flex;
+      gap: 8px 14px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .bal-item { color: var(--muted); }
+    .bal-item.neg { color: var(--danger); }
+    .bal-item.zero { color: #cbd5e1; font-weight: 500; }
+
+    /* بطاقات المعاملات */
+    .tx-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
       margin-bottom: 8px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.3);
-      border: 1px solid rgba(91, 79, 207, 0.04);
-      transition: all 0.3s ease;
-      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
     }
-    .tx-ios:hover {
-      background: rgba(255, 255, 255, 0.5);
-      transform: translateX(-4px);
+    .tx-card:hover {
+      transform: translateX(-3px);
+      box-shadow: var(--shadow-md);
     }
-    .tx-ios .icon {
-      width: 40px;
-      height: 40px;
+    .tx-icon {
+      width: 42px;
+      height: 42px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 20px;
       flex-shrink: 0;
     }
-    .tx-ios .icon.deposit { background: rgba(46, 204, 113, 0.12); }
-    .tx-ios .icon.withdraw { background: rgba(255, 107, 107, 0.12); }
-    .tx-ios .icon.transfer { background: rgba(91, 79, 207, 0.12); }
-    .tx-ios .info { flex: 1; min-width: 0; }
-    .tx-ios .info .title {
+    .tx-icon.dep { background: rgba(16, 185, 129, 0.12); color: var(--success); }
+    .tx-icon.wit { background: rgba(239, 68, 68, 0.12); color: var(--danger); }
+    .tx-icon.trf { background: rgba(99, 102, 241, 0.12); color: var(--brand); }
+    .tx-info { flex: 1; min-width: 0; }
+    .tx-title {
       font-size: 14px;
-      font-weight: 600;
-      color: var(--text-dark);
-    }
-    .tx-ios .info .sub {
-      font-size: 12px;
-      color: var(--text-light);
-      margin-top: 2px;
-    }
-    .tx-ios .amount {
       font-weight: 700;
-      font-size: 14px;
+      color: var(--ink);
+      margin-bottom: 2px;
     }
-    .tx-ios .amount.pos { color: var(--success); }
-    .tx-ios .amount.neg { color: var(--danger); }
-    .tx-ios .amount.neu { color: var(--primary); }
-    .tx-ios .actions-btn {
+    .tx-sub {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .tx-amt {
+      font-weight: 800;
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .tx-amt.pos { color: var(--success); }
+    .tx-amt.neg { color: var(--danger); }
+    .tx-amt.neu { color: var(--brand); }
+    .tx-actions {
       display: flex;
-      gap: 4px;
+      gap: 2px;
     }
-    .tx-ios .actions-btn button {
-      background: none;
+    .tx-actions button {
+      width: 30px;
+      height: 30px;
       border: none;
-      color: var(--text-light);
-      font-size: 14px;
-      cursor: pointer;
-      padding: 4px 6px;
-      transition: all 0.3s ease;
+      background: transparent;
+      color: var(--muted);
       border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .tx-ios .actions-btn button:hover {
-      background: rgba(91, 79, 207, 0.06);
+    .tx-actions button:hover {
+      background: rgba(99, 102, 241, 0.08);
     }
-    .tx-ios .actions-btn .edit:hover { color: var(--primary); }
-    .tx-ios .actions-btn .del:hover { color: var(--danger); }
+    .tx-actions .edit:hover { color: var(--brand); }
+    .tx-actions .del:hover { color: var(--danger); }
 
-    /* التنقل السفلي */
-    .nav-ios {
+    /* الأزرار العائمة */
+    .fab-wrap {
       position: fixed;
-      bottom: 20px;
+      bottom: 88px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 45;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .fab {
+      height: 52px;
+      padding: 0 20px;
+      border: none;
+      border-radius: 26px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+    }
+    .fab-add {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-3) 100%);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+    }
+    .fab-add:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(99, 102, 241, 0.5);
+    }
+    .fab-trf {
+      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+    }
+    .fab-trf:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.5);
+    }
+    .fab:active { transform: scale(0.95); }
+
+    /* شريط التنقل السفلي */
+    .navbar {
+      position: fixed;
+      bottom: 14px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 50;
-      padding: 6px;
       display: flex;
-      gap: 2px;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(40px);
-      -webkit-backdrop-filter: blur(40px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 30px;
-      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
+      gap: 4px;
+      padding: 6px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: 0 8px 32px rgba(15, 23, 42, 0.1);
       max-width: 360px;
       width: calc(100% - 32px);
     }
-    .nav-ios .item {
+    .nav-item {
       flex: 1;
-      padding: 10px 0;
+      padding: 8px 4px;
       border: none;
       background: transparent;
-      color: var(--text-light);
+      color: var(--muted);
       font-family: 'Cairo', sans-serif;
       font-size: 11px;
-      font-weight: 500;
+      font-weight: 700;
       cursor: pointer;
-      border-radius: 24px;
+      border-radius: 16px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      gap: 3px;
     }
-    .nav-ios .item .ico {
+    .nav-item .nav-ico {
       font-size: 20px;
       transition: all 0.3s ease;
+      line-height: 1;
     }
-    .nav-ios .item.active {
-      color: var(--primary);
-      background: rgba(91, 79, 207, 0.08);
+    .nav-item.active {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
     }
-    .nav-ios .item.active .ico { transform: scale(1.1); }
-    .nav-ios .item:hover:not(.active) { color: var(--primary); }
-
-    /* الأزرار العائمة */
-    .fab-container {
-      position: fixed;
-      bottom: 100px;
-      left: 20px;
-      z-index: 45;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      align-items: flex-start;
-    }
-    .fab-main {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: none;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      color: white;
-      font-size: 32px;
-      cursor: pointer;
-      box-shadow: 0 6px 30px rgba(91, 79, 207, 0.3);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .fab-main:hover {
-      transform: scale(1.08) rotate(8deg);
-      box-shadow: 0 8px 40px rgba(91, 79, 207, 0.4);
-    }
-    .fab-main:active { transform: scale(0.92); }
-    .fab-transfer {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: none;
-      background: linear-gradient(135deg, var(--success), #27AE60);
-      color: white;
-      font-size: 22px;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(46, 204, 113, 0.25);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .fab-transfer:hover {
-      transform: scale(1.08);
-      box-shadow: 0 6px 30px rgba(46, 204, 113, 0.35);
-    }
-    .fab-transfer:active { transform: scale(0.92); }
+    .nav-item.active .nav-ico { transform: scale(1.15); }
+    .nav-item:hover:not(.active) { color: var(--brand); }
 
     /* المودالات */
-    .modal-ios {
+    .modal {
       position: fixed;
       inset: 0;
       z-index: 100;
@@ -591,218 +644,314 @@
       align-items: flex-end;
       justify-content: center;
       padding: 16px;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      animation: fadeIn 0.2s ease;
     }
-    .modal-ios .sheet {
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .sheet {
       width: 100%;
       max-width: 440px;
       max-height: 88vh;
       overflow-y: auto;
-      padding: 24px 20px 20px;
-      border-radius: 30px 30px 20px 20px;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(40px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.08);
-      animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      padding: 22px 20px;
+      border-radius: 26px 26px 20px 20px;
+      background: var(--card);
+      box-shadow: 0 24px 80px rgba(15, 23, 42, 0.25);
+      animation: slideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
     @keyframes slideUp {
-      from { opacity: 0; transform: translateY(40px) scale(0.98); }
+      from { opacity: 0; transform: translateY(30px) scale(0.98); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
-    .modal-ios .sheet .head {
+    .sheet-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
     }
-    .modal-ios .sheet .head h2 {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-dark);
+    .sheet-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .modal-ios .sheet .head .close {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
+    .sheet-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
       border: none;
-      background: rgba(91, 79, 207, 0.06);
-      color: var(--text-light);
-      font-size: 16px;
+      background: var(--bg);
+      color: var(--muted);
+      font-size: 15px;
       cursor: pointer;
-      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: all 0.2s ease;
     }
-    .modal-ios .sheet .head .close:hover {
-      background: rgba(91, 79, 207, 0.12);
-      color: var(--text-dark);
+    .sheet-close:hover {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger);
     }
 
-    .step-ios {
+    /* خطوات المعاملة */
+    .steps {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
-    .step-ios .dot {
-      width: 7px;
-      height: 7px;
+    .step-dot {
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      background: rgba(91, 79, 207, 0.1);
-      transition: all 0.4s ease;
+      background: var(--line);
+      transition: all 0.3s ease;
     }
-    .step-ios .dot.active {
-      background: var(--primary);
-      width: 28px;
+    .step-dot.active {
+      background: var(--brand);
+      width: 24px;
       border-radius: 4px;
     }
-    .step-ios .dot.done { background: var(--success); }
-    .step-ios .label {
+    .step-dot.done { background: var(--success); }
+    .step-label {
       text-align: center;
       font-size: 13px;
-      color: var(--text-light);
-      margin-bottom: 14px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 16px;
     }
 
-    .empty-ios {
+    /* الحالة الفارغة */
+    .empty {
       text-align: center;
       padding: 40px 20px;
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      border: 1.5px dashed var(--line);
     }
-    .empty-ios .icon {
-      font-size: 52px;
+    .empty-ico {
+      font-size: 48px;
       margin-bottom: 12px;
       display: block;
       opacity: 0.5;
     }
-    .empty-ios h3 {
-      font-size: 17px;
-      color: var(--text-dark);
-      font-weight: 600;
+    .empty h3 {
+      font-size: 15px;
+      color: var(--ink);
+      font-weight: 700;
+      margin-bottom: 4px;
     }
-    .empty-ios p {
-      color: var(--text-light);
-      font-size: 14px;
-      margin-top: 4px;
+    .empty p {
+      font-size: 13px;
+      color: var(--muted);
     }
 
-    .toast-ios {
+    /* التنبيهات */
+    .toast {
       position: fixed;
-      top: 80px;
+      top: 20px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 200;
-      padding: 14px 28px;
-      border-radius: 16px;
-      background: rgba(46, 204, 113, 0.95);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 8px 32px rgba(46, 204, 113, 0.15);
+      padding: 12px 22px;
+      border-radius: 14px;
+      background: var(--ink);
+      color: #fff;
       font-family: 'Cairo', sans-serif;
       font-weight: 600;
-      color: #fff;
-      font-size: 15px;
-      animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      font-size: 14px;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.3);
+      animation: toastIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      max-width: calc(100% - 32px);
     }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px) scale(0.96); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+    .toast.success { background: linear-gradient(135deg, var(--success), #059669); }
+    .toast.error { background: linear-gradient(135deg, var(--danger), #dc2626); }
+    .toast.warn { background: linear-gradient(135deg, var(--warning), #d97706); }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translate(-50%, -20px) scale(0.95); }
+      to { opacity: 1; transform: translate(-50%, 0) scale(1); }
     }
 
-    .currency-selector {
+    /* اختيار العملة */
+    .cur-selector {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
-      margin-top: 6px;
     }
-    .currency-selector .curr-btn {
-      padding: 6px 14px;
+    .cur-btn {
+      padding: 8px 14px;
       border-radius: 12px;
-      border: 1px solid rgba(91, 79, 207, 0.06);
-      background: rgba(91, 79, 207, 0.02);
-      color: var(--text-light);
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      color: var(--muted);
       font-family: 'Cairo', sans-serif;
       font-size: 13px;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
-    .currency-selector .curr-btn:hover {
-      background: rgba(91, 79, 207, 0.06);
-    }
-    .currency-selector .curr-btn.active {
-      border-color: var(--primary);
-      background: rgba(91, 79, 207, 0.08);
-      color: var(--primary);
+    .cur-btn:hover { border-color: rgba(99, 102, 241, 0.3); }
+    .cur-btn.active {
+      border-color: var(--brand);
+      background: rgba(99, 102, 241, 0.08);
+      color: var(--brand);
+      font-weight: 700;
     }
 
+    /* شبكة */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
     .flex { display: flex; }
-    .flex-col { flex-direction: column; }
     .items-center { align-items: center; }
     .justify-between { justify-content: space-between; }
     .gap-2 { gap: 8px; }
     .gap-3 { gap: 12px; }
-    .gap-4 { gap: 16px; }
-    .w-full { width: 100%; }
-    .text-center { text-align: center; }
-    .mt-2 { margin-top: 8px; }
     .mt-3 { margin-top: 12px; }
     .mt-4 { margin-top: 16px; }
     .mb-2 { margin-bottom: 8px; }
     .mb-3 { margin-bottom: 12px; }
     .mb-4 { margin-bottom: 16px; }
-    .mb-6 { margin-bottom: 24px; }
-    .grid-cols-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    .grid-cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .hidden { display: none; }
-    .relative { position: relative; }
-    .p-2 { padding: 8px; }
-    .p-3 { padding: 12px; }
-    .p-4 { padding: 16px; }
-    .rounded-xl { border-radius: 14px; }
-    .bg-glass { background: rgba(255, 255, 255, 0.3); }
+    .text-center { text-align: center; }
+    .hidden { display: none !important; }
+
+    /* خيارات الأيقونات والألوان */
+    .opt-btn {
+      padding: 10px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      border-radius: 12px;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .opt-btn:hover { border-color: rgba(99, 102, 241, 0.3); }
+    .opt-btn.active {
+      border-color: var(--brand);
+      background: rgba(99, 102, 241, 0.1);
+      transform: scale(1.05);
+    }
+    .color-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+    .color-dot:hover { transform: scale(1.1); }
+    .color-dot.active {
+      border-color: var(--ink);
+      transform: scale(1.1);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    /* معاينة التحويل */
+    .preview-box {
+      padding: 14px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05));
+      border: 1px solid rgba(99, 102, 241, 0.1);
+      text-align: center;
+      margin-top: 12px;
+    }
+    .preview-label {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .preview-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .preview-amt {
+      font-size: 18px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .preview-amt.from { color: var(--ink); }
+    .preview-amt.to { color: var(--success); }
+    .preview-amt.neg { color: var(--danger); }
+
+    /* شريط التقدم */
+    .progress-bar {
+      height: 5px;
+      border-radius: 10px;
+      background: rgba(99, 102, 241, 0.1);
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--brand), var(--brand-3));
+      transition: width 0.4s ease;
+    }
 
     @media (min-width: 640px) {
-      .modal-ios { align-items: center; }
-      .modal-ios .sheet { border-radius: 32px; }
+      .modal { align-items: center; }
+      .sheet { border-radius: 26px; }
     }
-    @media (max-width: 400px) {
-      .stats-ios { gap: 6px; }
-      .stat-ios .value { font-size: 17px; }
-      .balance-ios .amount { font-size: 28px; }
-      .fab-main { width: 52px; height: 52px; font-size: 26px; }
-      .fab-transfer { width: 44px; height: 44px; font-size: 18px; }
+    @media (max-width: 380px) {
+      .hero-amt .val { font-size: 18px; }
+      .stat .num { font-size: 20px; }
+      .brand-name { font-size: 19px; }
+      .fab { height: 48px; padding: 0 16px; font-size: 13px; }
     }
+
+    /* أنيميشن ظهور العناصر */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
   </style>
 </head>
 <body>
 
-  <div class="bg-ios">
-    <div class="stars" id="stars"></div>
+  <div class="bg-layer"></div>
+  <div class="app" id="app"></div>
+
+  <div class="fab-wrap" id="fabWrap">
+    <button class="fab fab-trf" id="fabTransfer" onclick="openModal('transfer')" style="display:none;">
+      <span style="font-size:18px;">⇄</span> تحويل
+    </button>
+    <button class="fab fab-add" id="fabAdd" onclick="openModal('addTransaction')" style="display:none;">
+      <span style="font-size:20px;">+</span> معاملة
+    </button>
   </div>
 
-  <div id="app">
-    <div class="app-container" id="app-container"></div>
-  </div>
-
-  <div class="fab-container" id="fabContainer">
-    <button class="fab-transfer" id="fabTransfer" onclick="openModal('transfer')" title="تحويل بين الحسابات" style="display:none;">⇄</button>
-    <button class="fab-main" id="fabMain" onclick="openModal('addTransaction')" title="إضافة معاملة">+</button>
-  </div>
-
-  <nav class="nav-ios" id="bottom-nav"></nav>
+  <nav class="navbar" id="navbar"></nav>
 
   <script>
     // ============================================================
-    // ====== DATA ======
+    // البيانات
     // ============================================================
-
     const CURRENCIES = [
       { value: 'USD', label: 'دولار', symbol: '$', flag: '🇺🇸' },
-      { value: 'TRY', label: 'ليرا', symbol: '₺', flag: '🇹🇷' },
+      { value: 'TRY', label: 'ليرة', symbol: '₺', flag: '🇹🇷' },
       { value: 'EUR', label: 'يورو', symbol: '€', flag: '🇪🇺' },
     ];
 
@@ -814,11 +963,12 @@
       { value: 'personal', label: 'شخصي', icon: '👤' },
       { value: 'apartment', label: 'الشقة', icon: '🏢' },
       { value: 'metro', label: 'مترو', icon: '🚇' },
+      { value: 'salary', label: 'راتب', icon: '💼' },
       { value: 'other', label: 'أخرى', icon: '📌' },
     ];
 
-    const ACCOUNT_COLORS = ['#5B4FCF', '#2ECC71', '#F9CA24', '#FF6B6B', '#4ECDC4', '#FF9FF3'];
-    const ACCOUNT_ICONS = ['👛', '🐷', '🏢', '🏛️', '🪙', '💵'];
+    const ACCOUNT_COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4', '#a855f7', '#ec4899', '#14b8a6'];
+    const ACCOUNT_ICONS = ['👛', '🐷', '🏢', '🏛️', '🪙', '💵', '💳', '💰'];
 
     const TABS = [
       { id: 'home', label: 'الرئيسية', icon: '🏠' },
@@ -826,51 +976,48 @@
       { id: 'reports', label: 'التقارير', icon: '📊' },
     ];
 
-    const STORAGE_KEY = 'finance_ios_data_v7';
+    const STORAGE_KEY = 'tarek_finance_v1';
 
     let state = { accounts: [], transactions: [] };
     let currentTab = 'home';
     let selectedAccountId = null;
-    let modals = { createAccount: false, addTransaction: false, transfer: false, settings: false, editTransaction: false,
-      editAccount: false };
+    let modals = {
+      createAccount: false,
+      addTransaction: false,
+      transfer: false,
+      settings: false,
+      editTransaction: false,
+      editAccount: false,
+    };
     let txStep = 1;
-    let txData = { type: 'deposit', accountId: '', currency: 'USD', reason: '', amount: 0, note: '', toAccountId: '',
-      exchangeRate: 0 };
-    let transferData = { fromAccountId: '', toAccountId: '', fromCurrency: 'USD', toCurrency: 'TRY', amount: 0,
-      exchangeRate: 0, convertedAmount: 0 };
+    let txData = { type: 'deposit', accountId: '', currency: 'USD', reason: '', amount: 0, note: '', toAccountId: '', exchangeRate: 0 };
+    let transferData = { fromAccountId: '', toAccountId: '', fromCurrency: 'USD', toCurrency: 'USD', amount: 0, exchangeRate: 0, convertedAmount: 0 };
     let editingTxId = null;
     let editingAccountId = null;
 
     // ============================================================
-    // ====== HELPERS ======
+    // أدوات مساعدة
     // ============================================================
-
-    function $(s, c = document) { return c.querySelector(s); }
-    function $$(s, c = document) { return [...c.querySelectorAll(s)]; }
-    function id() { return Date.now().toString(36) + Math.random().toString(36).substr(2, 6); }
-
-    function getAccount(id) { return state.accounts.find(a => a.id === id); }
-    function getTransaction(id) { return state.transactions.find(t => t.id === id); }
-    function getTransactions(accountId) {
-      return state.transactions.filter(t => t.accountId === accountId || t.toAccountId === accountId);
-    }
+    const $ = (s, c = document) => c.querySelector(s);
+    const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+    const uid = () => Date.now().toString(36) + Math.random().toString(36).substr(2, 6);
+    const getAccount = (id) => state.accounts.find(a => a.id === id);
+    const getTransaction = (id) => state.transactions.find(t => t.id === id);
+    const getTransactions = (accountId) => state.transactions.filter(t => t.accountId === accountId || t.toAccountId === accountId);
+    const curInfo = (c) => CURRENCIES.find(x => x.value === c);
+    const reasonInfo = (r) => REASONS.find(x => x.value === r);
+    const fmt = (n) => Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const fmtDate = (d) => new Date(d).toLocaleDateString('ar-SA', { year: 'numeric', month: 'short', day: 'numeric' });
 
     function getTotalBalance() {
       const t = { USD: 0, TRY: 0, EUR: 0 };
       state.accounts.forEach(a => {
         Object.entries(a.currencies || {}).forEach(([c, v]) => {
-          if (t[c] !== undefined && v > 0) t[c] += v; // نضيف فقط الموجب
+          if (t[c] !== undefined) t[c] += v;
         });
       });
       return t;
     }
-
-    function formatNum(n) { return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
-    function formatDate(d) {
-      return new Date(d).toLocaleDateString('ar-SA', { year: 'numeric', month: 'short', day: 'numeric' });
-    }
-    function curInfo(c) { return CURRENCIES.find(x => x.value === c); }
-    function reasonInfo(r) { return REASONS.find(x => x.value === r); }
 
     function saveData() {
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { console.error(e); }
@@ -879,33 +1026,33 @@
     function loadData() {
       try {
         const s = localStorage.getItem(STORAGE_KEY);
-        if (s) { const d = JSON.parse(s);
+        if (s) {
+          const d = JSON.parse(s);
           state.accounts = d.accounts || [];
-          state.transactions = d.transactions || []; }
+          state.transactions = d.transactions || [];
+        }
       } catch (e) { console.error(e); }
     }
 
-    // ============================================================
-    // ====== TOAST ======
-    // ============================================================
-
-    function showToast(msg) {
+    function showToast(msg, type = 'success') {
       const old = $('#toast');
       if (old) old.remove();
       const el = document.createElement('div');
       el.id = 'toast';
-      el.className = 'toast-ios';
+      el.className = 'toast ' + type;
       el.textContent = msg;
       document.body.appendChild(el);
-      setTimeout(() => { el.style.opacity = '0';
-        el.style.transition = 'opacity 0.4s';
-        setTimeout(() => el.remove(), 400); }, 1800);
+      setTimeout(() => {
+        el.style.transition = 'all 0.4s';
+        el.style.opacity = '0';
+        el.style.transform = 'translate(-50%, -20px)';
+        setTimeout(() => el.remove(), 400);
+      }, 2000);
     }
 
     // ============================================================
-    // ====== MODAL HELPERS ======
+    // المودالات
     // ============================================================
-
     function openModal(id) {
       modals[id] = true;
       document.body.style.overflow = 'hidden';
@@ -918,12 +1065,11 @@
     }
 
     // ============================================================
-    // ====== ACCOUNT OPERATIONS ======
+    // عمليات الحسابات
     // ============================================================
-
     function addAccount(data) {
       const acc = {
-        id: id(),
+        id: uid(),
         name: data.name.trim(),
         currencies: data.currencies || {},
         color: data.color || ACCOUNT_COLORS[0],
@@ -960,17 +1106,16 @@
       state.accounts = state.accounts.filter(a => a.id !== id);
       saveData();
       if (selectedAccountId === id) selectedAccountId = null;
-      showToast('🗑️ تم حذف الحساب');
+      showToast('🗑️ تم حذف الحساب', 'warn');
       renderAll();
     }
 
     // ============================================================
-    // ====== TRANSACTION OPERATIONS ======
+    // عمليات المعاملات
     // ============================================================
-
     function addTransaction(data) {
       const tx = {
-        id: id(),
+        id: uid(),
         type: data.type,
         accountId: data.accountId,
         currency: data.currency,
@@ -1003,24 +1148,20 @@
           tx.targetCurrency = data.toCurrency || 'USD';
           accs = accs.map(a => {
             if (a.id === data.accountId) {
-              return { ...a, currencies: { ...a.currencies, [data.currency]: (a.currencies[data.currency] || 0) - data
-                    .amount } };
+              return { ...a, currencies: { ...a.currencies, [data.currency]: (a.currencies[data.currency] || 0) - data.amount } };
             }
             if (a.id === data.toAccountId) {
-              return { ...a, currencies: { ...a.currencies, [data.toCurrency]: (a.currencies[data.toCurrency] || 0) +
-                  converted } };
+              return { ...a, currencies: { ...a.currencies, [data.toCurrency]: (a.currencies[data.toCurrency] || 0) + converted } };
             }
             return a;
           });
         } else {
           accs = accs.map(a => {
             if (a.id === data.accountId) {
-              return { ...a, currencies: { ...a.currencies, [data.currency]: (a.currencies[data.currency] || 0) - data
-                    .amount } };
+              return { ...a, currencies: { ...a.currencies, [data.currency]: (a.currencies[data.currency] || 0) - data.amount } };
             }
             if (a.id === data.toAccountId) {
-              return { ...a, currencies: { ...a.currencies, [data.currency]: (a.currencies[data.currency] || 0) + data
-                    .amount } };
+              return { ...a, currencies: { ...a.currencies, [data.currency]: (a.currencies[data.currency] || 0) + data.amount } };
             }
             return a;
           });
@@ -1055,24 +1196,20 @@
         if (oldTx.exchangeRate && oldTx.exchangeRate > 0 && oldTx.convertedAmount) {
           accs = accs.map(a => {
             if (a.id === oldTx.accountId) {
-              return { ...a, currencies: { ...a.currencies, [oldTx.currency]: (a.currencies[oldTx.currency] || 0) + oldTx
-                    .amount } };
+              return { ...a, currencies: { ...a.currencies, [oldTx.currency]: (a.currencies[oldTx.currency] || 0) + oldTx.amount } };
             }
             if (a.id === oldTx.toAccountId) {
-              return { ...a, currencies: { ...a.currencies, [oldTx.targetCurrency || 'USD']: (a.currencies[oldTx
-                    .targetCurrency || 'USD'] || 0) - oldTx.convertedAmount } };
+              return { ...a, currencies: { ...a.currencies, [oldTx.targetCurrency || 'USD']: (a.currencies[oldTx.targetCurrency || 'USD'] || 0) - oldTx.convertedAmount } };
             }
             return a;
           });
         } else {
           accs = accs.map(a => {
             if (a.id === oldTx.accountId) {
-              return { ...a, currencies: { ...a.currencies, [oldTx.currency]: (a.currencies[oldTx.currency] || 0) + oldTx
-                    .amount } };
+              return { ...a, currencies: { ...a.currencies, [oldTx.currency]: (a.currencies[oldTx.currency] || 0) + oldTx.amount } };
             }
             if (a.id === oldTx.toAccountId) {
-              return { ...a, currencies: { ...a.currencies, [oldTx.currency]: (a.currencies[oldTx.currency] || 0) - oldTx
-                    .amount } };
+              return { ...a, currencies: { ...a.currencies, [oldTx.currency]: (a.currencies[oldTx.currency] || 0) - oldTx.amount } };
             }
             return a;
           });
@@ -1098,24 +1235,20 @@
           newTx.targetCurrency = newTx.toCurrency || 'USD';
           accs = accs.map(a => {
             if (a.id === newTx.accountId) {
-              return { ...a, currencies: { ...a.currencies, [newTx.currency]: (a.currencies[newTx.currency] || 0) - newTx
-                    .amount } };
+              return { ...a, currencies: { ...a.currencies, [newTx.currency]: (a.currencies[newTx.currency] || 0) - newTx.amount } };
             }
             if (a.id === newTx.toAccountId) {
-              return { ...a, currencies: { ...a.currencies, [newTx.toCurrency]: (a.currencies[newTx.toCurrency] || 0) +
-                  converted } };
+              return { ...a, currencies: { ...a.currencies, [newTx.toCurrency]: (a.currencies[newTx.toCurrency] || 0) + converted } };
             }
             return a;
           });
         } else {
           accs = accs.map(a => {
             if (a.id === newTx.accountId) {
-              return { ...a, currencies: { ...a.currencies, [newTx.currency]: (a.currencies[newTx.currency] || 0) - newTx
-                    .amount } };
+              return { ...a, currencies: { ...a.currencies, [newTx.currency]: (a.currencies[newTx.currency] || 0) - newTx.amount } };
             }
             if (a.id === newTx.toAccountId) {
-              return { ...a, currencies: { ...a.currencies, [newTx.currency]: (a.currencies[newTx.currency] || 0) + newTx
-                    .amount } };
+              return { ...a, currencies: { ...a.currencies, [newTx.currency]: (a.currencies[newTx.currency] || 0) + newTx.amount } };
             }
             return a;
           });
@@ -1154,8 +1287,7 @@
               return { ...a, currencies: { ...a.currencies, [tx.currency]: (a.currencies[tx.currency] || 0) + tx.amount } };
             }
             if (a.id === tx.toAccountId) {
-              return { ...a, currencies: { ...a.currencies, [tx.targetCurrency || 'USD']: (a.currencies[tx
-                    .targetCurrency || 'USD'] || 0) - tx.convertedAmount } };
+              return { ...a, currencies: { ...a.currencies, [tx.targetCurrency || 'USD']: (a.currencies[tx.targetCurrency || 'USD'] || 0) - tx.convertedAmount } };
             }
             return a;
           });
@@ -1175,21 +1307,20 @@
       state.accounts = accs;
       state.transactions = state.transactions.filter(t => t.id !== id);
       saveData();
-      showToast('🗑️ تم حذف المعاملة');
+      showToast('🗑️ تم حذف المعاملة', 'warn');
       renderAll();
     }
 
     // ============================================================
-    // ====== EXPORT / IMPORT ======
+    // تصدير/استيراد
     // ============================================================
-
     function exportData() {
       const data = { accounts: state.accounts, transactions: state.transactions, exportedAt: new Date().toISOString() };
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `finance_${new Date().toISOString().split('T')[0]}.json`;
+      a.download = `tarek_backup_${new Date().toISOString().split('T')[0]}.json`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -1209,9 +1340,11 @@
             renderAll();
             showToast(`✅ تم استيراد ${d.accounts.length} حسابات`);
           } else {
-            showToast('❌ ملف غير صالح');
+            showToast('❌ ملف غير صالح', 'error');
           }
-        } catch (err) { showToast('❌ خطأ في الاستيراد'); }
+        } catch (err) {
+          showToast('❌ خطأ في الاستيراد', 'error');
+        }
       };
       reader.readAsText(file);
     }
@@ -1220,49 +1353,25 @@
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = '.json';
-      input.onchange = function() { if (this.files && this.files[0]) importData(this.files[0]); };
+      input.onchange = function() {
+        if (this.files && this.files[0]) importData(this.files[0]);
+      };
       input.click();
     }
 
     // ============================================================
-    // ====== FAB VISIBILITY ======
+    // الأزرار العائمة
     // ============================================================
-
     function updateFabs() {
-      const fabMain = $('#fabMain');
-      const fabTransfer = $('#fabTransfer');
-      if (fabMain) {
-        fabMain.style.display = state.accounts.length > 0 ? 'flex' : 'none';
-      }
-      if (fabTransfer) {
-        fabTransfer.style.display = state.accounts.length > 1 ? 'flex' : 'none';
-      }
+      const add = $('#fabAdd');
+      const trf = $('#fabTransfer');
+      if (add) add.style.display = state.accounts.length > 0 ? 'flex' : 'none';
+      if (trf) trf.style.display = state.accounts.length > 1 ? 'flex' : 'none';
     }
 
     // ============================================================
-    // ====== STARS BACKGROUND ======
+    // Render
     // ============================================================
-
-    function createStars() {
-      const container = document.getElementById('stars');
-      if (!container) return;
-      for (let i = 0; i < 50; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        star.style.width = (Math.random() * 3 + 1) + 'px';
-        star.style.height = star.style.width;
-        star.style.animationDelay = (Math.random() * 5) + 's';
-        star.style.animationDuration = (3 + Math.random() * 4) + 's';
-        container.appendChild(star);
-      }
-    }
-
-    // ============================================================
-    // ====== RENDER ======
-    // ============================================================
-
     function renderAll() {
       renderApp();
       renderNav();
@@ -1271,123 +1380,173 @@
     }
 
     function renderNav() {
-      const container = $('#bottom-nav');
-      if (!container) return;
-      container.innerHTML = TABS.map(t => `
-        <button class="item ${currentTab === t.id ? 'active' : ''}" onclick="switchTab('${t.id}')">
-          <span class="ico">${t.icon}</span>
+      const nav = $('#navbar');
+      if (!nav) return;
+      nav.innerHTML = TABS.map(t => `
+        <button class="nav-item ${currentTab === t.id ? 'active' : ''}" onclick="switchTab('${t.id}')">
+          <span class="nav-ico">${t.icon}</span>
           <span>${t.label}</span>
         </button>
       `).join('');
     }
 
     function renderApp() {
-      const container = $('#app-container');
-      if (!container) return;
+      const app = $('#app');
+      if (!app) return;
 
       let html = '';
 
-      html += `
-        <div class="header-ios animate-fade-up">
-          <span class="title">${selectedAccountId ? '' : 'حسابات<span class="accent">ي</span>'}</span>
-          <div class="actions">
-            <button class="btn-ios-icon" onclick="openModal('settings')">⚙</button>
+      // الترويسة
+      if (selectedAccountId) {
+        const acc = getAccount(selectedAccountId);
+        html += `
+          <div class="topbar">
+            <div class="brand">
+              <button class="icon-btn" onclick="selectedAccountId=null;renderAll()">←</button>
+              <div>
+                <div class="brand-name" style="font-size:18px;">${acc?.name || 'حساب'}</div>
+                <div class="brand-sub">تفاصيل الحساب</div>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="icon-btn" onclick="openEditAccount('${selectedAccountId}')">✎</button>
+              <button class="icon-btn" onclick="deleteAccount('${selectedAccountId}')" style="color:var(--danger);">🗑</button>
+            </div>
           </div>
-        </div>
-      `;
+        `;
+      } else {
+        html += `
+          <div class="topbar">
+            <div class="brand">
+              <div class="brand-mark">T</div>
+              <div>
+                <div class="brand-name">TAREK</div>
+                <div class="brand-sub">إدارة مالية احترافية</div>
+              </div>
+            </div>
+            <button class="icon-btn" onclick="openModal('settings')">⚙</button>
+          </div>
+        `;
+      }
 
       if (selectedAccountId) {
         html += renderAccountDetail();
       } else {
         switch (currentTab) {
-          case 'home':
-            html += renderHome();
-            break;
-          case 'transactions':
-            html += renderTransactions();
-            break;
-          case 'reports':
-            html += renderReports();
-            break;
+          case 'home': html += renderHome(); break;
+          case 'transactions': html += renderTransactions(); break;
+          case 'reports': html += renderReports(); break;
         }
       }
 
-      container.innerHTML = html;
+      app.innerHTML = html;
     }
 
     // ============================================================
-    // ====== HOME ======
+    // الصفحة الرئيسية
     // ============================================================
-
     function renderHome() {
       const totals = getTotalBalance();
-      const hasBal = totals.USD > 0 || totals.TRY > 0 || totals.EUR > 0;
+      const hasBal = totals.USD !== 0 || totals.TRY !== 0 || totals.EUR !== 0;
+      const totalCurrencies = Object.values(totals).filter(v => v !== 0).length;
 
       let html = '';
 
+      // بطاقة الرصيد
       html += `
-        <div class="balance-ios animate-fade-up">
-          <div class="label">الرصيد الإجمالي (الموجب فقط)</div>
-          <div class="amount">${hasBal ? '' : '0.00'}</div>
-          <div class="currencies">
-            ${CURRENCIES.filter(c => totals[c.value] > 0).map(c => `
-              <span class="chip">${c.flag} <strong>${c.symbol}${formatNum(totals[c.value])}</strong></span>
-            `).join('')}
-            ${!hasBal ? '<span class="chip" style="color:var(--text-light);">لا توجد أرصدة موجبة</span>' : ''}
+        <div class="hero fade-up">
+          <div class="hero-content">
+            <div class="hero-label">الرصيد الإجمالي</div>
+            ${hasBal ? `
+              <div class="hero-amounts">
+                ${CURRENCIES.filter(c => totals[c.value] !== 0).map(c => `
+                  <div class="hero-amt">
+                    <span class="cur">${c.flag} ${c.label}</span>
+                    <span class="val ${totals[c.value] < 0 ? 'neg' : ''}">${c.symbol}${fmt(totals[c.value])}</span>
+                  </div>
+                `).join('')}
+              </div>
+            ` : `
+              <div class="hero-amounts">
+                <div class="hero-amt">
+                  <span class="cur">لا توجد أرصدة</span>
+                  <span class="val">0.00</span>
+                </div>
+              </div>
+            `}
+            <div class="hero-chips">
+              <span class="hero-chip">👥 ${state.accounts.length} حساب</span>
+              <span class="hero-chip">💱 ${totalCurrencies} عملة</span>
+              <span class="hero-chip">📋 ${state.transactions.length} معاملة</span>
+            </div>
           </div>
         </div>
       `;
 
+      // الإحصائيات
+      const income = state.transactions.filter(t => t.type === 'deposit').reduce((s, t) => s + t.amount, 0);
+      const expense = state.transactions.filter(t => t.type === 'withdraw').reduce((s, t) => s + t.amount, 0);
+      const net = income - expense;
+
       html += `
-        <div class="stats-ios">
-          <div class="stat-ios">
-            <div class="value">${state.accounts.length}</div>
-            <div class="label">حسابات</div>
+        <div class="stats">
+          <div class="stat income">
+            <div class="num">${fmt(income)}</div>
+            <div class="lbl">إيداعات</div>
           </div>
-          <div class="stat-ios">
-            <div class="value">${Object.values(totals).filter(v => v > 0).length}</div>
-            <div class="label">عملات</div>
+          <div class="stat expense">
+            <div class="num">${fmt(expense)}</div>
+            <div class="lbl">سحوبات</div>
           </div>
-          <div class="stat-ios">
-            <div class="value">${state.transactions.length}</div>
-            <div class="label">معاملات</div>
+          <div class="stat net">
+            <div class="num">${fmt(net)}</div>
+            <div class="lbl">صافي</div>
           </div>
         </div>
       `;
 
+      // زر إضافة حساب
       html += `
-        <button class="btn-ios btn-ios-primary w-full mb-4" onclick="openModal('createAccount')">
-          <span style="font-size:20px;">+</span> حساب جديد
+        <button class="btn btn-primary btn-block btn-lg mb-4" onclick="openModal('createAccount')">
+          <span style="font-size:20px;">+</span> إضافة حساب جديد
         </button>
+      `;
+
+      // قائمة الحسابات
+      html += `
+        <div class="section-head">
+          <div class="section-title">حساباتي</div>
+          <span class="section-count">${state.accounts.length}</span>
+        </div>
       `;
 
       if (state.accounts.length === 0) {
         html += `
-          <div class="empty-ios glass" style="border-radius:22px;padding:40px 20px;">
-            <span class="icon">👛</span>
-            <h3>لا توجد حسابات</h3>
-            <p>أضف حسابك الأول</p>
+          <div class="empty">
+            <span class="empty-ico">👛</span>
+            <h3>لا توجد حسابات بعد</h3>
+            <p>أضف حسابك الأول لتبدأ</p>
           </div>
         `;
       } else {
         state.accounts.forEach((acc, i) => {
           const icon = acc.icon || ACCOUNT_ICONS[i % ACCOUNT_ICONS.length];
           const color = acc.color || ACCOUNT_COLORS[i % ACCOUNT_COLORS.length];
+          const currencies = Object.entries(acc.currencies || {}).filter(([, v]) => v !== 0);
           html += `
-            <div class="account-ios animate-fade-up" style="animation-delay:${i * 0.04}s" onclick="selectAccount('${acc.id}')">
-              <div class="line" style="background:${color};"></div>
-              <div class="row">
-                <span class="name">${acc.name}</span>
-                <div class="badge" style="background:${color}22;">${icon}</div>
+            <div class="account-card fade-up" style="animation-delay:${i * 0.04}s;--brand:${color};" onclick="selectAccount('${acc.id}')">
+              <div style="position:absolute;right:0;top:0;bottom:0;width:4px;background:${color};"></div>
+              <div class="account-icon" style="background:${color}18;color:${color};">${icon}</div>
+              <div class="account-info">
+                <div class="account-name">${acc.name}</div>
+                <div class="account-bals">
+                  ${currencies.length > 0 ? currencies.map(([c, v]) => {
+                    const info = curInfo(c);
+                    return `<span class="bal-item ${v < 0 ? 'neg' : ''}">${info?.flag || ''} ${info?.symbol || ''}${fmt(v)}</span>`;
+                  }).join('') : '<span class="bal-item zero">لا توجد أرصدة</span>'}
+                </div>
               </div>
-              <div class="balances">
-                ${Object.entries(acc.currencies || {}).filter(([,v]) => v !== 0).map(([c, v]) => {
-                  const info = curInfo(c);
-                  const isNegative = v < 0;
-                  return `<span class="b ${isNegative ? 'negative' : ''}">${info?.flag || ''} <strong>${info?.symbol || ''}${formatNum(v)}</strong></span>`;
-                }).join('')}
-                ${Object.values(acc.currencies || {}).every(v => v === 0) ? '<span class="b" style="color:var(--text-light);">لا توجد أرصدة</span>' : ''}
-              </div>
+              <div style="color:var(--muted);font-size:18px;">›</div>
             </div>
           `;
         });
@@ -1397,102 +1556,100 @@
     }
 
     // ============================================================
-    // ====== ACCOUNT DETAIL ======
+    // تفاصيل الحساب
     // ============================================================
-
     function renderAccountDetail() {
       const acc = getAccount(selectedAccountId);
       if (!acc) { selectedAccountId = null; return ''; }
-
       const icon = acc.icon || '👛';
-      const color = acc.color || '#5B4FCF';
+      const color = acc.color || '#6366f1';
       const txs = getTransactions(acc.id);
 
-      let html = `
-        <div class="animate-fade-up">
-          <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
-            <button class="btn-ios btn-ios-ghost btn-ios-small" onclick="selectedAccountId=null;renderAll()">← رجوع</button>
-            <button class="btn-ios btn-ios-primary btn-ios-small" onclick="openEditAccount('${acc.id}')">✎ تعديل</button>
-            <button class="btn-ios btn-ios-danger btn-ios-small" onclick="deleteAccount('${acc.id}')">🗑 حذف</button>
-          </div>
+      let html = '';
 
-          <div class="balance-ios" style="background:linear-gradient(145deg, ${color}08, rgba(255,255,255,0.3));border-color:${color}22;">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
-              <span style="font-size:32px;">${icon}</span>
-              <span style="font-size:20px;font-weight:700;color:var(--text-dark);">${acc.name}</span>
+      // بطاقة الحساب
+      html += `
+        <div class="hero fade-up" style="background:linear-gradient(135deg, ${color} 0%, ${color}cc 100%);">
+          <div class="hero-content">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+              <div style="width:50px;height:50px;border-radius:16px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:26px;">${icon}</div>
+              <div>
+                <div style="font-size:18px;font-weight:800;">${acc.name}</div>
+                <div style="font-size:11px;opacity:0.7;margin-top:2px;">${txs.length} معاملة</div>
+              </div>
             </div>
-            <div class="currencies">
+            <div class="hero-amounts">
               ${CURRENCIES.filter(c => (acc.currencies?.[c.value] || 0) !== 0).map(c => {
                 const v = acc.currencies?.[c.value] || 0;
-                const isNegative = v < 0;
-                return `<span class="chip" style="${isNegative ? 'border-color:var(--danger);background:rgba(255,107,107,0.05);' : ''}">${c.flag} <strong style="${isNegative ? 'color:var(--danger);' : ''}">${c.symbol}${formatNum(v)}</strong></span>`;
-              }).join('')}
-              ${Object.values(acc.currencies || {}).every(v => v === 0) ? '<span style="color:var(--text-light);font-size:13px;">لا توجد أرصدة</span>' : ''}
+                return `
+                  <div class="hero-amt">
+                    <span class="cur">${c.flag} ${c.label}</span>
+                    <span class="val ${v < 0 ? 'neg' : ''}">${c.symbol}${fmt(v)}</span>
+                  </div>
+                `;
+              }).join('') || '<div class="hero-amt"><span class="cur">لا توجد أرصدة</span><span class="val">0.00</span></div>'}
             </div>
-            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
-              <button class="btn-ios btn-ios-success btn-ios-small" onclick="openTxModal('deposit','${acc.id}')">+ إيداع</button>
-              <button class="btn-ios btn-ios-danger btn-ios-small" onclick="openTxModal('withdraw','${acc.id}')">- سحب</button>
+            <div class="flex gap-2" style="margin-top:16px;">
+              <button class="btn btn-success btn-sm" style="flex:1;" onclick="openTxModal('deposit','${acc.id}')">+ إيداع</button>
+              <button class="btn btn-danger btn-sm" style="flex:1;" onclick="openTxModal('withdraw','${acc.id}')">- سحب</button>
             </div>
           </div>
-
-          <div style="display:flex;justify-content:space-between;align-items:center;margin:12px 0 10px;">
-            <span style="font-weight:600;color:var(--text-dark);font-size:15px;">المعاملات</span>
-            <span style="font-size:12px;color:var(--text-light);">${txs.length}</span>
-          </div>
+        </div>
       `;
 
-      if (txs.length === 0) {
-        html += `
-          <div class="empty-ios glass" style="border-radius:18px;padding:30px 20px;">
-            <span class="icon" style="font-size:32px;">📭</span>
-            <h3 style="font-size:15px;">لا توجد معاملات</h3>
-          </div>
-        `;
-      } else {
-        txs.forEach((tx, i) => {
-          html += renderTxItem(tx, i);
-        });
-      }
-
-      html += `</div>`;
-      return html;
-    }
-
-    // ============================================================
-    // ====== TRANSACTIONS PAGE ======
-    // ============================================================
-
-    function renderTransactions() {
-      let txs = [...state.transactions];
-
-      let html = `
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-          <span style="font-size:20px;font-weight:700;color:var(--text-dark);">المعاملات</span>
-          <span style="font-size:13px;color:var(--text-light);">${txs.length}</span>
+      // قائمة المعاملات
+      html += `
+        <div class="section-head">
+          <div class="section-title">المعاملات</div>
+          <span class="section-count">${txs.length}</span>
         </div>
       `;
 
       if (txs.length === 0) {
         html += `
-          <div class="empty-ios glass" style="border-radius:22px;padding:40px 20px;">
-            <span class="icon">📭</span>
+          <div class="empty">
+            <span class="empty-ico">📭</span>
             <h3>لا توجد معاملات</h3>
-            <p>أضف معاملة جديدة</p>
+            <p>أضف أول معاملة لهذا الحساب</p>
           </div>
         `;
       } else {
-        txs.forEach((tx, i) => {
-          html += renderTxItem(tx, i);
-        });
+        txs.forEach((tx, i) => { html += renderTxItem(tx, i); });
       }
 
       return html;
     }
 
     // ============================================================
-    // ====== TRANSACTION ITEM ======
+    // صفحة المعاملات
     // ============================================================
+    function renderTransactions() {
+      const txs = [...state.transactions];
+      let html = `
+        <div class="section-head" style="margin-top:0;">
+          <div class="section-title">جميع المعاملات</div>
+          <span class="section-count">${txs.length}</span>
+        </div>
+      `;
 
+      if (txs.length === 0) {
+        html += `
+          <div class="empty">
+            <span class="empty-ico">📭</span>
+            <h3>لا توجد معاملات</h3>
+            <p>أضف معاملة جديدة للبدء</p>
+          </div>
+        `;
+      } else {
+        txs.forEach((tx, i) => { html += renderTxItem(tx, i); });
+      }
+
+      return html;
+    }
+
+    // ============================================================
+    // عنصر المعاملة
+    // ============================================================
     function renderTxItem(tx, index) {
       const isDeposit = tx.type === 'deposit';
       const isWithdraw = tx.type === 'withdraw';
@@ -1502,25 +1659,25 @@
       const acc = getAccount(tx.accountId);
       const toAcc = tx.toAccountId ? getAccount(tx.toAccountId) : null;
       const icon = isDeposit ? '📥' : isWithdraw ? '📤' : '🔄';
-      const cls = isDeposit ? 'deposit' : isWithdraw ? 'withdraw' : 'transfer';
+      const cls = isDeposit ? 'dep' : isWithdraw ? 'wit' : 'trf';
       const sign = isWithdraw ? '-' : '+';
       const clsAmt = isDeposit ? 'pos' : isWithdraw ? 'neg' : 'neu';
 
-      let amountDisplay = `${sign}${info?.symbol || ''}${formatNum(tx.amount)}`;
+      let amountDisplay = `${sign}${info?.symbol || ''}${fmt(tx.amount)}`;
       if (isTransfer && tx.convertedAmount) {
         const tInfo = curInfo(tx.targetCurrency || 'USD');
-        amountDisplay += ` → ${tInfo?.symbol || ''}${formatNum(tx.convertedAmount)}`;
+        amountDisplay = `${info?.symbol || ''}${fmt(tx.amount)} → ${tInfo?.symbol || ''}${fmt(tx.convertedAmount)}`;
       }
 
       return `
-        <div class="tx-ios animate-fade-up" style="animation-delay:${index * 0.03}s">
-          <div class="icon ${cls}">${icon}</div>
-          <div class="info">
-            <div class="title">${reason?.icon || ''} ${reason?.label || tx.reason}</div>
-            <div class="sub">${acc?.name || ''} ${toAcc ? `→ ${toAcc.name}` : ''} · ${formatDate(tx.date)}</div>
+        <div class="tx-card fade-up" style="animation-delay:${index * 0.03}s;">
+          <div class="tx-icon ${cls}">${icon}</div>
+          <div class="tx-info">
+            <div class="tx-title">${reason?.icon || ''} ${reason?.label || tx.reason || 'تحويل'}</div>
+            <div class="tx-sub">${acc?.name || ''}${toAcc ? ` → ${toAcc.name}` : ''} · ${fmtDate(tx.date)}</div>
           </div>
-          <div class="amount ${clsAmt}" style="font-size:13px;">${amountDisplay}</div>
-          <div class="actions-btn">
+          <div class="tx-amt ${clsAmt}">${amountDisplay}</div>
+          <div class="tx-actions">
             <button class="edit" onclick="openEditTransaction('${tx.id}')" title="تعديل">✎</button>
             <button class="del" onclick="deleteTransaction('${tx.id}')" title="حذف">✕</button>
           </div>
@@ -1529,9 +1686,8 @@
     }
 
     // ============================================================
-    // ====== REPORTS ======
+    // التقارير
     // ============================================================
-
     function renderReports() {
       const income = state.transactions.filter(t => t.type === 'deposit').reduce((s, t) => s + t.amount, 0);
       const expense = state.transactions.filter(t => t.type === 'withdraw').reduce((s, t) => s + t.amount, 0);
@@ -1546,41 +1702,40 @@
       const maxAmt = sorted[0]?.[1] || 1;
 
       let html = `
-        <div style="margin-bottom:16px;">
-          <span style="font-size:20px;font-weight:700;color:var(--text-dark);">التقارير</span>
+        <div class="section-head" style="margin-top:0;">
+          <div class="section-title">التقارير</div>
         </div>
-
-        <div class="stats-ios">
-          <div class="stat-ios" style="border-color:rgba(46,204,113,0.1);">
-            <div class="value" style="color:var(--success);">${formatNum(income)}</div>
-            <div class="label">إيداعات</div>
+        <div class="stats">
+          <div class="stat income">
+            <div class="num">${fmt(income)}</div>
+            <div class="lbl">إيداعات</div>
           </div>
-          <div class="stat-ios" style="border-color:rgba(255,107,107,0.1);">
-            <div class="value" style="color:var(--danger);">${formatNum(expense)}</div>
-            <div class="label">سحوبات</div>
+          <div class="stat expense">
+            <div class="num">${fmt(expense)}</div>
+            <div class="lbl">سحوبات</div>
           </div>
-          <div class="stat-ios" style="border-color:${net >= 0 ? 'rgba(46,204,113,0.1)' : 'rgba(255,107,107,0.1)'};">
-            <div class="value" style="color:${net >= 0 ? 'var(--success)' : 'var(--danger)'};">${formatNum(net)}</div>
-            <div class="label">صافي</div>
+          <div class="stat ${net >= 0 ? 'income' : 'expense'}">
+            <div class="num">${fmt(net)}</div>
+            <div class="lbl">صافي</div>
           </div>
         </div>
       `;
 
       if (sorted.length > 0) {
         html += `
-          <div class="glass" style="padding:18px 20px;border-radius:20px;margin-bottom:16px;">
-            <div style="font-weight:600;color:var(--text-dark);font-size:15px;margin-bottom:12px;">التوزيع حسب السبب</div>
+          <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:16px;box-shadow:var(--shadow-sm);">
+            <div style="font-weight:800;color:var(--ink);font-size:14px;margin-bottom:14px;">📊 التوزيع حسب السبب</div>
             ${sorted.map(([r, amt]) => {
               const info = reasonInfo(r);
               const pct = (amt / maxAmt) * 100;
               return `
-                <div style="margin-bottom:10px;">
-                  <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-light);margin-bottom:3px;">
-                    <span>${info?.icon || ''} ${info?.label || r}</span>
-                    <span style="color:var(--text-dark);">${formatNum(amt)}</span>
+                <div style="margin-bottom:12px;">
+                  <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:5px;">
+                    <span style="color:var(--muted);">${info?.icon || ''} ${info?.label || r}</span>
+                    <span style="color:var(--ink);">${fmt(amt)}</span>
                   </div>
-                  <div style="height:4px;border-radius:10px;background:rgba(91,79,207,0.06);overflow:hidden;">
-                    <div style="height:100%;border-radius:10px;background:linear-gradient(90deg,var(--primary),var(--secondary));width:${Math.min(pct, 100)}%;"></div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width:${Math.min(pct, 100)}%;"></div>
                   </div>
                 </div>
               `;
@@ -1589,27 +1744,26 @@
         `;
       } else {
         html += `
-          <div class="empty-ios glass" style="border-radius:20px;padding:30px 20px;">
-            <span class="icon" style="font-size:32px;">📊</span>
-            <h3 style="font-size:15px;">لا توجد بيانات</h3>
-            <p style="font-size:13px;">أضف معاملات لعرض التقارير</p>
+          <div class="empty">
+            <span class="empty-ico">📊</span>
+            <h3>لا توجد بيانات</h3>
+            <p>أضف معاملات لعرض التقارير</p>
           </div>
         `;
       }
 
       html += `
-        <button class="btn-ios btn-ios-primary w-full" onclick="exportData()">📤 تصدير التقرير</button>
+        <button class="btn btn-primary btn-block btn-lg" onclick="exportData()">📤 تصدير البيانات</button>
       `;
 
       return html;
     }
 
     // ============================================================
-    // ====== MODALS ======
+    // المودالات
     // ============================================================
-
     function renderModals() {
-      $$('.modal-ios').forEach(el => el.remove());
+      $$('.modal').forEach(el => el.remove());
       if (modals.createAccount) renderCreateAccountModal();
       if (modals.addTransaction) renderAddTransactionModal();
       if (modals.transfer) renderTransferModal();
@@ -1618,53 +1772,54 @@
       if (modals.editAccount) renderEditAccountModal();
     }
 
-    // ----- CREATE ACCOUNT -----
+    // ----- مودال إنشاء حساب -----
     function renderCreateAccountModal() {
-      const s = { currencies: [], icon: 0, color: 0, balances: {} };
       const overlay = document.createElement('div');
-      overlay.className = 'modal-ios';
+      overlay.className = 'modal';
+      overlay.onclick = (e) => { if (e.target === overlay) closeModal('createAccount'); };
       overlay.innerHTML = `
         <div class="sheet" onclick="event.stopPropagation()">
-          <div class="head">
-            <h2>✨ حساب جديد</h2>
-            <button class="close" onclick="closeModal('createAccount')">✕</button>
+          <div class="sheet-head">
+            <h2 class="sheet-title">✨ حساب جديد</h2>
+            <button class="sheet-close" onclick="closeModal('createAccount')">✕</button>
           </div>
-          <div>
-            <input class="input-ios" id="acc-name" placeholder="اسم الحساب" style="margin-bottom:12px;">
-            <div style="font-size:13px;color:var(--text-light);margin-bottom:8px;">العملات (يمكن إضافة عملة بصفر)</div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px;">
+          <div class="field">
+            <label class="field-label">اسم الحساب</label>
+            <input class="input" id="acc-name" placeholder="مثال: محفظتي الشخصية">
+          </div>
+          <div class="field">
+            <label class="field-label">العملات</label>
+            <div id="acc-currency-picker" class="grid-3">
               ${CURRENCIES.map(c => `
-                <button class="btn-ios btn-ios-ghost btn-ios-small" style="text-align:center;${s.currencies.includes(c.value) ? 'border-color:var(--primary);background:rgba(91,79,207,0.08);' : ''}" data-cur="${c.value}" onclick="toggleCurIOS(this,'${c.value}')">
-                  ${c.flag}<br><span style="font-size:10px;">${c.symbol}</span>
+                <button class="cur-btn" data-cur="${c.value}" onclick="toggleCurIOS(this,'${c.value}')" style="justify-content:center;">
+                  ${c.flag} ${c.symbol}
                 </button>
               `).join('')}
             </div>
-            <div id="acc-balances-ios" style="${s.currencies.length === 0 ? 'display:none;' : ''}margin-bottom:12px;">
-              ${s.currencies.map(c => {
-                const info = curInfo(c);
-                return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-                  <span style="font-size:16px;">${info?.flag}</span>
-                  <input class="input-ios" id="bal-${c}" placeholder="${info?.symbol}0.00" type="number" style="flex:1;padding:10px 14px;font-size:14px;" value="0">
-                </div>`;
-              }).join('')}
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:12px;">
-              ${ACCOUNT_ICONS.map((ic, i) => `
-                <button class="btn-ios btn-ios-ghost btn-ios-small" style="font-size:18px;padding:8px;${s.icon === i ? 'border-color:var(--primary);background:rgba(91,79,207,0.08);' : ''}" data-icon="${i}" onclick="selectIconIOS(this,${i})">${ic}</button>
-              `).join('')}
-            </div>
-            <div style="display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap;">
-              ${ACCOUNT_COLORS.map((col, i) => `
-                <button style="width:30px;height:30px;border-radius:50%;border:2px solid ${s.color === i ? 'var(--primary)' : 'transparent'};background:${col};cursor:pointer;transition:all 0.3s;" onclick="selectColorIOS(${i})" data-color="${i}"></button>
-              `).join('')}
-            </div>
-            <button class="btn-ios btn-ios-primary w-full" onclick="submitCreateIOS()">إنشاء</button>
           </div>
+          <div id="acc-balances" style="display:none;margin-bottom:14px;"></div>
+          <div class="field">
+            <label class="field-label">الأيقونة</label>
+            <div class="grid-6">
+              ${ACCOUNT_ICONS.map((ic, i) => `
+                <button class="opt-btn ${i === 0 ? 'active' : ''}" data-icon="${i}" onclick="selectIconIOS(this,${i})">${ic}</button>
+              `).join('')}
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">اللون</label>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              ${ACCOUNT_COLORS.map((col, i) => `
+                <button class="color-dot ${i === 0 ? 'active' : ''}" data-color="${i}" style="background:${col};" onclick="selectColorIOS(${i})"></button>
+              `).join('')}
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block btn-lg mt-3" onclick="submitCreateIOS()">إنشاء الحساب</button>
         </div>
       `;
       document.body.appendChild(overlay);
 
-      window._createIOS = s;
+      window._createIOS = { currencies: [], icon: 0, color: 0 };
     }
 
     window.toggleCurIOS = function(el, cur) {
@@ -1674,17 +1829,16 @@
       else s.currencies.push(cur);
       $$('[data-cur]').forEach(b => {
         const v = b.dataset.cur;
-        b.style.borderColor = s.currencies.includes(v) ? 'var(--primary)' : 'rgba(91,79,207,0.06)';
-        b.style.background = s.currencies.includes(v) ? 'rgba(91,79,207,0.08)' : 'rgba(255,255,255,0.3)';
+        b.classList.toggle('active', s.currencies.includes(v));
       });
-      const cont = $('#acc-balances-ios');
+      const cont = $('#acc-balances');
       if (s.currencies.length > 0) {
         cont.style.display = 'block';
         cont.innerHTML = s.currencies.map(c => {
           const info = curInfo(c);
-          return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            <span style="font-size:16px;">${info?.flag}</span>
-            <input class="input-ios" id="bal-${c}" placeholder="${info?.symbol}0.00" type="number" style="flex:1;padding:10px 14px;font-size:14px;" value="0">
+          return `<div class="field" style="margin-bottom:10px;">
+            <label class="field-label">رصيد ${info?.label} (${info?.symbol})</label>
+            <input class="input" id="bal-${c}" type="number" placeholder="0.00" value="0">
           </div>`;
         }).join('');
       } else {
@@ -1693,28 +1847,24 @@
     };
 
     window.selectIconIOS = function(el, i) {
-      const s = window._createIOS;
-      s.icon = i;
+      window._createIOS.icon = i;
       $$('[data-icon]').forEach(b => {
-        const v = parseInt(b.dataset.icon);
-        b.style.borderColor = v === i ? 'var(--primary)' : 'rgba(91,79,207,0.06)';
-        b.style.background = v === i ? 'rgba(91,79,207,0.08)' : 'rgba(255,255,255,0.3)';
+        b.classList.toggle('active', parseInt(b.dataset.icon) === i);
       });
     };
 
     window.selectColorIOS = function(i) {
-      const s = window._createIOS;
-      s.color = i;
-      $$('[data-color]').forEach((b, idx) => {
-        b.style.borderColor = idx === i ? 'var(--primary)' : 'transparent';
+      window._createIOS.color = i;
+      $$('[data-color]').forEach(b => {
+        b.classList.toggle('active', parseInt(b.dataset.color) === i);
       });
     };
 
     window.submitCreateIOS = function() {
       const s = window._createIOS;
       const name = $('#acc-name').value.trim();
-      if (!name) { showToast('❌ أدخل اسم الحساب'); return; }
-      if (s.currencies.length === 0) { showToast('❌ اختر عملة'); return; }
+      if (!name) { showToast('❌ أدخل اسم الحساب', 'error'); return; }
+      if (s.currencies.length === 0) { showToast('❌ اختر عملة واحدة على الأقل', 'error'); return; }
       const currencies = {};
       s.currencies.forEach(c => {
         const inp = $(`#bal-${c}`);
@@ -1723,24 +1873,24 @@
       addAccount({ name, currencies, icon: ACCOUNT_ICONS[s.icon], color: ACCOUNT_COLORS[s.color] });
     };
 
-    // ----- ADD TRANSACTION -----
-    function openTxModal(type, accountId) {
+    // ----- مودال إضافة معاملة -----
+    window.openTxModal = function(type, accountId) {
       txStep = 1;
-      txData = { type: type || 'deposit', accountId: accountId || '', currency: 'USD', reason: '', amount: 0, note: '',
-        toAccountId: '', exchangeRate: 0 };
+      txData = { type: type || 'deposit', accountId: accountId || '', currency: 'USD', reason: '', amount: 0, note: '', toAccountId: '', exchangeRate: 0 };
       openModal('addTransaction');
-    }
+    };
 
     function renderAddTransactionModal() {
       const overlay = document.createElement('div');
-      overlay.className = 'modal-ios';
+      overlay.className = 'modal';
+      overlay.onclick = (e) => { if (e.target === overlay) closeModal('addTransaction'); };
       overlay.innerHTML = `
         <div class="sheet" onclick="event.stopPropagation()">
-          <div class="head">
-            <h2>📝 معاملة جديدة</h2>
-            <button class="close" onclick="closeModal('addTransaction')">✕</button>
+          <div class="sheet-head">
+            <h2 class="sheet-title">📝 معاملة جديدة</h2>
+            <button class="sheet-close" onclick="closeModal('addTransaction')">✕</button>
           </div>
-          <div id="tx-content-ios">${renderTxStepIOS()}</div>
+          <div id="tx-content">${renderTxStepIOS()}</div>
         </div>
       `;
       document.body.appendChild(overlay);
@@ -1752,40 +1902,39 @@
       const data = txData;
 
       let html = `
-        <div class="step-ios">
-          ${steps.map((s, i) => `<div class="dot ${i + 1 < current ? 'done' : i + 1 === current ? 'active' : ''}"></div>`).join('')}
+        <div class="steps">
+          ${steps.map((s, i) => `<div class="step-dot ${i + 1 < current ? 'done' : i + 1 === current ? 'active' : ''}"></div>`).join('')}
         </div>
-        <div class="step-ios label">${steps[current - 1]}</div>
-        <div style="min-height:200px;">
+        <div class="step-label">${steps[current - 1]}</div>
       `;
 
       switch (current) {
         case 1:
           html += `
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
-              <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:14px;text-align:center;${data.type === 'deposit' ? 'border-color:var(--success);background:rgba(46,204,113,0.08);' : ''}" onclick="setTxTypeIOS('deposit')">
+            <div class="grid-3">
+              <button class="opt-btn ${data.type === 'deposit' ? 'active' : ''}" style="flex-direction:column;padding:16px 8px;gap:6px;height:auto;" onclick="setTxTypeIOS('deposit')">
                 <div style="font-size:28px;">📥</div>
-                <div style="font-weight:600;font-size:13px;">إيداع</div>
+                <div style="font-weight:700;font-size:12px;color:var(--ink);">إيداع</div>
               </button>
-              <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:14px;text-align:center;${data.type === 'withdraw' ? 'border-color:var(--danger);background:rgba(255,107,107,0.08);' : ''}" onclick="setTxTypeIOS('withdraw')">
+              <button class="opt-btn ${data.type === 'withdraw' ? 'active' : ''}" style="flex-direction:column;padding:16px 8px;gap:6px;height:auto;" onclick="setTxTypeIOS('withdraw')">
                 <div style="font-size:28px;">📤</div>
-                <div style="font-weight:600;font-size:13px;">سحب</div>
+                <div style="font-weight:700;font-size:12px;color:var(--ink);">سحب</div>
               </button>
-              <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:14px;text-align:center;${data.type === 'transfer' ? 'border-color:var(--primary);background:rgba(91,79,207,0.08);' : ''}" onclick="setTxTypeIOS('transfer')">
+              <button class="opt-btn ${data.type === 'transfer' ? 'active' : ''}" style="flex-direction:column;padding:16px 8px;gap:6px;height:auto;" onclick="setTxTypeIOS('transfer')">
                 <div style="font-size:28px;">🔄</div>
-                <div style="font-weight:600;font-size:13px;">تحويل</div>
+                <div style="font-weight:700;font-size:12px;color:var(--ink);">تحويل</div>
               </button>
             </div>
           `;
           break;
         case 2:
           html += `
-            <div style="max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;">
+            <div style="max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;">
               ${state.accounts.map(a => `
-                <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:12px 16px;text-align:right;${data.accountId === a.id ? 'border-color:var(--primary);background:rgba(91,79,207,0.06);' : ''}" onclick="setTxAccountIOS('${a.id}')">
-                  <div style="font-weight:600;font-size:14px;color:var(--text-dark);">${a.name}</div>
-                  <div style="font-size:11px;color:var(--text-light);">
-                    ${Object.entries(a.currencies || {}).filter(([,v]) => v !== 0).map(([c, v]) => `${curInfo(c)?.flag || ''} ${formatNum(v)}`).join(' · ') || 'لا توجد أرصدة'}
+                <button class="opt-btn ${data.accountId === a.id ? 'active' : ''}" style="padding:12px 14px;text-align:right;justify-content:flex-start;flex-direction:column;align-items:flex-start;gap:2px;height:auto;" onclick="setTxAccountIOS('${a.id}')">
+                  <div style="font-weight:700;font-size:14px;color:var(--ink);">${a.icon || ''} ${a.name}</div>
+                  <div style="font-size:11px;color:var(--muted);">
+                    ${Object.entries(a.currencies || {}).filter(([,v]) => v !== 0).map(([c, v]) => `${curInfo(c)?.flag || ''} ${fmt(v)}`).join(' · ') || 'لا توجد أرصدة'}
                   </div>
                 </button>
               `).join('')}
@@ -1794,27 +1943,28 @@
           break;
         case 3:
           const acc = getAccount(data.accountId);
-          const avail = acc ? Object.keys(acc.currencies || {}) : [];
+          const allCurrencies = acc ? Object.keys(acc.currencies || {}) : [];
+          // عرض جميع العملات حتى لو صفر
+          const showCurrencies = allCurrencies.length > 0 ? allCurrencies : CURRENCIES.map(c => c.value);
           html += `
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
-              ${CURRENCIES.filter(c => avail.includes(c.value)).map(c => `
-                <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:12px;text-align:center;${data.currency === c.value ? 'border-color:var(--primary);background:rgba(91,79,207,0.06);' : ''}" onclick="setTxCurrencyIOS('${c.value}')">
-                  <div style="font-size:28px;">${c.flag}</div>
-                  <div style="font-size:13px;font-weight:600;color:var(--text-dark);">${c.symbol}</div>
-                  <div style="font-size:10px;color:var(--text-light);">${formatNum(acc?.currencies?.[c.value] || 0)}</div>
+            <div class="grid-3">
+              ${CURRENCIES.filter(c => showCurrencies.includes(c.value)).map(c => `
+                <button class="opt-btn ${data.currency === c.value ? 'active' : ''}" style="flex-direction:column;padding:12px 6px;gap:4px;height:auto;" onclick="setTxCurrencyIOS('${c.value}')">
+                  <div style="font-size:26px;">${c.flag}</div>
+                  <div style="font-size:12px;font-weight:800;color:var(--ink);">${c.symbol}</div>
+                  <div style="font-size:10px;color:var(--muted);">${fmt(acc?.currencies?.[c.value] || 0)}</div>
                 </button>
               `).join('')}
-              ${avail.length === 0 ? '<div style="grid-column:span 3;text-align:center;color:var(--text-light);padding:16px;font-size:13px;">لا توجد عملات</div>' : ''}
             </div>
           `;
           break;
         case 4:
           html += `
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;">
+            <div class="grid-2">
               ${REASONS.map(r => `
-                <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:10px;text-align:center;${data.reason === r.value ? 'border-color:var(--primary);background:rgba(91,79,207,0.06);' : ''}" onclick="setTxReasonIOS('${r.value}')">
+                <button class="opt-btn ${data.reason === r.value ? 'active' : ''}" style="flex-direction:column;padding:12px 8px;gap:4px;height:auto;" onclick="setTxReasonIOS('${r.value}')">
                   <div style="font-size:24px;">${r.icon}</div>
-                  <div style="font-size:12px;font-weight:500;color:var(--text-dark);">${r.label}</div>
+                  <div style="font-size:12px;font-weight:700;color:var(--ink);">${r.label}</div>
                 </button>
               `).join('')}
             </div>
@@ -1823,26 +1973,24 @@
         case 5:
           const info = curInfo(data.currency);
           html += `
-            <div style="margin-bottom:10px;">
-              <label style="font-size:12px;color:var(--text-light);">المبلغ (${info?.symbol || ''})</label>
-              <input class="input-ios" id="tx-amount-ios" type="number" placeholder="0.00" style="font-size:18px;padding:12px 16px;">
+            <div class="field">
+              <label class="field-label">المبلغ (${info?.symbol || ''})</label>
+              <input class="input" id="tx-amount-ios" type="number" placeholder="0.00" style="font-size:20px;padding:16px;font-weight:800;text-align:center;">
             </div>
-            <div style="margin-bottom:14px;">
-              <label style="font-size:12px;color:var(--text-light);">ملاحظة</label>
-              <input class="input-ios" id="tx-note-ios" placeholder="اختياري" style="padding:12px 16px;">
+            <div class="field">
+              <label class="field-label">ملاحظة (اختياري)</label>
+              <input class="input" id="tx-note-ios" placeholder="أضف ملاحظة...">
             </div>
-            <button class="btn-ios btn-ios-success w-full" onclick="submitTxIOS()">✅ تأكيد</button>
+            <button class="btn btn-success btn-block btn-lg" onclick="submitTxIOS()">✅ تأكيد المعاملة</button>
           `;
           break;
       }
 
-      html += `</div>`;
-
       if (current < 5 && current > 0) {
         html += `
-          <div style="display:flex;gap:8px;margin-top:14px;">
-            ${current > 1 ? `<button class="btn-ios btn-ios-ghost btn-ios-small" style="flex:1;" onclick="txStep--;renderTxContentIOS()">← رجوع</button>` : ''}
-            <button class="btn-ios btn-ios-primary btn-ios-small" style="flex:1;" onclick="txStep++;renderTxContentIOS()">التالي →</button>
+          <div style="display:flex;gap:8px;margin-top:16px;">
+            ${current > 1 ? `<button class="btn btn-ghost" style="flex:1;" onclick="txStep--;renderTxContentIOS()">← رجوع</button>` : ''}
+            <button class="btn btn-primary" style="flex:1;" onclick="txStep++;renderTxContentIOS()">التالي →</button>
           </div>
         `;
       }
@@ -1851,7 +1999,7 @@
     }
 
     window.renderTxContentIOS = function() {
-      const container = $('#tx-content-ios');
+      const container = $('#tx-content');
       if (container) container.innerHTML = renderTxStepIOS();
     };
 
@@ -1887,104 +2035,99 @@
     window.submitTxIOS = function() {
       const data = txData;
       const amount = parseFloat($('#tx-amount-ios')?.value);
-      if (!data.accountId) { showToast('❌ اختر الحساب'); return; }
-      if (!data.reason && data.type !== 'transfer') { showToast('❌ اختر السبب'); return; }
-      if (!amount || amount === 0) { showToast('❌ أدخل مبلغ صحيح (لا يمكن أن يكون صفر)'); return; }
-
+      if (!data.accountId) { showToast('❌ اختر الحساب', 'error'); return; }
+      if (!data.reason && data.type !== 'transfer') { showToast('❌ اختر السبب', 'error'); return; }
+      if (!amount || amount === 0) { showToast('❌ أدخل مبلغ صحيح', 'error'); return; }
       data.note = $('#tx-note-ios')?.value || '';
       data.amount = amount;
-
       addTransaction(data);
       closeModal('addTransaction');
       txStep = 1;
-      txData = { type: 'deposit', accountId: '', currency: 'USD', reason: '', amount: 0, note: '', toAccountId: '',
-        exchangeRate: 0 };
+      txData = { type: 'deposit', accountId: '', currency: 'USD', reason: '', amount: 0, note: '', toAccountId: '', exchangeRate: 0 };
       renderAll();
     };
 
     // ============================================================
-    // ====== TRANSFER MODAL ======
+    // مودال التحويل - يعرض جميع الحسابات والعملات حتى الصفر
     // ============================================================
-
     function renderTransferModal() {
       const overlay = document.createElement('div');
-      overlay.className = 'modal-ios';
+      overlay.className = 'modal';
+      overlay.onclick = (e) => { if (e.target === overlay) closeModal('transfer'); };
       overlay.innerHTML = `
         <div class="sheet" onclick="event.stopPropagation()">
-          <div class="head">
-            <h2>🔄 تحويل بين الحسابات</h2>
-            <button class="close" onclick="closeModal('transfer')">✕</button>
+          <div class="sheet-head">
+            <h2 class="sheet-title">🔄 تحويل بين الحسابات</h2>
+            <button class="sheet-close" onclick="closeModal('transfer')">✕</button>
           </div>
-          <div>
-            <div style="margin-bottom:10px;">
-              <label style="font-size:12px;color:var(--text-light);">من حساب</label>
-              <select class="select-ios" id="tf-from-ios" style="padding:12px 16px;margin-top:2px;" onchange="updateTransferIOS()">
-                <option value="">اختر حساب</option>
-                ${state.accounts.map(a => `<option value="${a.id}">${a.name}</option>`).join('')}
-              </select>
-              <div id="tf-from-currencies" style="margin-top:6px;"></div>
-            </div>
-            <div style="text-align:center;font-size:20px;color:var(--text-light);margin:2px 0;">⬇</div>
-            <div style="margin-bottom:12px;">
-              <label style="font-size:12px;color:var(--text-light);">إلى حساب</label>
-              <select class="select-ios" id="tf-to-ios" style="padding:12px 16px;margin-top:2px;" onchange="updateTransferIOS()">
-                <option value="">اختر حساب</option>
-                ${state.accounts.map(a => `<option value="${a.id}">${a.name}</option>`).join('')}
-              </select>
-              <div id="tf-to-currencies" style="margin-top:6px;"></div>
-            </div>
-            <div id="tf-details-ios" style="display:none;">
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-                <div>
-                  <label style="font-size:12px;color:var(--text-light);">المبلغ</label>
-                  <input class="input-ios" id="tf-amount-ios" type="number" placeholder="0.00" style="padding:12px 16px;" oninput="updateTransferIOS()">
-                </div>
-                <div id="tf-rate-container" style="display:none;">
-                  <label style="font-size:12px;color:var(--text-light);">سعر التحويل</label>
-                  <input class="input-ios" id="tf-rate-ios" type="number" placeholder="32.50" style="padding:12px 16px;" oninput="updateTransferIOS()">
-                  <div id="tf-rate-label" style="font-size:10px;color:var(--text-light);margin-top:2px;"></div>
-                </div>
+          <div class="field">
+            <label class="field-label">من حساب</label>
+            <select class="input" id="tf-from" onchange="updateTransferIOS()">
+              <option value="">اختر الحساب</option>
+              ${state.accounts.map(a => `<option value="${a.id}">${a.name}</option>`).join('')}
+            </select>
+            <div id="tf-from-currencies" style="margin-top:8px;"></div>
+          </div>
+          <div style="text-align:center;font-size:20px;color:var(--brand);margin:4px 0;">⬇</div>
+          <div class="field">
+            <label class="field-label">إلى حساب</label>
+            <select class="input" id="tf-to" onchange="updateTransferIOS()">
+              <option value="">اختر الحساب</option>
+              ${state.accounts.map(a => `<option value="${a.id}">${a.name}</option>`).join('')}
+            </select>
+            <div id="tf-to-currencies" style="margin-top:8px;"></div>
+          </div>
+          <div id="tf-details" style="display:none;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <div class="field" style="margin-bottom:0;">
+                <label class="field-label">المبلغ</label>
+                <input class="input" id="tf-amount" type="number" placeholder="0.00" oninput="updateTransferIOS()">
               </div>
-              <div id="tf-preview-ios" style="padding:14px;border-radius:18px;background:rgba(46,204,113,0.04);border:1px solid rgba(46,204,113,0.06);margin-top:10px;text-align:center;">
-                <span style="font-size:12px;color:var(--text-light);">معاينة التحويل</span>
-                <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-top:4px;flex-wrap:wrap;">
-                  <span id="tf-from-amt-ios" style="font-weight:700;color:var(--text-dark);">0.00</span>
-                  <span style="font-size:16px;color:var(--text-light);">→</span>
-                  <span id="tf-to-amt-ios" style="font-weight:700;color:var(--success);">0.00</span>
-                </div>
+              <div class="field" id="tf-rate-container" style="margin-bottom:0;display:none;">
+                <label class="field-label">سعر التحويل</label>
+                <input class="input" id="tf-rate" type="number" placeholder="32.50" oninput="updateTransferIOS()">
               </div>
-              <button class="btn-ios btn-ios-success w-full" style="margin-top:10px;" onclick="submitTransferIOS()">✅ تأكيد التحويل</button>
             </div>
+            <div id="tf-rate-label" style="font-size:11px;color:var(--muted);margin-top:4px;text-align:center;"></div>
+            <div class="preview-box">
+              <div class="preview-label">معاينة التحويل</div>
+              <div class="preview-flow">
+                <span class="preview-amt from" id="tf-from-amt">0.00</span>
+                <span style="color:var(--brand);font-size:18px;">→</span>
+                <span class="preview-amt to" id="tf-to-amt">0.00</span>
+              </div>
+            </div>
+            <div id="tf-warning" style="display:none;margin-top:10px;padding:10px 14px;border-radius:12px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);font-size:12px;color:#d97706;font-weight:600;text-align:center;"></div>
+            <button class="btn btn-success btn-block btn-lg mt-3" onclick="submitTransferIOS()">✅ تأكيد التحويل</button>
           </div>
         </div>
       `;
       document.body.appendChild(overlay);
     }
 
-    // ============================================================
-    // ====== TRANSFER LOGIC ======
-    // ============================================================
-
+    // عرض العملات - يعرض جميع العملات حتى الصفر
     function renderCurrencies(accountId, containerId, selectedCur) {
       const container = $(`#${containerId}`);
       if (!container) return;
       const acc = getAccount(accountId);
       if (!acc) { container.innerHTML = ''; return; }
 
-      const currencies = Object.keys(acc.currencies || {}).filter(c => acc.currencies[c] !== 0);
-      if (currencies.length === 0) {
-        container.innerHTML = '<span style="font-size:12px;color:var(--text-light);">لا توجد عملات</span>';
+      // عرض جميع العملات الموجودة في الحساب حتى لو صفر
+      const allCurrencies = Object.keys(acc.currencies || {});
+      if (allCurrencies.length === 0) {
+        container.innerHTML = '<span style="font-size:12px;color:var(--muted);">لا توجد عملات - أضف عملة من تعديل الحساب</span>';
         return;
       }
 
-      let html = '<div class="currency-selector">';
-      currencies.forEach(c => {
+      let html = '<div class="cur-selector">';
+      allCurrencies.forEach(c => {
         const info = curInfo(c);
+        const bal = acc.currencies[c] || 0;
         const isActive = c === selectedCur;
         html += `
-          <button class="curr-btn ${isActive ? 'active' : ''}" onclick="selectTransferCurrency('${containerId}', '${c}')">
+          <button class="cur-btn ${isActive ? 'active' : ''}" onclick="selectTransferCurrency('${containerId}', '${c}')">
             ${info?.flag || ''} ${info?.symbol || c}
-            <span style="font-size:10px;color:var(--text-light);">${formatNum(acc.currencies[c])}</span>
+            <span style="font-size:10px;color:${bal < 0 ? 'var(--danger)' : 'var(--muted)'};font-weight:700;">${fmt(bal)}</span>
           </button>
         `;
       });
@@ -2002,42 +2145,32 @@
     };
 
     window.updateTransferIOS = function() {
-      const from = $('#tf-from-ios')?.value;
-      const to = $('#tf-to-ios')?.value;
-      const details = $('#tf-details-ios');
+      const from = $('#tf-from')?.value;
+      const to = $('#tf-to')?.value;
+      const details = $('#tf-details');
 
       if (from) {
-        renderCurrencies(from, 'tf-from-currencies', transferData.fromCurrency);
         const acc = getAccount(from);
-        if (acc) {
-          const keys = Object.keys(acc.currencies || {}).filter(c => acc.currencies[c] !== 0);
-          if (keys.length > 0 && !transferData.fromCurrency) {
-            transferData.fromCurrency = keys[0];
-          }
-          if (keys.length > 0 && !keys.includes(transferData.fromCurrency)) {
-            transferData.fromCurrency = keys[0];
-          }
+        const keys = Object.keys(acc?.currencies || {});
+        if (keys.length > 0 && (!transferData.fromCurrency || !keys.includes(transferData.fromCurrency))) {
+          transferData.fromCurrency = keys[0];
         }
+        renderCurrencies(from, 'tf-from-currencies', transferData.fromCurrency);
       }
       if (to) {
-        renderCurrencies(to, 'tf-to-currencies', transferData.toCurrency);
         const acc = getAccount(to);
-        if (acc) {
-          const keys = Object.keys(acc.currencies || {}).filter(c => acc.currencies[c] !== 0);
-          if (keys.length > 0 && !transferData.toCurrency) {
-            transferData.toCurrency = keys[0];
-          }
-          if (keys.length > 0 && !keys.includes(transferData.toCurrency)) {
-            transferData.toCurrency = keys[0];
-          }
+        const keys = Object.keys(acc?.currencies || {});
+        if (keys.length > 0 && (!transferData.toCurrency || !keys.includes(transferData.toCurrency))) {
+          transferData.toCurrency = keys[0];
         }
+        renderCurrencies(to, 'tf-to-currencies', transferData.toCurrency);
       }
 
       if (from && to && from !== to) {
         details.style.display = 'block';
 
-        const amount = parseFloat($('#tf-amount-ios')?.value) || 0;
-        const rate = parseFloat($('#tf-rate-ios')?.value) || 0;
+        const amount = parseFloat($('#tf-amount')?.value) || 0;
+        const rate = parseFloat($('#tf-rate')?.value) || 0;
 
         const fCur = transferData.fromCurrency || 'USD';
         const tCur = transferData.toCurrency || 'USD';
@@ -2049,21 +2182,30 @@
 
         if (isSameCurrency) {
           rateContainer.style.display = 'none';
-          $('#tf-from-amt-ios').textContent = `${fInfo?.symbol || ''}${formatNum(amount)}`;
-          $('#tf-to-amt-ios').textContent = `${tInfo?.symbol || ''}${formatNum(amount)}`;
+          $('#tf-from-amt').textContent = `${fInfo?.symbol || ''}${fmt(amount)}`;
+          $('#tf-to-amt').textContent = `${tInfo?.symbol || ''}${fmt(amount)}`;
           transferData.exchangeRate = 0;
           transferData.convertedAmount = amount;
         } else {
           rateContainer.style.display = 'block';
           const rateLabel = $('#tf-rate-label');
-          if (rateLabel) {
-            rateLabel.textContent = `1 ${fCur} = ? ${tCur}`;
-          }
+          if (rateLabel) rateLabel.textContent = `1 ${fCur} = ? ${tCur}`;
           const converted = amount * rate;
-          $('#tf-from-amt-ios').textContent = `${fInfo?.symbol || ''}${formatNum(amount)}`;
-          $('#tf-to-amt-ios').textContent = `${tInfo?.symbol || ''}${formatNum(converted)}`;
+          $('#tf-from-amt').textContent = `${fInfo?.symbol || ''}${fmt(amount)}`;
+          $('#tf-to-amt').textContent = `${tInfo?.symbol || ''}${fmt(converted)}`;
           transferData.exchangeRate = rate;
           transferData.convertedAmount = converted;
+        }
+
+        // تحذير إذا كان الرصيد غير كافٍ (لكن نسمح بالتحويل)
+        const fromAcc = getAccount(from);
+        const bal = fromAcc?.currencies?.[fCur] || 0;
+        const warning = $('#tf-warning');
+        if (amount > bal && warning) {
+          warning.style.display = 'block';
+          warning.innerHTML = `⚠️ الرصيد الحالي: ${fInfo?.symbol || ''}${fmt(bal)} — سيصبح الرصيد سالباً بعد التحويل (${fInfo?.symbol || ''}${fmt(bal - amount)})`;
+        } else if (warning) {
+          warning.style.display = 'none';
         }
 
         transferData.fromAccountId = from;
@@ -2071,7 +2213,6 @@
         transferData.fromCurrency = fCur;
         transferData.toCurrency = tCur;
         transferData.amount = amount;
-
       } else {
         details.style.display = 'none';
       }
@@ -2079,22 +2220,16 @@
 
     window.submitTransferIOS = function() {
       const data = transferData;
-      if (!data.fromAccountId || !data.toAccountId) { showToast('❌ اختر الحسابات'); return; }
-      if (data.fromAccountId === data.toAccountId) { showToast('❌ لا يمكن التحويل لنفس الحساب'); return; }
-      if (!data.amount || data.amount === 0) { showToast('❌ أدخل مبلغ صحيح'); return; }
-
-      const fromAcc = getAccount(data.fromAccountId);
-      const bal = fromAcc?.currencies?.[data.fromCurrency] || 0;
-
-      if (data.amount > bal) {
-        showToast(`⚠️ رصيدك: ${formatNum(bal)}، سيصبح سالباً`);
-      }
+      if (!data.fromAccountId || !data.toAccountId) { showToast('❌ اختر الحسابات', 'error'); return; }
+      if (data.fromAccountId === data.toAccountId) { showToast('❌ لا يمكن التحويل لنفس الحساب', 'error'); return; }
+      if (!data.amount || data.amount === 0) { showToast('❌ أدخل مبلغ صحيح', 'error'); return; }
 
       if (data.fromCurrency !== data.toCurrency && (!data.exchangeRate || data.exchangeRate <= 0)) {
-        showToast('❌ أدخل سعر تحويل صحيح');
+        showToast('❌ أدخل سعر تحويل صحيح', 'error');
         return;
       }
 
+      const fromAcc = getAccount(data.fromAccountId);
       addTransaction({
         type: 'transfer',
         accountId: data.fromAccountId,
@@ -2108,96 +2243,81 @@
       });
 
       closeModal('transfer');
-      transferData = { fromAccountId: '', toAccountId: '', fromCurrency: 'USD', toCurrency: 'TRY', amount: 0,
-        exchangeRate: 0, convertedAmount: 0 };
+      transferData = { fromAccountId: '', toAccountId: '', fromCurrency: 'USD', toCurrency: 'USD', amount: 0, exchangeRate: 0, convertedAmount: 0 };
       renderAll();
     };
 
     // ============================================================
-    // ====== EDIT TRANSACTION MODAL ======
+    // تعديل معاملة
     // ============================================================
-
-    function openEditTransaction(id) {
+    window.openEditTransaction = function(id) {
       editingTxId = id;
       const tx = getTransaction(id);
       if (!tx) return;
-      txData = {
-        type: tx.type,
-        accountId: tx.accountId,
-        currency: tx.currency,
-        reason: tx.reason,
-        amount: tx.amount,
-        note: tx.note || '',
-        toAccountId: tx.toAccountId || '',
-        exchangeRate: tx.exchangeRate || 0,
-        toCurrency: tx.targetCurrency || 'USD',
-      };
       openModal('editTransaction');
-    }
+    };
 
     function renderEditTransactionModal() {
       const tx = getTransaction(editingTxId);
       if (!tx) { closeModal('editTransaction'); return; }
 
-      const data = txData;
       const overlay = document.createElement('div');
-      overlay.className = 'modal-ios';
+      overlay.className = 'modal';
+      overlay.onclick = (e) => { if (e.target === overlay) closeModal('editTransaction'); };
       overlay.innerHTML = `
         <div class="sheet" onclick="event.stopPropagation()">
-          <div class="head">
-            <h2>✎ تعديل المعاملة</h2>
-            <button class="close" onclick="closeModal('editTransaction')">✕</button>
+          <div class="sheet-head">
+            <h2 class="sheet-title">✎ تعديل المعاملة</h2>
+            <button class="sheet-close" onclick="closeModal('editTransaction')">✕</button>
           </div>
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div>
-              <label style="font-size:12px;color:var(--text-light);">النوع</label>
-              <select class="select-ios" id="edit-tx-type" style="margin-top:4px;">
-                <option value="deposit" ${data.type === 'deposit' ? 'selected' : ''}>📥 إيداع</option>
-                <option value="withdraw" ${data.type === 'withdraw' ? 'selected' : ''}>📤 سحب</option>
-                <option value="transfer" ${data.type === 'transfer' ? 'selected' : ''}>🔄 تحويل</option>
-              </select>
-            </div>
-            <div>
-              <label style="font-size:12px;color:var(--text-light);">الحساب</label>
-              <select class="select-ios" id="edit-tx-account" style="margin-top:4px;">
-                ${state.accounts.map(a => `<option value="${a.id}" ${data.accountId === a.id ? 'selected' : ''}>${a.name}</option>`).join('')}
-              </select>
-            </div>
-            <div>
-              <label style="font-size:12px;color:var(--text-light);">العملة</label>
-              <select class="select-ios" id="edit-tx-currency" style="margin-top:4px;">
-                ${CURRENCIES.map(c => `<option value="${c.value}" ${data.currency === c.value ? 'selected' : ''}>${c.flag} ${c.symbol}</option>`).join('')}
-              </select>
-            </div>
-            <div>
-              <label style="font-size:12px;color:var(--text-light);">السبب</label>
-              <select class="select-ios" id="edit-tx-reason" style="margin-top:4px;">
-                ${REASONS.map(r => `<option value="${r.value}" ${data.reason === r.value ? 'selected' : ''}>${r.icon} ${r.label}</option>`).join('')}
-              </select>
-            </div>
-            <div>
-              <label style="font-size:12px;color:var(--text-light);">المبلغ</label>
-              <input class="input-ios" id="edit-tx-amount" type="number" value="${data.amount}" style="margin-top:4px;">
-            </div>
-            <div>
-              <label style="font-size:12px;color:var(--text-light);">ملاحظة</label>
-              <input class="input-ios" id="edit-tx-note" value="${data.note || ''}" style="margin-top:4px;" placeholder="اختياري">
-            </div>
-            ${data.type === 'transfer' ? `
-              <div>
-                <label style="font-size:12px;color:var(--text-light);">إلى حساب</label>
-                <select class="select-ios" id="edit-tx-to" style="margin-top:4px;">
-                  <option value="">اختر حساب</option>
-                  ${state.accounts.filter(a => a.id !== data.accountId).map(a => `<option value="${a.id}" ${data.toAccountId === a.id ? 'selected' : ''}>${a.name}</option>`).join('')}
-                </select>
-              </div>
-              <div id="edit-tx-rate-container" style="${data.currency !== data.toCurrency && data.toAccountId ? 'display:block;' : 'display:none;'}">
-                <label style="font-size:12px;color:var(--text-light);">سعر التحويل</label>
-                <input class="input-ios" id="edit-tx-rate" type="number" value="${data.exchangeRate || ''}" style="margin-top:4px;" placeholder="32.50">
-              </div>
-            ` : ''}
-            <button class="btn-ios btn-ios-success w-full" onclick="submitEditTransaction()" style="margin-top:8px;">💾 حفظ التعديل</button>
+          <div class="field">
+            <label class="field-label">النوع</label>
+            <select class="input" id="edit-tx-type">
+              <option value="deposit" ${tx.type === 'deposit' ? 'selected' : ''}>📥 إيداع</option>
+              <option value="withdraw" ${tx.type === 'withdraw' ? 'selected' : ''}>📤 سحب</option>
+              <option value="transfer" ${tx.type === 'transfer' ? 'selected' : ''}>🔄 تحويل</option>
+            </select>
           </div>
+          <div class="field">
+            <label class="field-label">الحساب</label>
+            <select class="input" id="edit-tx-account">
+              ${state.accounts.map(a => `<option value="${a.id}" ${tx.accountId === a.id ? 'selected' : ''}>${a.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label">العملة</label>
+            <select class="input" id="edit-tx-currency">
+              ${CURRENCIES.map(c => `<option value="${c.value}" ${tx.currency === c.value ? 'selected' : ''}>${c.flag} ${c.label} (${c.symbol})</option>`).join('')}
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label">السبب</label>
+            <select class="input" id="edit-tx-reason">
+              ${REASONS.map(r => `<option value="${r.value}" ${tx.reason === r.value ? 'selected' : ''}>${r.icon} ${r.label}</option>`).join('')}
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label">المبلغ</label>
+            <input class="input" id="edit-tx-amount" type="number" value="${tx.amount}">
+          </div>
+          <div class="field">
+            <label class="field-label">ملاحظة</label>
+            <input class="input" id="edit-tx-note" value="${tx.note || ''}" placeholder="اختياري">
+          </div>
+          ${tx.type === 'transfer' ? `
+            <div class="field">
+              <label class="field-label">إلى حساب</label>
+              <select class="input" id="edit-tx-to">
+                <option value="">اختر حساب</option>
+                ${state.accounts.filter(a => a.id !== tx.accountId).map(a => `<option value="${a.id}" ${tx.toAccountId === a.id ? 'selected' : ''}>${a.name}</option>`).join('')}
+              </select>
+            </div>
+            <div class="field">
+              <label class="field-label">سعر التحويل (إذا كانت العملة مختلفة)</label>
+              <input class="input" id="edit-tx-rate" type="number" value="${tx.exchangeRate || ''}" placeholder="32.50">
+            </div>
+          ` : ''}
+          <button class="btn btn-success btn-block btn-lg mt-3" onclick="submitEditTransaction()">💾 حفظ التعديل</button>
         </div>
       `;
       document.body.appendChild(overlay);
@@ -2213,8 +2333,8 @@
       const toAccountId = $('#edit-tx-to')?.value || null;
       const rate = parseFloat($('#edit-tx-rate')?.value) || 0;
 
-      if (!accountId) { showToast('❌ اختر الحساب'); return; }
-      if (!amount || amount === 0) { showToast('❌ أدخل مبلغ صحيح'); return; }
+      if (!accountId) { showToast('❌ اختر الحساب', 'error'); return; }
+      if (!amount || amount === 0) { showToast('❌ أدخل مبلغ صحيح', 'error'); return; }
 
       const data = { type, accountId, currency, reason, amount, note, toAccountId, exchangeRate: rate };
       if (type === 'transfer') {
@@ -2229,65 +2349,63 @@
     };
 
     // ============================================================
-    // ====== EDIT ACCOUNT MODAL ======
+    // تعديل حساب
     // ============================================================
-
-    function openEditAccount(id) {
+    window.openEditAccount = function(id) {
       editingAccountId = id;
       openModal('editAccount');
-    }
+    };
 
     function renderEditAccountModal() {
       const acc = getAccount(editingAccountId);
       if (!acc) { closeModal('editAccount'); return; }
 
       const overlay = document.createElement('div');
-      overlay.className = 'modal-ios';
+      overlay.className = 'modal';
+      overlay.onclick = (e) => { if (e.target === overlay) closeModal('editAccount'); };
       overlay.innerHTML = `
         <div class="sheet" onclick="event.stopPropagation()">
-          <div class="head">
-            <h2>✎ تعديل الحساب</h2>
-            <button class="close" onclick="closeModal('editAccount')">✕</button>
+          <div class="sheet-head">
+            <h2 class="sheet-title">✎ تعديل الحساب</h2>
+            <button class="sheet-close" onclick="closeModal('editAccount')">✕</button>
           </div>
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div>
-              <label style="font-size:12px;color:var(--text-light);">اسم الحساب</label>
-              <input class="input-ios" id="edit-acc-name" value="${acc.name}" style="margin-top:4px;">
-            </div>
-            <div>
-              <label style="font-size:12px;color:var(--text-light);">الأيقونة</label>
-              <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:6px;">
-                ${ACCOUNT_ICONS.map((ic, i) => `
-                  <button class="btn-ios btn-ios-ghost btn-ios-small" style="font-size:18px;padding:8px;${acc.icon === ic ? 'border-color:var(--primary);background:rgba(91,79,207,0.08);' : ''}" data-icon="${i}" onclick="selectEditIcon(this,${i})">${ic}</button>
-                `).join('')}
-              </div>
-            </div>
-            <div>
-              <label style="font-size:12px;color:var(--text-light);">اللون</label>
-              <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;">
-                ${ACCOUNT_COLORS.map((col, i) => `
-                  <button style="width:30px;height:30px;border-radius:50%;border:2px solid ${acc.color === col ? 'var(--primary)' : 'transparent'};background:${col};cursor:pointer;transition:all 0.3s;" onclick="selectEditColor(this,${i})" data-color="${i}"></button>
-                `).join('')}
-              </div>
-            </div>
-            <div>
-              <label style="font-size:12px;color:var(--text-light);">تعديل الأرصدة</label>
-              ${CURRENCIES.filter(c => acc.currencies?.[c.value] !== undefined).map(c => `
-                <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
-                  <span style="font-size:16px;">${c.flag}</span>
-                  <input class="input-ios" id="edit-bal-${c.value}" type="number" value="${acc.currencies[c.value] || 0}" style="flex:1;padding:10px 14px;font-size:14px;">
-                </div>
-              `).join('')}
-              ${CURRENCIES.filter(c => acc.currencies?.[c.value] === undefined).map(c => `
-                <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
-                  <span style="font-size:16px;">${c.flag}</span>
-                  <span style="font-size:13px;color:var(--text-light);">غير مضاف</span>
-                  <button class="btn-ios btn-ios-ghost btn-ios-small" onclick="addCurrencyToAccount('${editingAccountId}','${c.value}')" style="padding:4px 12px;font-size:12px;">+ إضافة</button>
-                </div>
+          <div class="field">
+            <label class="field-label">اسم الحساب</label>
+            <input class="input" id="edit-acc-name" value="${acc.name}">
+          </div>
+          <div class="field">
+            <label class="field-label">الأيقونة</label>
+            <div class="grid-6">
+              ${ACCOUNT_ICONS.map((ic, i) => `
+                <button class="opt-btn ${acc.icon === ic ? 'active' : ''}" data-icon="${i}" onclick="selectEditIcon(this,${i})">${ic}</button>
               `).join('')}
             </div>
-            <button class="btn-ios btn-ios-success w-full" onclick="submitEditAccount()" style="margin-top:8px;">💾 حفظ التعديلات</button>
           </div>
+          <div class="field">
+            <label class="field-label">اللون</label>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              ${ACCOUNT_COLORS.map((col, i) => `
+                <button class="color-dot ${acc.color === col ? 'active' : ''}" data-color="${i}" style="background:${col};" onclick="selectEditColor(this,${i})"></button>
+              `).join('')}
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">تعديل الأرصدة</label>
+            ${CURRENCIES.filter(c => acc.currencies?.[c.value] !== undefined).map(c => `
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="font-size:18px;width:30px;">${c.flag}</span>
+                <input class="input" id="edit-bal-${c.value}" type="number" value="${acc.currencies[c.value] || 0}" style="flex:1;">
+              </div>
+            `).join('')}
+            ${CURRENCIES.filter(c => acc.currencies?.[c.value] === undefined).map(c => `
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;padding:8px 0;">
+                <span style="font-size:18px;width:30px;">${c.flag}</span>
+                <span style="flex:1;font-size:13px;color:var(--muted);">${c.label} - غير مضاف</span>
+                <button class="btn btn-ghost btn-sm" onclick="addCurrencyToAccount('${editingAccountId}','${c.value}')">+ إضافة</button>
+              </div>
+            `).join('')}
+          </div>
+          <button class="btn btn-success btn-block btn-lg mt-3" onclick="submitEditAccount()">💾 حفظ التعديلات</button>
         </div>
       `;
       document.body.appendChild(overlay);
@@ -2298,18 +2416,12 @@
 
     window.selectEditIcon = function(el, i) {
       window._editIcon = ACCOUNT_ICONS[i];
-      $$('[data-icon]').forEach(b => {
-        const v = parseInt(b.dataset.icon);
-        b.style.borderColor = v === i ? 'var(--primary)' : 'rgba(91,79,207,0.06)';
-        b.style.background = v === i ? 'rgba(91,79,207,0.08)' : 'rgba(255,255,255,0.3)';
-      });
+      $$('[data-icon]').forEach(b => b.classList.toggle('active', parseInt(b.dataset.icon) === i));
     };
 
     window.selectEditColor = function(el, i) {
       window._editColor = ACCOUNT_COLORS[i];
-      $$('[data-color]').forEach((b, idx) => {
-        b.style.borderColor = idx === i ? 'var(--primary)' : 'transparent';
-      });
+      $$('[data-color]').forEach(b => b.classList.toggle('active', parseInt(b.dataset.color) === i));
     };
 
     window.addCurrencyToAccount = function(accountId, currency) {
@@ -2325,48 +2437,48 @@
     window.submitEditAccount = function() {
       const acc = getAccount(editingAccountId);
       if (!acc) return;
-
       const name = $('#edit-acc-name')?.value.trim() || acc.name;
       const icon = window._editIcon || acc.icon;
       const color = window._editColor || acc.color;
-
       const currencies = {};
       CURRENCIES.forEach(c => {
         const inp = $(`#edit-bal-${c.value}`);
-        if (inp) {
-          currencies[c.value] = parseFloat(inp.value) || 0;
-        } else if (acc.currencies?.[c.value] !== undefined) {
-          currencies[c.value] = acc.currencies[c.value];
-        }
+        if (inp) currencies[c.value] = parseFloat(inp.value) || 0;
+        else if (acc.currencies?.[c.value] !== undefined) currencies[c.value] = acc.currencies[c.value];
       });
-
       updateAccount(editingAccountId, { name, currencies, icon, color });
     };
 
     // ============================================================
-    // ====== SETTINGS ======
+    // الإعدادات
     // ============================================================
-
     function renderSettingsModal() {
       const overlay = document.createElement('div');
-      overlay.className = 'modal-ios';
+      overlay.className = 'modal';
+      overlay.onclick = (e) => { if (e.target === overlay) closeModal('settings'); };
       overlay.innerHTML = `
         <div class="sheet" onclick="event.stopPropagation()">
-          <div class="head">
-            <h2>⚙️ الإعدادات</h2>
-            <button class="close" onclick="closeModal('settings')">✕</button>
+          <div class="sheet-head">
+            <h2 class="sheet-title">⚙️ الإعدادات</h2>
+            <button class="sheet-close" onclick="closeModal('settings')">✕</button>
           </div>
           <div style="display:flex;flex-direction:column;gap:8px;">
-            <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:14px 16px;display:flex;align-items:center;gap:12px;text-align:right;width:100%;" onclick="closeModal('settings');exportData();">
-              <span style="font-size:22px;">📤</span>
-              <div><div style="font-weight:600;font-size:14px;color:var(--text-dark);">تصدير البيانات</div><div style="font-size:11px;color:var(--text-light);">نسخة احتياطية</div></div>
+            <button class="opt-btn" style="padding:14px 16px;justify-content:flex-start;gap:12px;text-align:right;height:auto;" onclick="closeModal('settings');exportData();">
+              <span style="font-size:24px;">📤</span>
+              <div style="flex:1;text-align:right;">
+                <div style="font-weight:700;font-size:14px;color:var(--ink);">تصدير البيانات</div>
+                <div style="font-size:11px;color:var(--muted);font-weight:500;">نسخة احتياطية بصيغة JSON</div>
+              </div>
             </button>
-            <button class="btn-ios btn-ios-ghost btn-ios-small" style="padding:14px 16px;display:flex;align-items:center;gap:12px;text-align:right;width:100%;" onclick="closeModal('settings');triggerImport();">
-              <span style="font-size:22px;">📥</span>
-              <div><div style="font-weight:600;font-size:14px;color:var(--text-dark);">استيراد البيانات</div><div style="font-size:11px;color:var(--text-light);">استعادة</div></div>
+            <button class="opt-btn" style="padding:14px 16px;justify-content:flex-start;gap:12px;text-align:right;height:auto;" onclick="closeModal('settings');triggerImport();">
+              <span style="font-size:24px;">📥</span>
+              <div style="flex:1;text-align:right;">
+                <div style="font-weight:700;font-size:14px;color:var(--ink);">استيراد البيانات</div>
+                <div style="font-size:11px;color:var(--muted);font-weight:500;">استعادة من ملف JSON</div>
+              </div>
             </button>
-            <div style="padding:12px;border-radius:16px;background:rgba(91,79,207,0.03);text-align:center;font-size:12px;color:var(--text-light);">
-              ${state.accounts.length} حسابات · ${state.transactions.length} معاملات
+            <div style="padding:14px;border-radius:14px;background:rgba(99,102,241,0.06);text-align:center;font-size:12px;color:var(--muted);font-weight:600;margin-top:8px;">
+              TAREK · ${state.accounts.length} حساب · ${state.transactions.length} معاملة
             </div>
           </div>
         </div>
@@ -2375,9 +2487,8 @@
     }
 
     // ============================================================
-    // ====== NAVIGATION ======
+    // التنقل
     // ============================================================
-
     window.switchTab = function(tab) {
       currentTab = tab;
       selectedAccountId = null;
@@ -2390,18 +2501,14 @@
     };
 
     // ============================================================
-    // ====== INIT ======
+    // البدء
     // ============================================================
-
     loadData();
-    createStars();
     renderAll();
 
-    console.log('💰 تطبيق حساباتي - النسخة المحسنة');
+    console.log('%c🎯 TAREK - إدارة مالية احترافية', 'color:#6366f1;font-size:16px;font-weight:bold;');
     console.log(`📊 ${state.accounts.length} حسابات، ${state.transactions.length} معاملات`);
-    console.log('✨ الميزات: عرض الأرصدة السالبة مع تمييزها، الإجمالي يحسب الموجب فقط، ألوان فاتحة ونظيفة');
-
-    updateFabs();
+    console.log('✨ الميزات: التحويل يعرض جميع الحسابات والعملات حتى الصفر، يسمح بالتحويل للسالب، تصدير/استيراد يعمل بشكل كامل');
   </script>
 
 </body>
