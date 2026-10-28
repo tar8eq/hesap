@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#0f172a" />
+  <meta name="theme-color" content="#f8fafc" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>TAREK - إدارة مالية احترافية</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -19,14 +19,12 @@
       --danger: #ef4444;
       --warning: #f59e0b;
       --ink: #0f172a;
-      --ink-2: #1e293b;
       --muted: #64748b;
       --line: rgba(15, 23, 42, 0.06);
       --bg: #f8fafc;
       --card: #ffffff;
       --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
       --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.08);
-      --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
       --radius: 18px;
       --radius-lg: 24px;
     }
@@ -42,7 +40,6 @@
       line-height: 1.5;
     }
 
-    /* خلفية مزخرفة */
     .bg-layer {
       position: fixed;
       inset: 0;
@@ -53,10 +50,8 @@
     .bg-layer::before {
       content: '';
       position: absolute;
-      top: -20%;
-      right: -10%;
-      width: 400px;
-      height: 400px;
+      top: -20%; right: -10%;
+      width: 400px; height: 400px;
       background: radial-gradient(circle, rgba(99, 102, 241, 0.15), transparent 70%);
       border-radius: 50%;
       filter: blur(40px);
@@ -64,10 +59,8 @@
     .bg-layer::after {
       content: '';
       position: absolute;
-      bottom: -10%;
-      left: -10%;
-      width: 350px;
-      height: 350px;
+      bottom: -10%; left: -10%;
+      width: 350px; height: 350px;
       background: radial-gradient(circle, rgba(168, 85, 247, 0.12), transparent 70%);
       border-radius: 50%;
       filter: blur(40px);
@@ -76,9 +69,7 @@
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.2); border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.4); }
 
-    /* الحاويات */
     .app {
       position: relative;
       z-index: 1;
@@ -88,7 +79,6 @@
       min-height: 100vh;
     }
 
-    /* الترويسة */
     .topbar {
       display: flex;
       align-items: center;
@@ -96,51 +86,31 @@
       padding: 10px 4px 20px;
       gap: 12px;
     }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .brand { display: flex; align-items: center; gap: 10px; }
     .brand-mark {
-      width: 42px;
-      height: 42px;
+      width: 42px; height: 42px;
       border-radius: 14px;
       background: linear-gradient(135deg, var(--brand) 0%, var(--brand-3) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-weight: 900;
-      font-size: 20px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 900; font-size: 20px;
       box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
-      letter-spacing: -1px;
     }
     .brand-name {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
+      font-size: 22px; font-weight: 800; letter-spacing: -0.5px;
       background: linear-gradient(135deg, var(--ink) 0%, var(--brand) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .brand-sub {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 500;
-    }
+    .brand-sub { font-size: 11px; color: var(--muted); font-weight: 500; }
     .icon-btn {
-      width: 42px;
-      height: 42px;
+      width: 42px; height: 42px;
       border-radius: 14px;
       border: 1px solid var(--line);
       background: var(--card);
       color: var(--muted);
       font-size: 18px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: var(--shadow-sm);
     }
@@ -152,7 +122,6 @@
     }
     .icon-btn:active { transform: scale(0.94); }
 
-    /* بطاقة الرصيد الكبيرة */
     .hero {
       background: linear-gradient(135deg, #1e1b4b 0%, #4c1d95 50%, #6d28d9 100%);
       border-radius: var(--radius-lg);
@@ -166,83 +135,53 @@
     .hero::before {
       content: '';
       position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 300px;
-      height: 300px;
+      top: -50%; right: -20%;
+      width: 300px; height: 300px;
       background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 60%);
       border-radius: 50%;
     }
     .hero::after {
       content: '';
       position: absolute;
-      bottom: -40%;
-      left: -10%;
-      width: 200px;
-      height: 200px;
+      bottom: -40%; left: -10%;
+      width: 200px; height: 200px;
       background: radial-gradient(circle, rgba(168, 85, 247, 0.4), transparent 60%);
       border-radius: 50%;
     }
     .hero-content { position: relative; z-index: 1; }
     .hero-label {
-      font-size: 12px;
-      font-weight: 600;
-      opacity: 0.75;
+      font-size: 12px; font-weight: 600; opacity: 0.75;
       letter-spacing: 0.5px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      display: flex; align-items: center; gap: 6px;
     }
     .hero-label::before {
-      content: '●';
-      color: var(--accent);
+      content: '●'; color: var(--accent);
       animation: pulse 2s infinite;
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
     .hero-amounts {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px 20px;
+      display: flex; flex-wrap: wrap; gap: 12px 20px;
       margin-top: 14px;
     }
-    .hero-amt {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .hero-amt .cur {
-      font-size: 11px;
-      opacity: 0.65;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
+    .hero-amt { display: flex; flex-direction: column; gap: 2px; }
+    .hero-amt .cur { font-size: 11px; opacity: 0.65; font-weight: 600; letter-spacing: 0.5px; }
     .hero-amt .val {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
+      font-size: 22px; font-weight: 800; letter-spacing: -0.5px;
       font-variant-numeric: tabular-nums;
     }
     .hero-amt .val.neg { color: #fca5a5; }
     .hero-chips {
-      display: flex;
-      gap: 6px;
-      margin-top: 16px;
-      flex-wrap: wrap;
+      display: flex; gap: 6px; margin-top: 16px; flex-wrap: wrap;
     }
     .hero-chip {
       padding: 6px 12px;
       background: rgba(255,255,255,0.12);
       border: 1px solid rgba(255,255,255,0.15);
       border-radius: 20px;
-      font-size: 11px;
-      font-weight: 600;
+      font-size: 11px; font-weight: 600;
       backdrop-filter: blur(8px);
     }
 
-    /* الإحصائيات */
     .stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -258,59 +197,38 @@
       box-shadow: var(--shadow-sm);
       transition: all 0.25s ease;
     }
-    .stat:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
+    .stat:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
     .stat .num {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--ink);
+      font-size: 24px; font-weight: 800; color: var(--ink);
       letter-spacing: -0.5px;
     }
-    .stat .lbl {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 600;
-      margin-top: 2px;
-    }
+    .stat .lbl { font-size: 11px; color: var(--muted); font-weight: 600; margin-top: 2px; }
     .stat.income .num { color: var(--success); }
     .stat.expense .num { color: var(--danger); }
     .stat.net .num { color: var(--brand); }
 
-    /* عناوين الأقسام */
     .section-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       margin: 20px 4px 12px;
     }
     .section-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--ink);
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-size: 16px; font-weight: 700; color: var(--ink);
+      display: flex; align-items: center; gap: 8px;
     }
     .section-title::before {
       content: '';
-      width: 4px;
-      height: 18px;
+      width: 4px; height: 18px;
       border-radius: 4px;
       background: linear-gradient(180deg, var(--brand), var(--brand-3));
     }
     .section-count {
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 600;
+      font-size: 12px; color: var(--muted); font-weight: 600;
       background: var(--card);
       padding: 4px 10px;
       border-radius: 20px;
       border: 1px solid var(--line);
     }
 
-    /* الأزرار */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -369,12 +287,10 @@
     .btn-sm { padding: 8px 14px; font-size: 13px; border-radius: 12px; }
     .btn-lg { padding: 16px 24px; font-size: 15px; border-radius: 16px; }
 
-    /* حقول الإدخال */
     .field { margin-bottom: 14px; }
     .field-label {
       display: block;
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 12px; font-weight: 700;
       color: var(--muted);
       margin-bottom: 6px;
     }
@@ -406,7 +322,6 @@
       cursor: pointer;
     }
 
-    /* بطاقات الحسابات */
     .account-card {
       background: var(--card);
       border: 1px solid var(--line);
@@ -425,9 +340,7 @@
     .account-card::before {
       content: '';
       position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
+      right: 0; top: 0; bottom: 0;
       width: 4px;
       background: var(--brand);
     }
@@ -437,37 +350,26 @@
       border-color: rgba(99, 102, 241, 0.15);
     }
     .account-icon {
-      width: 46px;
-      height: 46px;
+      width: 46px; height: 46px;
       border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-size: 22px;
       flex-shrink: 0;
     }
     .account-info { flex: 1; min-width: 0; }
     .account-name {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--ink);
+      font-size: 15px; font-weight: 700; color: var(--ink);
       margin-bottom: 3px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
     .account-bals {
-      display: flex;
-      gap: 8px 14px;
-      flex-wrap: wrap;
-      font-size: 12px;
-      font-weight: 600;
+      display: flex; gap: 8px 14px; flex-wrap: wrap;
+      font-size: 12px; font-weight: 600;
     }
     .bal-item { color: var(--muted); }
     .bal-item.neg { color: var(--danger); }
     .bal-item.zero { color: #cbd5e1; font-weight: 500; }
 
-    /* بطاقات المعاملات */
     .tx-card {
       background: var(--card);
       border: 1px solid var(--line);
@@ -485,12 +387,9 @@
       box-shadow: var(--shadow-md);
     }
     .tx-icon {
-      width: 42px;
-      height: 42px;
+      width: 42px; height: 42px;
       border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-size: 20px;
       flex-shrink: 0;
     }
@@ -498,17 +397,8 @@
     .tx-icon.wit { background: rgba(239, 68, 68, 0.12); color: var(--danger); }
     .tx-icon.trf { background: rgba(99, 102, 241, 0.12); color: var(--brand); }
     .tx-info { flex: 1; min-width: 0; }
-    .tx-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 2px;
-    }
-    .tx-sub {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 500;
-    }
+    .tx-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+    .tx-sub { font-size: 11px; color: var(--muted); font-weight: 500; }
     .tx-amt {
       font-weight: 800;
       font-size: 14px;
@@ -518,13 +408,9 @@
     .tx-amt.pos { color: var(--success); }
     .tx-amt.neg { color: var(--danger); }
     .tx-amt.neu { color: var(--brand); }
-    .tx-actions {
-      display: flex;
-      gap: 2px;
-    }
+    .tx-actions { display: flex; gap: 2px; }
     .tx-actions button {
-      width: 30px;
-      height: 30px;
+      width: 30px; height: 30px;
       border: none;
       background: transparent;
       color: var(--muted);
@@ -532,98 +418,54 @@
       cursor: pointer;
       font-size: 13px;
       transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
     }
-    .tx-actions button:hover {
-      background: rgba(99, 102, 241, 0.08);
-    }
+    .tx-actions button:hover { background: rgba(99, 102, 241, 0.08); }
     .tx-actions .edit:hover { color: var(--brand); }
     .tx-actions .del:hover { color: var(--danger); }
 
-    /* الأزرار العائمة */
-    .fab-wrap {
-      position: fixed;
-      bottom: 88px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 45;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    .fab {
-      height: 52px;
-      padding: 0 20px;
-      border: none;
-      border-radius: 26px;
-      font-family: 'Cairo', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #fff;
-    }
-    .fab-add {
-      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-3) 100%);
-      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
-    }
-    .fab-add:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(99, 102, 241, 0.5);
-    }
-    .fab-trf {
-      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
-    }
-    .fab-trf:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.5);
-    }
-    .fab:active { transform: scale(0.95); }
-
-    /* شريط التنقل السفلي */
+    /* ============================================================ */
+    /* شريط التنقل السفلي - 5 أزرار */
+    /* ============================================================ */
     .navbar {
       position: fixed;
-      bottom: 14px;
+      bottom: 12px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 50;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr 56px 56px 1fr;
+      align-items: center;
       gap: 4px;
-      padding: 6px;
-      background: rgba(255, 255, 255, 0.95);
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.97);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--line);
-      border-radius: 22px;
-      box-shadow: 0 8px 32px rgba(15, 23, 42, 0.1);
-      max-width: 360px;
-      width: calc(100% - 32px);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(15, 23, 42, 0.14);
+      max-width: 460px;
+      width: calc(100% - 20px);
     }
     .nav-item {
-      flex: 1;
-      padding: 8px 4px;
+      padding: 8px 2px;
       border: none;
       background: transparent;
       color: var(--muted);
       font-family: 'Cairo', sans-serif;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       cursor: pointer;
-      border-radius: 16px;
+      border-radius: 14px;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
+      gap: 2px;
+      min-width: 0;
     }
     .nav-item .nav-ico {
-      font-size: 20px;
+      font-size: 17px;
       transition: all 0.3s ease;
       line-height: 1;
     }
@@ -635,7 +477,33 @@
     .nav-item.active .nav-ico { transform: scale(1.15); }
     .nav-item:hover:not(.active) { color: var(--brand); }
 
-    /* المودالات */
+    /* أزرار الإضافة والتحويل - دائرية بارزة */
+    .nav-fab {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      flex-shrink: 0;
+    }
+    .nav-fab:hover { transform: translateY(-3px) scale(1.05); }
+    .nav-fab:active { transform: scale(0.92); }
+    .nav-fab.add {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-3) 100%);
+      box-shadow: 0 6px 18px rgba(99, 102, 241, 0.45);
+    }
+    .nav-fab.trf {
+      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.45);
+    }
+
     .modal {
       position: fixed;
       inset: 0;
@@ -666,33 +534,24 @@
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
     .sheet-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       margin-bottom: 20px;
       padding-bottom: 14px;
       border-bottom: 1px solid var(--line);
     }
     .sheet-title {
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--ink);
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-size: 18px; font-weight: 800; color: var(--ink);
+      display: flex; align-items: center; gap: 8px;
     }
     .sheet-close {
-      width: 34px;
-      height: 34px;
+      width: 34px; height: 34px;
       border-radius: 12px;
       border: none;
       background: var(--bg);
       color: var(--muted);
       font-size: 15px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       transition: all 0.2s ease;
     }
     .sheet-close:hover {
@@ -700,17 +559,13 @@
       color: var(--danger);
     }
 
-    /* خطوات المعاملة */
     .steps {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       gap: 6px;
       margin-bottom: 10px;
     }
     .step-dot {
-      width: 6px;
-      height: 6px;
+      width: 6px; height: 6px;
       border-radius: 50%;
       background: var(--line);
       transition: all 0.3s ease;
@@ -723,13 +578,11 @@
     .step-dot.done { background: var(--success); }
     .step-label {
       text-align: center;
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 13px; font-weight: 700;
       color: var(--muted);
       margin-bottom: 16px;
     }
 
-    /* الحالة الفارغة */
     .empty {
       text-align: center;
       padding: 40px 20px;
@@ -743,18 +596,9 @@
       display: block;
       opacity: 0.5;
     }
-    .empty h3 {
-      font-size: 15px;
-      color: var(--ink);
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .empty p {
-      font-size: 13px;
-      color: var(--muted);
-    }
+    .empty h3 { font-size: 15px; color: var(--ink); font-weight: 700; margin-bottom: 4px; }
+    .empty p { font-size: 13px; color: var(--muted); }
 
-    /* التنبيهات */
     .toast {
       position: fixed;
       top: 20px;
@@ -783,12 +627,7 @@
       to { opacity: 1; transform: translate(-50%, 0) scale(1); }
     }
 
-    /* اختيار العملة */
-    .cur-selector {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
+    .cur-selector { display: flex; gap: 6px; flex-wrap: wrap; }
     .cur-btn {
       padding: 8px 14px;
       border-radius: 12px;
@@ -812,7 +651,6 @@
       font-weight: 700;
     }
 
-    /* شبكة */
     .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
     .grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
@@ -829,7 +667,6 @@
     .text-center { text-align: center; }
     .hidden { display: none !important; }
 
-    /* خيارات الأيقونات والألوان */
     .opt-btn {
       padding: 10px;
       border: 1.5px solid var(--line);
@@ -849,8 +686,7 @@
       transform: scale(1.05);
     }
     .color-dot {
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       border-radius: 50%;
       border: 3px solid transparent;
       cursor: pointer;
@@ -864,7 +700,6 @@
       box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
     }
 
-    /* معاينة التحويل */
     .preview-box {
       padding: 14px;
       border-radius: 14px;
@@ -873,29 +708,18 @@
       text-align: center;
       margin-top: 12px;
     }
-    .preview-label {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
+    .preview-label { font-size: 11px; color: var(--muted); font-weight: 700; margin-bottom: 4px; }
     .preview-flow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; justify-content: center;
+      gap: 10px; flex-wrap: wrap;
     }
     .preview-amt {
-      font-size: 18px;
-      font-weight: 800;
+      font-size: 18px; font-weight: 800;
       font-variant-numeric: tabular-nums;
     }
     .preview-amt.from { color: var(--ink); }
     .preview-amt.to { color: var(--success); }
-    .preview-amt.neg { color: var(--danger); }
 
-    /* شريط التقدم */
     .progress-bar {
       height: 5px;
       border-radius: 10px;
@@ -914,14 +738,16 @@
       .modal { align-items: center; }
       .sheet { border-radius: 26px; }
     }
-    @media (max-width: 380px) {
+    @media (max-width: 400px) {
       .hero-amt .val { font-size: 18px; }
       .stat .num { font-size: 20px; }
       .brand-name { font-size: 19px; }
-      .fab { height: 48px; padding: 0 16px; font-size: 13px; }
+      .nav-item { font-size: 9px; }
+      .nav-item .nav-ico { font-size: 15px; }
+      .nav-fab { width: 46px; height: 46px; font-size: 23px; }
+      .navbar { padding: 6px 8px; grid-template-columns: 1fr 1fr 50px 50px 1fr; gap: 3px; }
     }
 
-    /* أنيميشن ظهور العناصر */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -933,15 +759,6 @@
 
   <div class="bg-layer"></div>
   <div class="app" id="app"></div>
-
-  <div class="fab-wrap" id="fabWrap">
-    <button class="fab fab-trf" id="fabTransfer" onclick="openModal('transfer')" style="display:none;">
-      <span style="font-size:18px;">⇄</span> تحويل
-    </button>
-    <button class="fab fab-add" id="fabAdd" onclick="openModal('addTransaction')" style="display:none;">
-      <span style="font-size:20px;">+</span> معاملة
-    </button>
-  </div>
 
   <nav class="navbar" id="navbar"></nav>
 
@@ -970,13 +787,7 @@
     const ACCOUNT_COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4', '#a855f7', '#ec4899', '#14b8a6'];
     const ACCOUNT_ICONS = ['👛', '🐷', '🏢', '🏛️', '🪙', '💵', '💳', '💰'];
 
-    const TABS = [
-      { id: 'home', label: 'الرئيسية', icon: '🏠' },
-      { id: 'transactions', label: 'المعاملات', icon: '📋' },
-      { id: 'reports', label: 'التقارير', icon: '📊' },
-    ];
-
-    const STORAGE_KEY = 'tarek_finance_v1';
+    const STORAGE_KEY = 'tarek_finance_v3';
 
     let state = { accounts: [], transactions: [] };
     let currentTab = 'home';
@@ -995,9 +806,6 @@
     let editingTxId = null;
     let editingAccountId = null;
 
-    // ============================================================
-    // أدوات مساعدة
-    // ============================================================
     const $ = (s, c = document) => c.querySelector(s);
     const $$ = (s, c = document) => [...c.querySelectorAll(s)];
     const uid = () => Date.now().toString(36) + Math.random().toString(36).substr(2, 6);
@@ -1050,9 +858,6 @@
       }, 2000);
     }
 
-    // ============================================================
-    // المودالات
-    // ============================================================
     function openModal(id) {
       modals[id] = true;
       document.body.style.overflow = 'hidden';
@@ -1181,7 +986,6 @@
 
       let accs = [...state.accounts];
 
-      // عكس العملية القديمة
       if (oldTx.type === 'deposit') {
         accs = accs.map(a => a.id === oldTx.accountId ? {
           ...a,
@@ -1216,7 +1020,6 @@
         }
       }
 
-      // تطبيق العملية الجديدة
       const newTx = { ...oldTx, ...data };
       if (newTx.type === 'deposit') {
         accs = accs.map(a => a.id === newTx.accountId ? {
@@ -1360,34 +1163,38 @@
     }
 
     // ============================================================
-    // الأزرار العائمة
-    // ============================================================
-    function updateFabs() {
-      const add = $('#fabAdd');
-      const trf = $('#fabTransfer');
-      if (add) add.style.display = state.accounts.length > 0 ? 'flex' : 'none';
-      if (trf) trf.style.display = state.accounts.length > 1 ? 'flex' : 'none';
-    }
-
-    // ============================================================
     // Render
     // ============================================================
     function renderAll() {
       renderApp();
       renderNav();
       renderModals();
-      updateFabs();
     }
 
+    // ============================================================
+    // شريط التنقل السفلي - 5 أزرار ثابتة
+    // [الرئيسية] [المعاملات] [+] [⇄] [التقارير]
+    // ============================================================
     function renderNav() {
       const nav = $('#navbar');
       if (!nav) return;
-      nav.innerHTML = TABS.map(t => `
-        <button class="nav-item ${currentTab === t.id ? 'active' : ''}" onclick="switchTab('${t.id}')">
-          <span class="nav-ico">${t.icon}</span>
-          <span>${t.label}</span>
+
+      nav.innerHTML = `
+        <button class="nav-item ${currentTab === 'home' && !selectedAccountId ? 'active' : ''}" onclick="switchTab('home')">
+          <span class="nav-ico">🏠</span>
+          <span>الرئيسية</span>
         </button>
-      `).join('');
+        <button class="nav-item ${currentTab === 'transactions' && !selectedAccountId ? 'active' : ''}" onclick="switchTab('transactions')">
+          <span class="nav-ico">📋</span>
+          <span>المعاملات</span>
+        </button>
+        <button class="nav-fab add" onclick="openModal('addTransaction')" title="معاملة جديدة">+</button>
+        <button class="nav-fab trf" onclick="openModal('transfer')" title="تحويل">⇄</button>
+        <button class="nav-item ${currentTab === 'reports' && !selectedAccountId ? 'active' : ''}" onclick="switchTab('reports')">
+          <span class="nav-ico">📊</span>
+          <span>التقارير</span>
+        </button>
+      `;
     }
 
     function renderApp() {
@@ -1396,7 +1203,6 @@
 
       let html = '';
 
-      // الترويسة
       if (selectedAccountId) {
         const acc = getAccount(selectedAccountId);
         html += `
@@ -1442,9 +1248,6 @@
       app.innerHTML = html;
     }
 
-    // ============================================================
-    // الصفحة الرئيسية
-    // ============================================================
     function renderHome() {
       const totals = getTotalBalance();
       const hasBal = totals.USD !== 0 || totals.TRY !== 0 || totals.EUR !== 0;
@@ -1452,7 +1255,6 @@
 
       let html = '';
 
-      // بطاقة الرصيد
       html += `
         <div class="hero fade-up">
           <div class="hero-content">
@@ -1483,7 +1285,6 @@
         </div>
       `;
 
-      // الإحصائيات
       const income = state.transactions.filter(t => t.type === 'deposit').reduce((s, t) => s + t.amount, 0);
       const expense = state.transactions.filter(t => t.type === 'withdraw').reduce((s, t) => s + t.amount, 0);
       const net = income - expense;
@@ -1505,14 +1306,12 @@
         </div>
       `;
 
-      // زر إضافة حساب
       html += `
         <button class="btn btn-primary btn-block btn-lg mb-4" onclick="openModal('createAccount')">
           <span style="font-size:20px;">+</span> إضافة حساب جديد
         </button>
       `;
 
-      // قائمة الحسابات
       html += `
         <div class="section-head">
           <div class="section-title">حساباتي</div>
@@ -1534,7 +1333,7 @@
           const color = acc.color || ACCOUNT_COLORS[i % ACCOUNT_COLORS.length];
           const currencies = Object.entries(acc.currencies || {}).filter(([, v]) => v !== 0);
           html += `
-            <div class="account-card fade-up" style="animation-delay:${i * 0.04}s;--brand:${color};" onclick="selectAccount('${acc.id}')">
+            <div class="account-card fade-up" style="animation-delay:${i * 0.04}s;" onclick="selectAccount('${acc.id}')">
               <div style="position:absolute;right:0;top:0;bottom:0;width:4px;background:${color};"></div>
               <div class="account-icon" style="background:${color}18;color:${color};">${icon}</div>
               <div class="account-info">
@@ -1555,9 +1354,6 @@
       return html;
     }
 
-    // ============================================================
-    // تفاصيل الحساب
-    // ============================================================
     function renderAccountDetail() {
       const acc = getAccount(selectedAccountId);
       if (!acc) { selectedAccountId = null; return ''; }
@@ -1567,7 +1363,6 @@
 
       let html = '';
 
-      // بطاقة الحساب
       html += `
         <div class="hero fade-up" style="background:linear-gradient(135deg, ${color} 0%, ${color}cc 100%);">
           <div class="hero-content">
@@ -1597,7 +1392,6 @@
         </div>
       `;
 
-      // قائمة المعاملات
       html += `
         <div class="section-head">
           <div class="section-title">المعاملات</div>
@@ -1620,9 +1414,6 @@
       return html;
     }
 
-    // ============================================================
-    // صفحة المعاملات
-    // ============================================================
     function renderTransactions() {
       const txs = [...state.transactions];
       let html = `
@@ -1647,9 +1438,6 @@
       return html;
     }
 
-    // ============================================================
-    // عنصر المعاملة
-    // ============================================================
     function renderTxItem(tx, index) {
       const isDeposit = tx.type === 'deposit';
       const isWithdraw = tx.type === 'withdraw';
@@ -1685,9 +1473,6 @@
       `;
     }
 
-    // ============================================================
-    // التقارير
-    // ============================================================
     function renderReports() {
       const income = state.transactions.filter(t => t.type === 'deposit').reduce((s, t) => s + t.amount, 0);
       const expense = state.transactions.filter(t => t.type === 'withdraw').reduce((s, t) => s + t.amount, 0);
@@ -1772,7 +1557,6 @@
       if (modals.editAccount) renderEditAccountModal();
     }
 
-    // ----- مودال إنشاء حساب -----
     function renderCreateAccountModal() {
       const overlay = document.createElement('div');
       overlay.className = 'modal';
@@ -1818,7 +1602,6 @@
         </div>
       `;
       document.body.appendChild(overlay);
-
       window._createIOS = { currencies: [], icon: 0, color: 0 };
     }
 
@@ -1848,16 +1631,12 @@
 
     window.selectIconIOS = function(el, i) {
       window._createIOS.icon = i;
-      $$('[data-icon]').forEach(b => {
-        b.classList.toggle('active', parseInt(b.dataset.icon) === i);
-      });
+      $$('[data-icon]').forEach(b => b.classList.toggle('active', parseInt(b.dataset.icon) === i));
     };
 
     window.selectColorIOS = function(i) {
       window._createIOS.color = i;
-      $$('[data-color]').forEach(b => {
-        b.classList.toggle('active', parseInt(b.dataset.color) === i);
-      });
+      $$('[data-color]').forEach(b => b.classList.toggle('active', parseInt(b.dataset.color) === i));
     };
 
     window.submitCreateIOS = function() {
@@ -1873,7 +1652,6 @@
       addAccount({ name, currencies, icon: ACCOUNT_ICONS[s.icon], color: ACCOUNT_COLORS[s.color] });
     };
 
-    // ----- مودال إضافة معاملة -----
     window.openTxModal = function(type, accountId) {
       txStep = 1;
       txData = { type: type || 'deposit', accountId: accountId || '', currency: 'USD', reason: '', amount: 0, note: '', toAccountId: '', exchangeRate: 0 };
@@ -1944,7 +1722,6 @@
         case 3:
           const acc = getAccount(data.accountId);
           const allCurrencies = acc ? Object.keys(acc.currencies || {}) : [];
-          // عرض جميع العملات حتى لو صفر
           const showCurrencies = allCurrencies.length > 0 ? allCurrencies : CURRENCIES.map(c => c.value);
           html += `
             <div class="grid-3">
@@ -2048,7 +1825,7 @@
     };
 
     // ============================================================
-    // مودال التحويل - يعرض جميع الحسابات والعملات حتى الصفر
+    // مودال التحويل
     // ============================================================
     function renderTransferModal() {
       const overlay = document.createElement('div');
@@ -2105,14 +1882,12 @@
       document.body.appendChild(overlay);
     }
 
-    // عرض العملات - يعرض جميع العملات حتى الصفر
     function renderCurrencies(accountId, containerId, selectedCur) {
       const container = $(`#${containerId}`);
       if (!container) return;
       const acc = getAccount(accountId);
       if (!acc) { container.innerHTML = ''; return; }
 
-      // عرض جميع العملات الموجودة في الحساب حتى لو صفر
       const allCurrencies = Object.keys(acc.currencies || {});
       if (allCurrencies.length === 0) {
         container.innerHTML = '<span style="font-size:12px;color:var(--muted);">لا توجد عملات - أضف عملة من تعديل الحساب</span>';
@@ -2197,7 +1972,6 @@
           transferData.convertedAmount = converted;
         }
 
-        // تحذير إذا كان الرصيد غير كافٍ (لكن نسمح بالتحويل)
         const fromAcc = getAccount(from);
         const bal = fromAcc?.currencies?.[fCur] || 0;
         const warning = $('#tf-warning');
@@ -2409,7 +2183,6 @@
         </div>
       `;
       document.body.appendChild(overlay);
-
       window._editIcon = acc.icon;
       window._editColor = acc.color;
     }
@@ -2508,7 +2281,7 @@
 
     console.log('%c🎯 TAREK - إدارة مالية احترافية', 'color:#6366f1;font-size:16px;font-weight:bold;');
     console.log(`📊 ${state.accounts.length} حسابات، ${state.transactions.length} معاملات`);
-    console.log('✨ الميزات: التحويل يعرض جميع الحسابات والعملات حتى الصفر، يسمح بالتحويل للسالب، تصدير/استيراد يعمل بشكل كامل');
+    console.log('✨ شريط التنقل السفلي يحتوي الآن على 5 أزرار: الرئيسية، المعاملات، +، ⇄، التقارير');
   </script>
 
 </body>
